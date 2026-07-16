@@ -1,0 +1,135 @@
+{
+  "_note": "Starter set of real-world estimation facts for the Fermi market-making mode. AI-drafted — spot-check trueValue/unit against a primary source before relying on these for interview prep; a few (e.g. Mariana Trench depth) vary by several percent across measurement surveys.",
+  "questions": [
+    {
+      "id": "great-wall-length",
+      "prompt": "Total length of the Great Wall of China, including all branches and trenches",
+      "unit": "km",
+      "trueValue": 21196,
+      "tolerancePct": 0.8,
+      "hints": [
+        "It's measured in thousands of kilometers, not hundreds.",
+        "It's roughly 5x the driving distance across the continental United States (~4,300 km).",
+        "The main wall alone (excluding branches) is about 8,850 km; branches add well over half again as much.",
+        "China's 2012 state survey put the total length, including all sections and branches, at just over 21,000 km."
+      ]
+    },
+    {
+      "id": "eiffel-tower-height",
+      "prompt": "Height of the Eiffel Tower, including its broadcast antenna",
+      "unit": "m",
+      "trueValue": 330,
+      "tolerancePct": 0.6,
+      "hints": [
+        "It's measured in tens to low hundreds of meters, not thousands.",
+        "It's more than double the height of the Great Pyramid of Giza (~139 m).",
+        "Without its antenna, the structure itself is 300 m tall.",
+        "With the antenna added in recent years, the official height is 330 m."
+      ]
+    },
+    {
+      "id": "everest-height",
+      "prompt": "Height of Mount Everest above sea level",
+      "unit": "m",
+      "trueValue": 8849,
+      "tolerancePct": 0.5,
+      "hints": [
+        "It's measured in thousands of meters.",
+        "It's roughly 1.4x the height of Denali (~6,190 m), North America's tallest peak.",
+        "It's just under 9,000 meters.",
+        "The 2020 China-Nepal joint survey fixed the official height at 8,849 m."
+      ]
+    },
+    {
+      "id": "earth-moon-distance",
+      "prompt": "Average Earth-to-Moon distance (center to center)",
+      "unit": "km",
+      "trueValue": 384400,
+      "tolerancePct": 0.5,
+      "hints": [
+        "It's measured in hundreds of thousands of kilometers.",
+        "Light takes about 1.3 seconds to cover this distance.",
+        "It's roughly 30 Earth diameters.",
+        "The average center-to-center distance is about 384,400 km."
+      ]
+    },
+    {
+      "id": "boeing-747-weight",
+      "prompt": "Empty (operating) weight of a Boeing 747-400, no fuel or payload",
+      "unit": "kg",
+      "trueValue": 183500,
+      "tolerancePct": 0.7,
+      "hints": [
+        "It's measured in tens to low hundreds of thousands of kilograms.",
+        "It weighs roughly as much as 30 fully grown blue whales.",
+        "Empty, it's just under 200,000 kg.",
+        "The operating empty weight of a 747-400 is about 183,500 kg."
+      ]
+    },
+    {
+      "id": "burj-khalifa-floors",
+      "prompt": "Number of floors in the Burj Khalifa",
+      "unit": "floors",
+      "trueValue": 163,
+      "tolerancePct": 0.6,
+      "hints": [
+        "It's measured in the hundreds, not thousands.",
+        "It has more than twice as many floors as the Empire State Building (102).",
+        "It has more than 150 floors.",
+        "The Burj Khalifa has 163 floors."
+      ]
+    },
+    {
+      "id": "speed-of-sound",
+      "prompt": "Speed of sound at sea level, dry air, 20°C",
+      "unit": "m/s",
+      "trueValue": 343,
+      "tolerancePct": 0.4,
+      "hints": [
+        "It's measured in the hundreds of meters per second.",
+        "It's roughly 1/875,000th the speed of light.",
+        "It's a bit faster than 300 m/s.",
+        "At sea level in dry air at 20°C, sound travels at about 343 m/s."
+      ]
+    },
+    {
+      "id": "human-bones",
+      "prompt": "Number of bones in an adult human skeleton",
+      "unit": "bones",
+      "trueValue": 206,
+      "tolerancePct": 0.5,
+      "hints": [
+        "It's measured in the low hundreds.",
+        "Babies are born with about 300 bones; many fuse together by adulthood.",
+        "It's fewer than 250.",
+        "The adult human skeleton has 206 bones."
+      ]
+    },
+    {
+      "id": "suez-canal-length",
+      "prompt": "Length of the Suez Canal",
+      "unit": "km",
+      "trueValue": 193,
+      "tolerancePct": 0.6,
+      "hints": [
+        "It's measured in the hundreds of kilometers, not thousands.",
+        "It's roughly 4-5x the length of the Panama Canal (~82 km).",
+        "It's just under 200 km.",
+        "The Suez Canal is about 193 km long."
+      ]
+    },
+    {
+      "id": "mariana-trench-depth",
+      "prompt": "Depth of the Challenger Deep, the deepest known point in the ocean",
+      "unit": "m",
+      "trueValue": 10935,
+      "tolerancePct": 0.5,
+      "hints": [
+        "It's measured in thousands of meters — deeper than Everest is tall.",
+        "It's the deepest known point in any ocean on Earth.",
+        "It's just under 11,000 meters deep.",
+        "Modern surveys put it at approximately 10,935 m, though estimates vary by a few dozen meters across studies."
+      ]
+    }
+  ]
+}

@@ -4,12 +4,15 @@ import { useState } from "react";
 import problemsData from "@/data/probability_problems.json";
 import { createClient } from "@/lib/supabase/client";
 import { recordAttempt } from "@/lib/supabase/attempts";
+import { shuffle } from "@/lib/shuffle";
+
+type Difficulty = "easy" | "medium" | "hard";
 
 type Problem = {
   id: string;
   source?: string;
   chapter?: string;
-  difficulty?: string;
+  difficulty?: Difficulty;
   category?: string;
   question: string;
   answer_type: "numeric" | "text";
@@ -20,12 +23,35 @@ type Problem = {
 };
 
 const problems = (problemsData.problems as Problem[]) ?? [];
+const CATEGORIES = Array.from(new Set(problems.map((p) => p.category).filter(Boolean))) as string[];
+const DIFFICULTIES: Difficulty[] = ["easy", "medium", "hard"];
 
 export default function ProbabilityBank() {
-  const [idx, setIdx] = useState(0);
+  const [categoryFilter, setCategoryFilter] = useState<string>("all");
+  const [difficultyFilter, setDifficultyFilter] = useState<string>("all");
+  const [queue, setQueue] = useState<Problem[]>(() => shuffle(problems));
   const [value, setValue] = useState("");
   const [result, setResult] = useState<"correct" | "wrong" | null>(null);
   const [revealed, setRevealed] = useState(false);
+
+  const filtered = problems.filter(
+    (p) =>
+      (categoryFilter === "all" || p.category === categoryFilter) &&
+      (difficultyFilter === "all" || p.difficulty === difficultyFilter)
+  );
+
+  // Reshuffle and reset progress whenever the filters change — adjusting state
+  // during render (React's documented pattern for this) rather than an effect,
+  // so the filtered pool and queue never visibly desync for a frame.
+  const filterKey = `${categoryFilter}|${difficultyFilter}`;
+  const [prevFilterKey, setPrevFilterKey] = useState(filterKey);
+  if (filterKey !== prevFilterKey) {
+    setPrevFilterKey(filterKey);
+    setQueue(shuffle(filtered));
+    setValue("");
+    setResult(null);
+    setRevealed(false);
+  }
 
   if (!problems.length) {
     return (
@@ -42,7 +68,57 @@ export default function ProbabilityBank() {
     );
   }
 
-  const p = problems[idx];
+  const filterBar = (
+    <div className="mb-5 flex flex-wrap gap-3">
+      <select
+        value={categoryFilter}
+        onChange={(e) => setCategoryFilter(e.target.value)}
+        className="rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-1.5 font-mono text-xs text-[var(--foreground)]"
+      >
+        <option value="all">All categories</option>
+        {CATEGORIES.map((c) => (
+          <option key={c} value={c}>
+            {c}
+          </option>
+        ))}
+      </select>
+      <select
+        value={difficultyFilter}
+        onChange={(e) => setDifficultyFilter(e.target.value)}
+        className="rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-1.5 font-mono text-xs text-[var(--foreground)]"
+      >
+        <option value="all">All difficulties</option>
+        {DIFFICULTIES.map((d) => (
+          <option key={d} value={d}>
+            {d}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+
+  if (!filtered.length) {
+    return (
+      <div className="rounded-md border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
+        <div className="mb-5 font-mono text-xs tracking-widest text-[var(--text-secondary)] uppercase">Problem</div>
+        {filterBar}
+        <div className="flex min-h-32 flex-col items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] p-6 text-center font-mono text-xs leading-loose text-[var(--text-muted)]">
+          <p>No problems match these filters.</p>
+          <button
+            onClick={() => {
+              setCategoryFilter("all");
+              setDifficultyFilter("all");
+            }}
+            className="text-[var(--accent-blue)] underline underline-offset-2"
+          >
+            Clear filters
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const p = queue[0] ?? filtered[0];
 
   function check() {
     let ok: boolean;
@@ -61,7 +137,10 @@ export default function ProbabilityBank() {
   }
 
   function next() {
-    setIdx((i) => (i + 1) % problems.length);
+    setQueue((q) => {
+      const rest = q.slice(1);
+      return rest.length ? rest : shuffle(filtered);
+    });
     setValue("");
     setResult(null);
     setRevealed(false);
@@ -70,6 +149,8 @@ export default function ProbabilityBank() {
   return (
     <div className="rounded-md border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
       <div className="mb-5 font-mono text-xs tracking-widest text-[var(--text-secondary)] uppercase">Problem</div>
+
+      {filterBar}
 
       <div className="mb-4 flex flex-wrap gap-2">
         {p.difficulty && <Tag>{p.difficulty}</Tag>}

@@ -3,7 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { recordAttempt } from "@/lib/supabase/attempts";
+import { generateSequence } from "@/lib/sequences";
 
+type Mode = "arithmetic" | "sequences";
 type Op = "add" | "sub" | "mul" | "div" | "pct" | "sq";
 
 const OPS: { key: Op; label: string }[] = [
@@ -69,6 +71,7 @@ function generateQuestion(ops: Op[], digits: number) {
 }
 
 export default function MentalMathTrainer() {
+  const [mode, setMode] = useState<Mode>("arithmetic");
   const [enabledOps, setEnabledOps] = useState<Record<Op, boolean>>({
     add: true,
     sub: true,
@@ -100,7 +103,11 @@ export default function MentalMathTrainer() {
     const avgTime = answerTimes.length
       ? answerTimes.reduce((a, b) => a + b, 0) / answerTimes.length
       : null;
-    recordAttempt(createClient(), "mental_math", correct - wrong, { correct, wrong, avgTime });
+    recordAttempt(createClient(), mode === "sequences" ? "sequences" : "mental_math", correct - wrong, {
+      correct,
+      wrong,
+      avgTime,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [finished]);
 
@@ -125,9 +132,13 @@ export default function MentalMathTrainer() {
   }
 
   function nextQuestion() {
-    const ops = activeOps();
-    if (!ops.length) return;
-    setQuestion(generateQuestion(ops, digits));
+    if (mode === "sequences") {
+      setQuestion(generateSequence());
+    } else {
+      const ops = activeOps();
+      if (!ops.length) return;
+      setQuestion(generateQuestion(ops, digits));
+    }
     setInput("");
     setFeedback(null);
     questionStart.current = performance.now();
@@ -185,38 +196,57 @@ export default function MentalMathTrainer() {
         <div className="mb-5 font-mono text-xs tracking-widest text-[var(--text-secondary)] uppercase">
           Configure Drill
         </div>
-        <div className="mb-5 flex flex-wrap items-start gap-8">
-          <div>
-            <div className="mb-2 font-mono text-[0.65rem] tracking-wider text-[var(--text-muted)] uppercase">
-              Operations
-            </div>
-            <div className="flex flex-wrap gap-4">
-              {OPS.map((o) => (
-                <label key={o.key} className="flex items-center gap-1.5 font-mono text-xs text-[var(--text-secondary)]">
-                  <input
-                    type="checkbox"
-                    checked={enabledOps[o.key]}
-                    onChange={(e) => setEnabledOps((s) => ({ ...s, [o.key]: e.target.checked }))}
-                  />
-                  {o.label}
-                </label>
-              ))}
-            </div>
-          </div>
-          <div>
-            <div className="mb-2 font-mono text-[0.65rem] tracking-wider text-[var(--text-muted)] uppercase">
-              Digit Size
-            </div>
-            <select
-              value={digits}
-              onChange={(e) => setDigits(parseInt(e.target.value, 10))}
-              className="rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 font-mono text-sm text-[var(--foreground)]"
+        <div className="mb-5 flex flex-wrap gap-2">
+          {(["arithmetic", "sequences"] as Mode[]).map((m) => (
+            <button
+              key={m}
+              onClick={() => setMode(m)}
+              className={`rounded-full border px-4 py-2 font-mono text-xs tracking-wide transition ${
+                mode === m
+                  ? "border-[var(--accent-blue)] bg-blue-500/10 text-[var(--accent-blue)]"
+                  : "border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent-blue)] hover:text-[var(--accent-blue)]"
+              }`}
             >
-              <option value={1}>1-digit</option>
-              <option value={2}>2-digit</option>
-              <option value={3}>3-digit</option>
-            </select>
-          </div>
+              {m === "arithmetic" ? "Arithmetic" : "Sequences & Patterns"}
+            </button>
+          ))}
+        </div>
+        <div className="mb-5 flex flex-wrap items-start gap-8">
+          {mode === "arithmetic" && (
+            <>
+              <div>
+                <div className="mb-2 font-mono text-[0.65rem] tracking-wider text-[var(--text-muted)] uppercase">
+                  Operations
+                </div>
+                <div className="flex flex-wrap gap-4">
+                  {OPS.map((o) => (
+                    <label key={o.key} className="flex items-center gap-1.5 font-mono text-xs text-[var(--text-secondary)]">
+                      <input
+                        type="checkbox"
+                        checked={enabledOps[o.key]}
+                        onChange={(e) => setEnabledOps((s) => ({ ...s, [o.key]: e.target.checked }))}
+                      />
+                      {o.label}
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div className="mb-2 font-mono text-[0.65rem] tracking-wider text-[var(--text-muted)] uppercase">
+                  Digit Size
+                </div>
+                <select
+                  value={digits}
+                  onChange={(e) => setDigits(parseInt(e.target.value, 10))}
+                  className="rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 font-mono text-sm text-[var(--foreground)]"
+                >
+                  <option value={1}>1-digit</option>
+                  <option value={2}>2-digit</option>
+                  <option value={3}>3-digit</option>
+                </select>
+              </div>
+            </>
+          )}
           <div>
             <div className="mb-2 font-mono text-[0.65rem] tracking-wider text-[var(--text-muted)] uppercase">
               Round Length
@@ -234,7 +264,7 @@ export default function MentalMathTrainer() {
         </div>
         <button
           onClick={start}
-          disabled={!activeOps().length}
+          disabled={mode === "arithmetic" && !activeOps().length}
           className="rounded-md bg-[var(--accent-blue)] px-5 py-2.5 text-sm font-medium text-[var(--background)] transition hover:opacity-90 disabled:opacity-40"
         >
           {running || finished ? "Restart Drill" : "Start Drill"}

@@ -3,12 +3,13 @@ import SettingsPanel from "@/components/SettingsPanel";
 import ScoreSparkline from "@/components/ScoreSparkline";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import type { Drill, DrillAttempt } from "@/lib/supabase/attempts";
+import { getPercentile, type Drill, type DrillAttempt, type Percentile } from "@/lib/supabase/attempts";
 
 const DRILL_LABELS: Record<Drill, string> = {
   mental_math: "Mental Math Trainer",
   market_making: "Market-Making Drill",
   probability: "Probability & Stats",
+  sequences: "Sequences & Patterns",
 };
 
 export default async function ProfilePage() {
@@ -29,9 +30,19 @@ export default async function ProfilePage() {
     mental_math: [],
     market_making: [],
     probability: [],
+    sequences: [],
   };
   for (const a of attempts ?? []) {
     byDrill[a.drill]?.push(a);
+  }
+
+  const percentiles: Partial<Record<Drill, Percentile>> = {};
+  for (const drill of Object.keys(byDrill) as Drill[]) {
+    const scores = byDrill[drill].map((a) => a.score);
+    if (!scores.length) continue;
+    const best = Math.max(...scores);
+    const pct = await getPercentile(supabase, drill, best);
+    if (pct) percentiles[drill] = pct;
   }
 
   const joined = new Date(user.created_at).toLocaleDateString(undefined, {
@@ -66,9 +77,14 @@ export default async function ProfilePage() {
           </div>
         </div>
 
-        <div className="mb-6 grid gap-4 sm:grid-cols-3">
+        <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {(Object.keys(DRILL_LABELS) as Drill[]).map((drill) => (
-            <DrillStatsCard key={drill} label={DRILL_LABELS[drill]} attempts={byDrill[drill]} />
+            <DrillStatsCard
+              key={drill}
+              label={DRILL_LABELS[drill]}
+              attempts={byDrill[drill]}
+              percentile={percentiles[drill]}
+            />
           ))}
         </div>
 
@@ -78,7 +94,17 @@ export default async function ProfilePage() {
   );
 }
 
-function DrillStatsCard({ label, attempts }: { label: string; attempts: DrillAttempt[] }) {
+const MIN_PERCENTILE_SAMPLE = 5;
+
+function DrillStatsCard({
+  label,
+  attempts,
+  percentile,
+}: {
+  label: string;
+  attempts: DrillAttempt[];
+  percentile?: Percentile;
+}) {
   const scores = attempts.map((a) => a.score);
   const count = attempts.length;
   const best = count ? Math.max(...scores) : null;
@@ -101,6 +127,15 @@ function DrillStatsCard({ label, attempts }: { label: string; attempts: DrillAtt
           <div className="mt-2 font-mono text-[0.65rem] text-[var(--text-muted)]">
             Last played {new Date(last!).toLocaleDateString()}
           </div>
+          {percentile && percentile.sampleSize >= MIN_PERCENTILE_SAMPLE ? (
+            <div className="mt-1 font-mono text-[0.65rem] text-[var(--accent-blue)]">
+              Best score beats {Math.round(percentile.percentile)}% of all attempts
+            </div>
+          ) : (
+            <div className="mt-1 font-mono text-[0.65rem] text-[var(--text-muted)]">
+              Not enough attempts yet for a percentile
+            </div>
+          )}
         </>
       )}
     </div>

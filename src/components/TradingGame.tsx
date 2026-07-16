@@ -3,11 +3,22 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { recordAttempt } from "@/lib/supabase/attempts";
+import { shuffle } from "@/lib/shuffle";
+import fermiData from "@/data/fermi_questions.json";
 
 const SUITS = ["♠", "♥", "♦", "♣"] as const;
 const TOTAL_ROUNDS = 4;
 const HIDDEN_COUNT = 4;
 const NOISE_TRADE_PROB = 0.2;
+const DICE_SIDES = 6;
+
+type Scenario = "cards" | "dice" | "fermi";
+
+const SCENARIOS: { key: Scenario; label: string }[] = [
+  { key: "cards", label: "Card Game" },
+  { key: "dice", label: "Dice Game" },
+  { key: "fermi", label: "Fermi Estimate" },
+];
 
 type Card = { rank: number; suit: (typeof SUITS)[number] };
 
@@ -19,15 +30,6 @@ function buildDeck(): Card[] {
   return deck;
 }
 
-function shuffle<T>(arr: T[]): T[] {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
 function cardLabel(c: Card) {
   const rankLabel = c.rank === 1 ? "A" : c.rank === 11 ? "J" : c.rank === 12 ? "Q" : c.rank === 13 ? "K" : String(c.rank);
   return `${rankLabel}${c.suit}`;
@@ -37,13 +39,30 @@ function cardEq(a: Card, b: Card) {
   return a.rank === b.rank && a.suit === b.suit;
 }
 
+function rollDie() {
+  return 1 + Math.floor(Math.random() * DICE_SIDES);
+}
+
+type FermiQuestion = {
+  id: string;
+  prompt: string;
+  unit: string;
+  trueValue: number;
+  tolerancePct: number;
+  hints: string[];
+};
+
+const FERMI_QUESTIONS = fermiData.questions as FermiQuestion[];
+
 type Fill = { round: number; side: "BUY" | "SELL"; price: number; informed: boolean };
 
+type CardsData = { kind: "cards"; deck: Card[]; hand: Card[]; hiddenPool: Card[]; revealed: Card[] };
+type DiceData = { kind: "dice"; hand: number[]; hiddenPool: number[]; revealed: number[] };
+type FermiRoundData = { kind: "fermi"; question: FermiQuestion; revealedHints: string[] };
+type ScenarioData = CardsData | DiceData | FermiRoundData;
+
 type GameState = {
-  deck: Card[];
-  hand: Card[];
-  hiddenPool: Card[];
-  revealed: Card[];
+  data: ScenarioData;
   trueTotal: number;
   round: number;
   cash: number;
@@ -53,17 +72,14 @@ type GameState = {
   finished: boolean;
 };
 
-function newGame(): GameState {
+function newCardsGame(): GameState {
   const deck = shuffle(buildDeck());
   const dealt = deck.slice(0, 2 + HIDDEN_COUNT);
   const hand = dealt.slice(0, 2);
   const hiddenPool = dealt.slice(2);
   const trueTotal = dealt.reduce((s, c) => s + c.rank, 0);
   return {
-    deck,
-    hand,
-    hiddenPool,
-    revealed: [],
+    data: { kind: "cards", deck, hand, hiddenPool, revealed: [] },
     trueTotal,
     round: 1,
     cash: 0,
@@ -74,27 +90,117 @@ function newGame(): GameState {
   };
 }
 
+function newDiceGame(): GameState {
+  const hand = [rollDie(), rollDie()];
+  const hiddenPool = Array.from({ length: HIDDEN_COUNT }, rollDie);
+  const trueTotal = [...hand, ...hiddenPool].reduce((s, v) => s + v, 0);
+  return {
+    data: { kind: "dice", hand, hiddenPool, revealed: [] },
+    trueTotal,
+    round: 1,
+    cash: 0,
+    inventory: 0,
+    fills: [],
+    quotes: [],
+    finished: false,
+  };
+}
+
+function newFermiGame(): GameState {
+  const question = FERMI_QUESTIONS[Math.floor(Math.random() * FERMI_QUESTIONS.length)];
+  return {
+    data: { kind: "fermi", question, revealedHints: [] },
+    trueTotal: question.trueValue,
+    round: 1,
+    cash: 0,
+    inventory: 0,
+    fills: [],
+    quotes: [],
+    finished: false,
+  };
+}
+
+function newGame(scenario: Scenario): GameState {
+  if (scenario === "cards") return newCardsGame();
+  if (scenario === "dice") return newDiceGame();
+  return newFermiGame();
+}
+
+function revealedCount(data: ScenarioData) {
+  return data.kind === "fermi" ? data.revealedHints.length : data.revealed.length;
+}
+
+// Reveals one more hidden unit for the round just played, or everything remaining
+// on the last round (relevant when a round is skipped/ends early — otherwise a no-op
+// since HIDDEN_COUNT === TOTAL_ROUNDS for every scenario).
+function revealNext(data: ScenarioData, isLastRound: boolean): ScenarioData {
+  if (data.kind === "fermi") {
+    const remaining = data.question.hints.slice(data.revealedHints.length);
+    const revealedHints = isLastRound ? [...data.revealedHints, ...remaining] : [...data.revealedHints, remaining[0]];
+    return { ...data, revealedHints };
+  }
+  if (data.kind === "cards") {
+    const revealed = isLastRound
+      ? [...data.revealed, ...data.hiddenPool.slice(data.revealed.length)]
+      : [...data.revealed, data.hiddenPool[data.revealed.length]];
+    return { ...data, revealed };
+  }
+  const revealed = isLastRound
+    ? [...data.revealed, ...data.hiddenPool.slice(data.revealed.length)]
+    : [...data.revealed, data.hiddenPool[data.revealed.length]];
+  return { ...data, revealed };
+}
+
+function sliceDataAt(data: ScenarioData, n: number): ScenarioData {
+  if (data.kind === "fermi") return { ...data, revealedHints: data.question.hints.slice(0, n) };
+  if (data.kind === "cards") return { ...data, revealed: data.revealed.slice(0, n) };
+  return { ...data, revealed: data.revealed.slice(0, n) };
+}
+
 // Bayesian "fair value" the player would need to estimate mentally each round —
 // used only in the post-game feedback panel, never shown live (that's the drill).
-function fairValueStats(g: GameState) {
-  const visible = [...g.hand, ...g.revealed];
-  const undrawn = g.deck.filter((c) => !visible.some((v) => cardEq(v, c)));
-  const avgRank = undrawn.reduce((s, c) => s + c.rank, 0) / undrawn.length;
-  const variance = undrawn.reduce((s, c) => s + (c.rank - avgRank) ** 2, 0) / undrawn.length;
-  const remainingHidden = HIDDEN_COUNT - g.revealed.length;
-  const knownSum = visible.reduce((s, c) => s + c.rank, 0);
-  const fairValue = knownSum + remainingHidden * avgRank;
-  const stdev = Math.sqrt(remainingHidden * variance);
-  return { fairValue, stdev };
+function fairValueStats(game: GameState) {
+  const { data, trueTotal } = game;
+  if (data.kind === "cards") {
+    const visible = [...data.hand, ...data.revealed];
+    const undrawn = data.deck.filter((c) => !visible.some((v) => cardEq(v, c)));
+    const avgRank = undrawn.reduce((s, c) => s + c.rank, 0) / undrawn.length;
+    const variance = undrawn.reduce((s, c) => s + (c.rank - avgRank) ** 2, 0) / undrawn.length;
+    const remainingHidden = HIDDEN_COUNT - data.revealed.length;
+    const knownSum = visible.reduce((s, c) => s + c.rank, 0);
+    return { fairValue: knownSum + remainingHidden * avgRank, stdev: Math.sqrt(remainingHidden * variance) };
+  }
+  if (data.kind === "dice") {
+    const dieMean = (DICE_SIDES + 1) / 2;
+    const dieVariance = (DICE_SIDES ** 2 - 1) / 12;
+    const visible = [...data.hand, ...data.revealed];
+    const remainingHidden = HIDDEN_COUNT - data.revealed.length;
+    const knownSum = visible.reduce((s, v) => s + v, 0);
+    return { fairValue: knownSum + remainingHidden * dieMean, stdev: Math.sqrt(remainingHidden * dieVariance) };
+  }
+  // Fermi: no hidden-unit sum to reconstruct — model uncertainty as shrinking
+  // geometrically with each narrowing hint revealed.
+  const stdev = trueTotal * data.question.tolerancePct * 0.5 ** data.revealedHints.length;
+  return { fairValue: trueTotal, stdev };
 }
 
 export default function TradingGame() {
-  const [game, setGame] = useState<GameState>(() => newGame());
+  const [scenario, setScenario] = useState<Scenario>("cards");
+  const [game, setGame] = useState<GameState>(() => newGame("cards"));
   const [bidInput, setBidInput] = useState("");
   const [askInput, setAskInput] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [showHelp, setShowHelp] = useState(false);
   const [recorded, setRecorded] = useState(false);
+
+  function changeScenario(s: Scenario) {
+    setScenario(s);
+    setGame(newGame(s));
+    setBidInput("");
+    setAskInput("");
+    setError(null);
+    setRecorded(false);
+  }
 
   function submitMarket() {
     const bid = parseFloat(bidInput);
@@ -135,9 +241,6 @@ export default function TradingGame() {
     }
 
     const isLastRound = game.round >= TOTAL_ROUNDS;
-    const revealed = isLastRound
-      ? [...game.revealed, ...game.hiddenPool.slice(game.revealed.length)]
-      : [...game.revealed, game.hiddenPool[game.revealed.length]];
 
     const next: GameState = {
       ...game,
@@ -145,7 +248,7 @@ export default function TradingGame() {
       inventory,
       fills: [...game.fills, ...roundFills],
       quotes: [...game.quotes, { bid, ask }],
-      revealed,
+      data: revealNext(game.data, isLastRound),
       round: game.round + 1,
       finished: isLastRound,
     };
@@ -158,6 +261,7 @@ export default function TradingGame() {
       const finalPnl = cash + inventory * trueTotal;
       const avgSpread = next.quotes.reduce((s, q) => s + (q.ask - q.bid), 0) / next.quotes.length;
       recordAttempt(createClient(), "market_making", finalPnl, {
+        scenario,
         fills: next.fills.length,
         avgSpread,
       });
@@ -166,7 +270,7 @@ export default function TradingGame() {
   }
 
   function restart() {
-    setGame(newGame());
+    setGame(newGame(scenario));
     setBidInput("");
     setAskInput("");
     setError(null);
@@ -181,9 +285,21 @@ export default function TradingGame() {
   return (
     <div className="flex flex-col gap-6">
       <div className="rounded-md border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
-        <div className="mb-4 flex items-center justify-between">
-          <div className="font-mono text-xs tracking-widest text-[var(--text-secondary)] uppercase">
-            Trading Game — Make Me A Market
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap gap-2">
+            {SCENARIOS.map((s) => (
+              <button
+                key={s.key}
+                onClick={() => changeScenario(s.key)}
+                className={`rounded-full border px-3 py-1.5 font-mono text-xs tracking-wide transition ${
+                  scenario === s.key
+                    ? "border-[var(--accent-blue)] bg-blue-500/10 text-[var(--accent-blue)]"
+                    : "border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent-blue)] hover:text-[var(--accent-blue)]"
+                }`}
+              >
+                {s.label}
+              </button>
+            ))}
           </div>
           <button
             onClick={() => setShowHelp((s) => !s)}
@@ -195,39 +311,75 @@ export default function TradingGame() {
 
         {showHelp && (
           <div className="mb-5 rounded-md border border-blue-500/20 bg-blue-500/5 p-4 text-sm leading-relaxed text-[var(--text-secondary)]">
-            This is the format actually used in trading interviews at firms like Jane Street and
-            Optiver: a hidden total value is built from cards, you see a partial hand, and across
-            several rounds you must quote a two-sided market (bid/ask) on the sum. A counterparty
-            trades against you whenever it&apos;s profitable for them — so quoting too tight gets you
-            picked off, quoting too wide means you rarely trade and capture no edge. Each round
-            reveals one more hidden card; the goal is to tighten your market as your uncertainty
-            shrinks, and to walk away with positive realized P&amp;L once everything is revealed.
+            This is the &quot;make me a market&quot; format actually used in trading interviews at
+            firms like Jane Street and Optiver: a hidden total value exists, you see partial
+            information, and across several rounds you must quote a two-sided market (bid/ask) on
+            it. A counterparty trades against you whenever it&apos;s profitable for them — so
+            quoting too tight gets you picked off, quoting too wide means you rarely trade and
+            capture no edge. Each round reveals more information; the goal is to tighten your
+            market as your uncertainty shrinks, and to walk away with positive realized P&amp;L
+            once everything is revealed. The <span className="text-[var(--foreground)]">card</span>{" "}
+            and <span className="text-[var(--foreground)]">dice</span> modes sum hidden values with
+            known statistics; <span className="text-[var(--foreground)]">Fermi</span> mode quotes a
+            real-world quantity that narrows via hints instead.
+          </div>
+        )}
+
+        {game.data.kind === "fermi" ? (
+          <div className="mb-5">
+            <div className="mb-2 font-mono text-[0.65rem] tracking-wider text-[var(--text-muted)] uppercase">
+              Estimate ({game.data.question.unit})
+            </div>
+            <div className="rounded-md border border-[var(--border)] bg-[var(--background)] p-4 text-sm text-[var(--foreground)]">
+              {game.data.question.prompt}
+            </div>
+          </div>
+        ) : (
+          <div className="mb-5">
+            <div className="mb-2 font-mono text-[0.65rem] tracking-wider text-[var(--text-muted)] uppercase">
+              Your Hand
+            </div>
+            <div className="flex gap-2">
+              {game.data.kind === "cards"
+                ? game.data.hand.map((c, i) => <UnitTile key={i} label={cardLabel(c)} />)
+                : game.data.hand.map((v, i) => <UnitTile key={i} label={String(v)} />)}
+            </div>
           </div>
         )}
 
         <div className="mb-5">
           <div className="mb-2 font-mono text-[0.65rem] tracking-wider text-[var(--text-muted)] uppercase">
-            Your Hand
+            {game.data.kind === "fermi" ? "Hints" : "Revealed"} ({revealedCount(game.data)}/{HIDDEN_COUNT})
           </div>
-          <div className="flex gap-2">
-            {game.hand.map((c, i) => (
-              <CardTile key={i} card={c} />
-            ))}
-          </div>
-        </div>
-
-        <div className="mb-5">
-          <div className="mb-2 font-mono text-[0.65rem] tracking-wider text-[var(--text-muted)] uppercase">
-            Revealed Cards ({game.revealed.length}/{HIDDEN_COUNT})
-          </div>
-          <div className="flex gap-2">
-            {game.revealed.map((c, i) => (
-              <CardTile key={i} card={c} />
-            ))}
-            {Array.from({ length: HIDDEN_COUNT - game.revealed.length }).map((_, i) => (
-              <CardTile key={`hidden-${i}`} hidden />
-            ))}
-          </div>
+          {game.data.kind === "fermi" ? (
+            <div className="flex flex-col gap-2">
+              {game.data.revealedHints.map((h, i) => (
+                <div
+                  key={i}
+                  className="rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 font-mono text-xs text-[var(--foreground)]"
+                >
+                  {h}
+                </div>
+              ))}
+              {Array.from({ length: HIDDEN_COUNT - game.data.revealedHints.length }).map((_, i) => (
+                <div
+                  key={`hidden-${i}`}
+                  className="rounded-md border border-dashed border-[var(--border)] px-3 py-2 font-mono text-xs text-[var(--text-muted)]"
+                >
+                  ???
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex gap-2">
+              {game.data.kind === "cards"
+                ? game.data.revealed.map((c, i) => <UnitTile key={i} label={cardLabel(c)} />)
+                : game.data.revealed.map((v, i) => <UnitTile key={i} label={String(v)} />)}
+              {Array.from({ length: HIDDEN_COUNT - revealedCount(game.data) }).map((_, i) => (
+                <UnitTile key={`hidden-${i}`} hidden />
+              ))}
+            </div>
+          )}
         </div>
 
         {!game.finished ? (
@@ -287,22 +439,27 @@ export default function TradingGame() {
 
         {game.finished && (
           <div className="mb-5 rounded-md border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-xs leading-relaxed text-[var(--text-secondary)]">
-            True total was <span className="text-[var(--foreground)]">{game.trueTotal}</span>.{" "}
+            True {game.data.kind === "fermi" ? "value" : "total"} was{" "}
+            <span className="text-[var(--foreground)]">
+              {game.trueTotal}
+              {game.data.kind === "fermi" ? ` ${game.data.question.unit}` : ""}
+            </span>
+            .{" "}
             {(() => {
               const stdevs = game.quotes.map((_, i) => {
-                const gAtRound: GameState = { ...game, revealed: game.revealed.slice(0, i) };
+                const gAtRound: GameState = { ...game, data: sliceDataAt(game.data, i) };
                 return fairValueStats(gAtRound).stdev;
               });
               const avgFairSpread = (stdevs.reduce((s, x) => s + x, 0) / stdevs.length) * 2;
               return (
                 <>
                   Your average spread was {avgSpread!.toFixed(2)} vs an uncertainty-implied fair
-                  spread of ~{avgFairSpread.toFixed(2)} (2×stdev of the hidden cards remaining at each
+                  spread of ~{avgFairSpread.toFixed(2)} (2×stdev of the remaining uncertainty at each
                   round). {avgSpread! > avgFairSpread * 1.3
                     ? "You quoted wide relative to the uncertainty — safe, but you left edge on the table."
                     : avgSpread! < avgFairSpread * 0.7
                     ? "You quoted tight relative to the uncertainty — that's how you got picked off."
-                    : "That's well calibrated to the actual uncertainty in the hidden cards."}
+                    : "That's well calibrated to the actual uncertainty."}
                 </>
               );
             })()}
@@ -330,7 +487,7 @@ function fmtSigned(n: number) {
   return (n >= 0 ? "+" : "") + n.toFixed(2);
 }
 
-function CardTile({ card, hidden }: { card?: Card; hidden?: boolean }) {
+function UnitTile({ label, hidden }: { label?: string; hidden?: boolean }) {
   return (
     <div
       className={`flex h-14 w-10 items-center justify-center rounded-md border font-mono text-sm ${
@@ -339,7 +496,7 @@ function CardTile({ card, hidden }: { card?: Card; hidden?: boolean }) {
           : "border-[var(--border)] bg-[var(--background)] text-[var(--foreground)]"
       }`}
     >
-      {hidden ? "?" : cardLabel(card!)}
+      {hidden ? "?" : label}
     </div>
   );
 }
