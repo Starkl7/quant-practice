@@ -1,0 +1,19 @@
+{
+  "_schema": {
+    "note": "Populate 'problems' with real problems sourced from your prep books. Each entry: { id, source, chapter, difficulty (easy|medium|hard), category, question (KaTeX $...$ supported), answer_type (numeric|text), answer, tolerance (optional, numeric only), solution, tags [] }",
+    "example": {
+      "id": "example-1",
+      "source": "Book Title Here",
+      "chapter": "Ch. 3 — Combinatorics",
+      "difficulty": "medium",
+      "category": "combinatorics",
+      "question": "Example question text goes here.",
+      "answer_type": "numeric",
+      "answer": 0,
+      "tolerance": 0.01,
+      "solution": "Example worked solution goes here.",
+      "tags": ["example"]
+    }
+  },
+  "problems": []
+}
