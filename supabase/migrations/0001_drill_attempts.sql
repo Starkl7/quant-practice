@@ -19,3 +19,9 @@ create policy "insert own attempts" on public.drill_attempts
   for insert with check (auth.uid() = user_id);
 
 create index drill_attempts_user_drill_idx on public.drill_attempts (user_id, drill, created_at desc);
+
+-- RLS policies only govern which rows a role can see/touch — the role also needs
+-- the base table privilege, which Postgres does NOT grant automatically for
+-- tables created via the SQL Editor. Without this, every insert/select fails
+-- with "permission denied for table drill_attempts" before RLS is even evaluated.
+grant select, insert on public.drill_attempts to authenticated;

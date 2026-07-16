@@ -12,11 +12,12 @@ into a standalone app so it could get real auth and keep growing as its own thin
 1. **Mental Math Trainer** (`src/components/MentalMathTrainer.tsx`) — timed
    arithmetic drills, configurable ops/digit-size/round-length. Fully working,
    no backend dependency.
-2. **Market-Making Drill** (`src/components/MarketMakingDrill.tsx`) — an
-   Avellaneda–Stoikov-style quoting simulator. Synthetic mid-price random walk,
-   configurable half-spread / inventory-skew (γ) / volatility, Chart.js P&L
-   chart, fill log. Fully working, no backend dependency, purely client-side —
-   explicitly labeled as a practice simulator, not a real backtest.
+2. **Market-Making Game** (`src/components/TradingGame.tsx`) — the "make me a
+   market" card game used in trading interviews (Jane Street, Optiver, etc.):
+   a hidden total is built from a deck of cards, you see a partial hand, and
+   across several rounds you quote a two-sided bid/ask on the sum while more
+   cards are revealed. Fully working, no backend dependency, purely
+   client-side.
 3. **Probability & Stats** (`src/components/ProbabilityBank.tsx`) — reads from
    `src/data/probability_problems.json`. **That file is an intentionally empty
    schema skeleton** — no fabricated problems. The engine (question render,

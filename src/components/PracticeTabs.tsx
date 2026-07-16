@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import MentalMathTrainer from "@/components/MentalMathTrainer";
-import MarketMakingDrill from "@/components/MarketMakingDrill";
+import TradingGame from "@/components/TradingGame";
 import ProbabilityBank from "@/components/ProbabilityBank";
 
 const TABS = [
   { key: "mental-math", label: "Mental Math Trainer" },
-  { key: "market-making", label: "Market-Making Drill" },
+  { key: "market-making", label: "Market-Making Game" },
   { key: "probability", label: "Probability & Stats" },
 ] as const;
 
@@ -49,7 +49,7 @@ export default function PracticeTabs() {
       </div>
 
       {active === "mental-math" && <MentalMathTrainer />}
-      {active === "market-making" && <MarketMakingDrill />}
+      {active === "market-making" && <TradingGame />}
       {active === "probability" && <ProbabilityBank />}
     </div>
   );

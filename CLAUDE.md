@@ -21,7 +21,7 @@ There is no test suite/runner configured in this repo.
 A standalone quant-interview-prep app (spun out of a portfolio site), with three drills behind Supabase auth at `/practice`:
 
 1. **Mental Math Trainer** (`src/components/MentalMathTrainer.tsx`) — timed arithmetic drills. Client-only, no backend dependency.
-2. **Market-Making Drill** (`src/components/MarketMakingDrill.tsx`) — Avellaneda–Stoikov-style quoting simulator: synthetic mid-price random walk, configurable half-spread / inventory-skew (γ) / volatility, Chart.js P&L chart, fill log. Client-only, explicitly a practice simulator, not a real backtest.
+2. **Market-Making Game** (`src/components/TradingGame.tsx`) — the "make me a market" card game used in actual trading interviews (Jane Street, Optiver, etc.): a hidden total is built from dealt cards, you see a partial hand, and across several rounds you quote a two-sided bid/ask on the sum as more cards are revealed and a counterparty trades against you when it's profitable for them. Client-only.
 3. **Probability & Stats** (`src/components/ProbabilityBank.tsx`) — reads problems from `src/data/probability_problems.json`.
 
 All three are tabbed together via `src/components/PracticeTabs.tsx` and rendered from `src/app/practice/page.tsx`.

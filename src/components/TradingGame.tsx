@@ -158,7 +158,6 @@ export default function TradingGame() {
       const finalPnl = cash + inventory * trueTotal;
       const avgSpread = next.quotes.reduce((s, q) => s + (q.ask - q.bid), 0) / next.quotes.length;
       recordAttempt(createClient(), "market_making", finalPnl, {
-        mode: "trading_game",
         fills: next.fills.length,
         avgSpread,
       });
