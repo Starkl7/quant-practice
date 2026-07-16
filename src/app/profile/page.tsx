@@ -1,6 +1,6 @@
 import Nav from "@/components/Nav";
 import SettingsPanel from "@/components/SettingsPanel";
-import ScoreSparkline from "@/components/ScoreSparkline";
+import DrillStatsCard from "@/components/DrillStatsCard";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { getPercentile, type Drill, type DrillAttempt, type Percentile } from "@/lib/supabase/attempts";
@@ -55,29 +55,28 @@ export default async function ProfilePage() {
     <div className="flex flex-1 flex-col">
       <Nav />
       <main className="mx-auto w-full max-w-5xl px-6 py-16">
-        <div className="mb-3 font-mono text-xs tracking-widest text-[var(--accent-blue)] uppercase">
-          &gt; PROFILE.sh
-        </div>
+        <div className="term-label term-prompt mb-3 !text-[var(--accent-blue)]">Profile.sh</div>
         <h1 className="mb-3 text-4xl font-semibold tracking-tight text-[var(--foreground)]">Profile</h1>
         <p className="mb-10 max-w-xl text-sm leading-relaxed text-[var(--text-secondary)]">
           Account details, drill stats, and settings.
         </p>
 
-        <div className="mb-6 rounded-md border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
-          <div className="mb-5 font-mono text-xs tracking-widest text-[var(--text-secondary)] uppercase">Account</div>
+        <div className="panel mb-6 p-6">
+          <div className="term-label term-prompt mb-5">Account</div>
           <div className="flex flex-wrap gap-8">
             <div>
-              <div className="mb-1.5 font-mono text-[0.6rem] tracking-wider text-[var(--text-muted)] uppercase">Email</div>
+              <div className="field-label mb-1.5">Email</div>
               <div className="font-mono text-sm text-[var(--foreground)]">{user.email}</div>
             </div>
             <div>
-              <div className="mb-1.5 font-mono text-[0.6rem] tracking-wider text-[var(--text-muted)] uppercase">Member Since</div>
+              <div className="field-label mb-1.5">Member Since</div>
               <div className="font-mono text-sm text-[var(--foreground)]">{joined}</div>
             </div>
           </div>
         </div>
 
-        <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="term-label term-prompt mb-4">Progress</div>
+        <div className="mb-6 flex flex-col gap-4">
           {(Object.keys(DRILL_LABELS) as Drill[]).map((drill) => (
             <DrillStatsCard
               key={drill}
@@ -90,63 +89,6 @@ export default async function ProfilePage() {
 
         <SettingsPanel />
       </main>
-    </div>
-  );
-}
-
-const MIN_PERCENTILE_SAMPLE = 5;
-
-function DrillStatsCard({
-  label,
-  attempts,
-  percentile,
-}: {
-  label: string;
-  attempts: DrillAttempt[];
-  percentile?: Percentile;
-}) {
-  const scores = attempts.map((a) => a.score);
-  const count = attempts.length;
-  const best = count ? Math.max(...scores) : null;
-  const avg = count ? scores.reduce((a, b) => a + b, 0) / count : null;
-  const last = count ? attempts[attempts.length - 1].created_at : null;
-
-  return (
-    <div className="rounded-md border border-[var(--border)] bg-[var(--bg-secondary)] p-5">
-      <div className="mb-4 font-mono text-xs tracking-widest text-[var(--text-secondary)] uppercase">{label}</div>
-      {count === 0 ? (
-        <div className="font-mono text-xs text-[var(--text-muted)]">No attempts yet.</div>
-      ) : (
-        <>
-          <div className="mb-3 grid grid-cols-3 gap-2">
-            <MiniStat label="Attempts" value={count} />
-            <MiniStat label="Best" value={best!.toFixed(2)} />
-            <MiniStat label="Avg" value={avg!.toFixed(2)} />
-          </div>
-          <ScoreSparkline scores={scores} />
-          <div className="mt-2 font-mono text-[0.65rem] text-[var(--text-muted)]">
-            Last played {new Date(last!).toLocaleDateString()}
-          </div>
-          {percentile && percentile.sampleSize >= MIN_PERCENTILE_SAMPLE ? (
-            <div className="mt-1 font-mono text-[0.65rem] text-[var(--accent-blue)]">
-              Best score beats {Math.round(percentile.percentile)}% of all attempts
-            </div>
-          ) : (
-            <div className="mt-1 font-mono text-[0.65rem] text-[var(--text-muted)]">
-              Not enough attempts yet for a percentile
-            </div>
-          )}
-        </>
-      )}
-    </div>
-  );
-}
-
-function MiniStat({ label, value }: { label: string; value: string | number }) {
-  return (
-    <div className="rounded border border-[var(--border)] bg-[var(--background)] px-2 py-1.5">
-      <div className="mb-1 font-mono text-[0.55rem] tracking-wider text-[var(--text-muted)] uppercase">{label}</div>
-      <div className="font-mono text-sm font-medium text-[var(--foreground)]">{value}</div>
     </div>
   );
 }

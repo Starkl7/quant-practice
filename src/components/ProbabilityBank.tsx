@@ -55,13 +55,15 @@ export default function ProbabilityBank() {
 
   if (!problems.length) {
     return (
-      <div className="rounded-md border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
-        <div className="mb-5 font-mono text-xs tracking-widest text-[var(--text-secondary)] uppercase">Problem</div>
-        <div className="flex min-h-32 flex-col items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] p-6 text-center font-mono text-xs leading-loose text-[var(--text-muted)]">
-          <p>No problems loaded yet.</p>
-          <p>
-            Add entries to <code>src/data/probability_problems.json</code> (schema documented in the
-            file&apos;s <code>_schema</code> field) to populate this drill.
+      <div className="panel-live p-6">
+        <div className="term-label term-prompt mb-5">Problem</div>
+        <div className="well flex min-h-40 flex-col items-center justify-center gap-1.5 p-6 text-center">
+          <p className="font-mono text-sm text-[var(--text-secondary)]">
+            The problem bank is empty right now.
+          </p>
+          <p className="max-w-sm text-xs leading-relaxed text-[var(--text-muted)]">
+            Problems are added in curated batches from real interview prep material — the Mental
+            Math and Market-Making drills are live in the meantime.
           </p>
         </div>
       </div>
@@ -99,10 +101,10 @@ export default function ProbabilityBank() {
 
   if (!filtered.length) {
     return (
-      <div className="rounded-md border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
-        <div className="mb-5 font-mono text-xs tracking-widest text-[var(--text-secondary)] uppercase">Problem</div>
+      <div className="panel-live p-6">
+        <div className="term-label term-prompt mb-5">Problem</div>
         {filterBar}
-        <div className="flex min-h-32 flex-col items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] p-6 text-center font-mono text-xs leading-loose text-[var(--text-muted)]">
+        <div className="well flex min-h-32 flex-col items-center justify-center gap-2 p-6 text-center font-mono text-xs leading-loose text-[var(--text-muted)]">
           <p>No problems match these filters.</p>
           <button
             onClick={() => {
@@ -147,13 +149,13 @@ export default function ProbabilityBank() {
   }
 
   return (
-    <div className="rounded-md border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
-      <div className="mb-5 font-mono text-xs tracking-widest text-[var(--text-secondary)] uppercase">Problem</div>
+    <div className="panel-live p-6">
+      <div className="term-label term-prompt mb-5">Problem</div>
 
       {filterBar}
 
       <div className="mb-4 flex flex-wrap gap-2">
-        {p.difficulty && <Tag>{p.difficulty}</Tag>}
+        {p.difficulty && <Tag tone={p.difficulty}>{p.difficulty}</Tag>}
         {p.category && <Tag>{p.category}</Tag>}
         {p.source && <Tag>{p.source}</Tag>}
       </div>
@@ -195,9 +197,19 @@ export default function ProbabilityBank() {
   );
 }
 
-function Tag({ children }: { children: React.ReactNode }) {
+const TAG_TONES: Record<Difficulty, string> = {
+  easy: "border-[color-mix(in_srgb,var(--accent-green)_40%,transparent)] text-[var(--accent-green)]",
+  medium: "border-[color-mix(in_srgb,var(--accent-amber)_40%,transparent)] text-[var(--accent-amber)]",
+  hard: "border-[color-mix(in_srgb,var(--accent-red)_40%,transparent)] text-[var(--accent-red)]",
+};
+
+function Tag({ children, tone }: { children: React.ReactNode; tone?: Difficulty }) {
   return (
-    <span className="rounded border border-[var(--border)] bg-[var(--bg-tertiary)] px-2 py-0.5 font-mono text-[0.65rem] tracking-wide text-[var(--text-secondary)] uppercase">
+    <span
+      className={`rounded border bg-[var(--bg-tertiary)] px-2 py-0.5 font-mono text-[0.65rem] tracking-wide uppercase ${
+        tone ? TAG_TONES[tone] : "border-[var(--border)] text-[var(--text-secondary)]"
+      }`}
+    >
       {children}
     </span>
   );

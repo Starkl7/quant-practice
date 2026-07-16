@@ -192,10 +192,8 @@ export default function MentalMathTrainer() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="rounded-md border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
-        <div className="mb-5 font-mono text-xs tracking-widest text-[var(--text-secondary)] uppercase">
-          Configure Drill
-        </div>
+      <div className={`panel p-6 transition-opacity duration-300 ${running ? "opacity-45" : ""}`}>
+        <div className="term-label term-prompt mb-5">Configure</div>
         <div className="mb-5 flex flex-wrap gap-2">
           {(["arithmetic", "sequences"] as Mode[]).map((m) => (
             <button
@@ -215,9 +213,7 @@ export default function MentalMathTrainer() {
           {mode === "arithmetic" && (
             <>
               <div>
-                <div className="mb-2 font-mono text-[0.65rem] tracking-wider text-[var(--text-muted)] uppercase">
-                  Operations
-                </div>
+                <div className="field-label mb-2">Operations</div>
                 <div className="flex flex-wrap gap-4">
                   {OPS.map((o) => (
                     <label key={o.key} className="flex items-center gap-1.5 font-mono text-xs text-[var(--text-secondary)]">
@@ -225,6 +221,7 @@ export default function MentalMathTrainer() {
                         type="checkbox"
                         checked={enabledOps[o.key]}
                         onChange={(e) => setEnabledOps((s) => ({ ...s, [o.key]: e.target.checked }))}
+                        className="accent-[var(--accent-blue)]"
                       />
                       {o.label}
                     </label>
@@ -232,9 +229,7 @@ export default function MentalMathTrainer() {
                 </div>
               </div>
               <div>
-                <div className="mb-2 font-mono text-[0.65rem] tracking-wider text-[var(--text-muted)] uppercase">
-                  Digit Size
-                </div>
+                <div className="field-label mb-2">Digit Size</div>
                 <select
                   value={digits}
                   onChange={(e) => setDigits(parseInt(e.target.value, 10))}
@@ -248,9 +243,7 @@ export default function MentalMathTrainer() {
             </>
           )}
           <div>
-            <div className="mb-2 font-mono text-[0.65rem] tracking-wider text-[var(--text-muted)] uppercase">
-              Round Length
-            </div>
+            <div className="field-label mb-2">Round Length</div>
             <select
               value={duration}
               onChange={(e) => setDuration(parseInt(e.target.value, 10))}
@@ -271,9 +264,22 @@ export default function MentalMathTrainer() {
         </button>
       </div>
 
-      <div className="rounded-md border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
-        <div className="mb-5 grid grid-cols-4 gap-4">
-          <Stat label="Time Left" value={running || finished ? `${timeLeft}s` : "—"} />
+      <div className="panel-live p-6">
+        <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+          <div className={`term-label term-prompt ${running ? "cursor-blink" : ""}`}>Session</div>
+          {running && (
+            <div className="font-mono text-[0.65rem] text-[var(--text-muted)]">
+              auto-advances when correct · <kbd>Enter</kbd> submits
+            </div>
+          )}
+        </div>
+
+        <div className="mb-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Stat
+            label="Time Left"
+            value={running || finished ? `${timeLeft}s` : "—"}
+            className={running && timeLeft <= 10 ? "text-[var(--accent-amber)]" : ""}
+          />
           <Stat label="Correct" value={correct} className="text-[var(--accent-green)]" />
           <Stat label="Wrong" value={wrong} className="text-[var(--accent-red)]" />
           <Stat label="Avg Time / Q" value={avgTime === "—" ? "—" : `${avgTime}s`} />
@@ -281,12 +287,16 @@ export default function MentalMathTrainer() {
 
         <div className="mb-5 h-1 overflow-hidden rounded-full bg-[var(--border)]">
           <div
-            className="h-full bg-[var(--accent-blue)] transition-[width] duration-1000 ease-linear"
-            style={{ width: `${(100 * timeLeft) / duration}%` }}
+            className="h-full origin-left transition-transform duration-1000 ease-linear"
+            style={{
+              transform: `scaleX(${running || finished ? timeLeft / duration : 1})`,
+              background:
+                running && timeLeft <= 10 ? "var(--accent-amber)" : "var(--accent-blue)",
+            }}
           />
         </div>
 
-        <div className="rounded-md border border-[var(--border)] bg-[var(--background)] p-10 text-center">
+        <div className="well p-10 text-center">
           {!running && !finished && (
             <p className="text-sm text-[var(--text-secondary)]">
               Set your options above and hit <strong>Start Drill</strong>.
@@ -294,7 +304,9 @@ export default function MentalMathTrainer() {
           )}
           {running && question && (
             <div>
-              <div className="mb-5 font-mono text-3xl text-[var(--foreground)]">{question.text}</div>
+              <div className="mb-6 font-mono text-4xl tracking-tight text-[var(--foreground)] sm:text-5xl">
+                {question.text}
+              </div>
               <input
                 ref={inputRef}
                 type="text"
@@ -307,20 +319,22 @@ export default function MentalMathTrainer() {
                   checkAnswer(e.target.value);
                 }}
                 onKeyDown={(e) => e.key === "Enter" && submitCurrent()}
-                className={`w-48 rounded-md border bg-[var(--bg-secondary)] px-4 py-2.5 text-center font-mono text-lg text-[var(--foreground)] outline-none ${
+                className={`w-56 rounded-md border-2 bg-[var(--bg-secondary)] px-4 py-3 text-center font-mono text-xl text-[var(--foreground)] outline-none transition-colors ${
                   feedback === "correct"
                     ? "border-[var(--accent-green)]"
                     : feedback === "wrong"
                     ? "border-[var(--accent-red)]"
-                    : "border-[var(--border)]"
+                    : "border-[var(--border-strong)] focus:border-[var(--accent-blue)]"
                 }`}
               />
             </div>
           )}
           {finished && (
             <div>
-              <div className="mb-2 font-mono text-2xl text-[var(--foreground)]">
-                {correct} / {total} · {accuracy}%
+              <div className="mb-3 font-mono text-4xl font-medium text-[var(--foreground)]">
+                <span className="text-[var(--accent-green)]">{correct}</span>
+                <span className="text-[var(--text-muted)]"> / {total}</span>
+                <span className="text-[var(--text-secondary)]"> · {accuracy}%</span>
               </div>
               <div className="font-mono text-sm text-[var(--text-secondary)]">
                 Avg {avgTime}s per question. Hit Start Drill to try again.
@@ -335,9 +349,9 @@ export default function MentalMathTrainer() {
 
 function Stat({ label, value, className }: { label: string; value: string | number; className?: string }) {
   return (
-    <div className="rounded-md border border-[var(--border)] bg-[var(--background)] px-4 py-3.5">
-      <div className="mb-1.5 font-mono text-[0.6rem] tracking-wider text-[var(--text-muted)] uppercase">{label}</div>
-      <div className={`font-mono text-lg font-medium text-[var(--foreground)] ${className ?? ""}`}>{value}</div>
+    <div className="well px-4 py-3.5">
+      <div className="field-label mb-1.5">{label}</div>
+      <div className={`font-mono text-2xl font-medium text-[var(--foreground)] ${className ?? ""}`}>{value}</div>
     </div>
   );
 }

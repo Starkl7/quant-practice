@@ -33,7 +33,7 @@ export default function PracticeTabs() {
   return (
     <div>
       <div className="mb-8 flex flex-wrap gap-2">
-        {TABS.map((t) => (
+        {TABS.map((t, i) => (
           <button
             key={t.key}
             onClick={() => setActive(t.key)}
@@ -43,6 +43,8 @@ export default function PracticeTabs() {
                 : "border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent-blue)] hover:text-[var(--accent-blue)]"
             }`}
           >
+            <span className={active === t.key ? "opacity-60" : "opacity-40"}>0{i + 1}</span>
+            <span className="mx-1.5 opacity-30">·</span>
             {t.label}
           </button>
         ))}

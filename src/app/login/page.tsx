@@ -59,18 +59,16 @@ function LoginForm() {
   return (
     <div className="w-full max-w-sm">
       <div className="mb-8">
-        <div className="mb-3 font-mono text-xs tracking-widest text-blue-400 uppercase">
-          &gt; LOGIN.sh
-        </div>
-        <h1 className="text-2xl font-semibold text-slate-100">Sign in to Quant Practice</h1>
-        <p className="mt-2 text-sm text-slate-400">
+        <div className="term-label term-prompt mb-3 !text-[var(--accent-blue)]">Login.sh</div>
+        <h1 className="text-2xl font-semibold text-[var(--foreground)]">Sign in to Quant Practice</h1>
+        <p className="mt-2 text-sm text-[var(--text-secondary)]">
           Enter your email and we&apos;ll send a magic link. No password needed.
         </p>
       </div>
 
       {status === "sent" ? (
-        <div className="rounded-md border border-blue-500/30 bg-blue-500/5 p-4 text-sm text-slate-300">
-          Check <span className="text-slate-100">{email}</span> for a sign-in link.
+        <div className="rounded-md border border-blue-500/30 bg-blue-500/5 p-4 text-sm text-[var(--text-secondary)]">
+          Check <span className="text-[var(--foreground)]">{email}</span> for a sign-in link.
         </div>
       ) : (
         <div className="flex flex-col gap-4">
@@ -78,7 +76,7 @@ function LoginForm() {
             type="button"
             onClick={handleGoogleSignIn}
             disabled={status === "sending"}
-            className="flex items-center justify-center gap-2 rounded-md border border-slate-700 bg-slate-900 px-4 py-2.5 text-sm font-medium text-slate-100 transition hover:bg-slate-800 disabled:opacity-50"
+            className="flex items-center justify-center gap-2 rounded-md border border-[var(--border-strong)] bg-[var(--bg-secondary)] px-4 py-2.5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--bg-tertiary)] disabled:opacity-50"
           >
             <svg width="16" height="16" viewBox="0 0 48 48" aria-hidden="true">
               <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l6-6C34.6 5.1 29.6 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21c0-1.4-.1-2.7-.4-3.5z" />
@@ -89,10 +87,10 @@ function LoginForm() {
             Sign in with Google
           </button>
 
-          <div className="flex items-center gap-3 text-xs text-slate-500">
-            <div className="h-px flex-1 bg-slate-800" />
+          <div className="flex items-center gap-3 text-xs text-[var(--text-muted)]">
+            <div className="h-px flex-1 bg-[var(--border)]" />
             or
-            <div className="h-px flex-1 bg-slate-800" />
+            <div className="h-px flex-1 bg-[var(--border)]" />
           </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -102,19 +100,19 @@ function LoginForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="rounded-md border border-slate-700 bg-slate-900 px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 outline-none focus:border-blue-500"
+              className="rounded-md border border-[var(--border-strong)] bg-[var(--bg-secondary)] px-4 py-2.5 text-sm text-[var(--foreground)] placeholder-[var(--text-muted)] outline-none focus:border-[var(--accent-blue)]"
             />
             <button
               type="submit"
               disabled={status === "sending"}
-              className="rounded-md bg-blue-500 px-4 py-2.5 text-sm font-medium text-slate-950 transition hover:bg-blue-400 disabled:opacity-50"
+              className="rounded-md bg-[var(--accent-blue)] px-4 py-2.5 text-sm font-medium text-[var(--background)] transition hover:opacity-90 disabled:opacity-50"
             >
               {status === "sending" ? "Sending…" : "Send magic link"}
             </button>
           </form>
 
           {status === "error" && (
-            <p className="text-sm text-red-400">{errorMsg}</p>
+            <p className="text-sm text-[var(--accent-red)]">{errorMsg}</p>
           )}
         </div>
       )}
@@ -124,7 +122,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-950 px-6">
+    <main className="flex min-h-screen items-center justify-center px-6">
       <Suspense fallback={null}>
         <LoginForm />
       </Suspense>

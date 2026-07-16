@@ -72,9 +72,8 @@ function buildDeck(): Card[] {
   return deck;
 }
 
-function cardLabel(c: Card) {
-  const rankLabel = c.rank === 1 ? "A" : c.rank === 11 ? "J" : c.rank === 12 ? "Q" : c.rank === 13 ? "K" : String(c.rank);
-  return `${rankLabel}${c.suit}`;
+function rankLabel(rank: number) {
+  return rank === 1 ? "A" : rank === 11 ? "J" : rank === 12 ? "Q" : rank === 13 ? "K" : String(rank);
 }
 
 function cardEq(a: Card, b: Card) {
@@ -326,7 +325,7 @@ export default function TradingGame() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="rounded-md border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
+      <div className="panel-live p-6">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap gap-2">
             {SCENARIOS.map((s) => (
@@ -359,37 +358,30 @@ export default function TradingGame() {
 
         {game.data.kind === "fermi" ? (
           <div className="mb-5">
-            <div className="mb-2 font-mono text-[0.65rem] tracking-wider text-[var(--text-muted)] uppercase">
-              Estimate ({game.data.question.unit})
-            </div>
-            <div className="rounded-md border border-[var(--border)] bg-[var(--background)] p-4 text-sm text-[var(--foreground)]">
+            <div className="field-label mb-2">Estimate ({game.data.question.unit})</div>
+            <div className="well p-4 text-sm text-[var(--foreground)]">
               {game.data.question.prompt}
             </div>
           </div>
         ) : (
           <div className="mb-5">
-            <div className="mb-2 font-mono text-[0.65rem] tracking-wider text-[var(--text-muted)] uppercase">
-              Your Hand
-            </div>
+            <div className="field-label mb-2">Your Hand</div>
             <div className="flex gap-2">
               {game.data.kind === "cards"
-                ? game.data.hand.map((c, i) => <UnitTile key={i} label={cardLabel(c)} />)
-                : game.data.hand.map((v, i) => <UnitTile key={i} label={String(v)} />)}
+                ? game.data.hand.map((c, i) => <PlayingCard key={i} card={c} />)
+                : game.data.hand.map((v, i) => <Die key={i} value={v} />)}
             </div>
           </div>
         )}
 
         <div className="mb-5">
-          <div className="mb-2 font-mono text-[0.65rem] tracking-wider text-[var(--text-muted)] uppercase">
+          <div className="field-label mb-2">
             {game.data.kind === "fermi" ? "Hints" : "Revealed"} ({revealedCount(game.data)}/{HIDDEN_COUNT})
           </div>
           {game.data.kind === "fermi" ? (
             <div className="flex flex-col gap-2">
               {game.data.revealedHints.map((h, i) => (
-                <div
-                  key={i}
-                  className="rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 font-mono text-xs text-[var(--foreground)]"
-                >
+                <div key={i} className="well px-3 py-2 font-mono text-xs text-[var(--foreground)]">
                   {h}
                 </div>
               ))}
@@ -405,37 +397,41 @@ export default function TradingGame() {
           ) : (
             <div className="flex gap-2">
               {game.data.kind === "cards"
-                ? game.data.revealed.map((c, i) => <UnitTile key={i} label={cardLabel(c)} />)
-                : game.data.revealed.map((v, i) => <UnitTile key={i} label={String(v)} />)}
-              {Array.from({ length: HIDDEN_COUNT - revealedCount(game.data) }).map((_, i) => (
-                <UnitTile key={`hidden-${i}`} hidden />
-              ))}
+                ? game.data.revealed.map((c, i) => <PlayingCard key={i} card={c} />)
+                : game.data.revealed.map((v, i) => <Die key={i} value={v} />)}
+              {Array.from({ length: HIDDEN_COUNT - revealedCount(game.data) }).map((_, i) =>
+                game.data.kind === "cards" ? (
+                  <PlayingCard key={`hidden-${i}`} hidden />
+                ) : (
+                  <Die key={`hidden-${i}`} hidden />
+                )
+              )}
             </div>
           )}
         </div>
 
         {!game.finished ? (
           <div>
-            <div className="mb-3 font-mono text-xs tracking-widest text-[var(--accent-blue)] uppercase">
+            <div className="term-label term-prompt cursor-blink mb-3 !text-[var(--accent-blue)]">
               Round {game.round} / {TOTAL_ROUNDS}
             </div>
             <div className="mb-4 flex flex-wrap items-end gap-4">
               <div className="flex flex-col gap-1.5">
-                <label className="font-mono text-[0.65rem] tracking-wider text-[var(--text-muted)] uppercase">Bid</label>
+                <label className="field-label !text-[var(--accent-green)]">Bid</label>
                 <input
                   type="number"
                   value={bidInput}
                   onChange={(e) => setBidInput(e.target.value)}
-                  className="w-28 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 font-mono text-sm text-[var(--foreground)]"
+                  className="w-28 rounded-md border border-[var(--border-strong)] bg-[var(--background)] px-3 py-2 font-mono text-sm text-[var(--foreground)] outline-none focus:border-[var(--accent-green)]"
                 />
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="font-mono text-[0.65rem] tracking-wider text-[var(--text-muted)] uppercase">Ask</label>
+                <label className="field-label !text-[var(--accent-red)]">Ask</label>
                 <input
                   type="number"
                   value={askInput}
                   onChange={(e) => setAskInput(e.target.value)}
-                  className="w-28 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 font-mono text-sm text-[var(--foreground)]"
+                  className="w-28 rounded-md border border-[var(--border-strong)] bg-[var(--background)] px-3 py-2 font-mono text-sm text-[var(--foreground)] outline-none focus:border-[var(--accent-red)]"
                 />
               </div>
               <button
@@ -457,8 +453,9 @@ export default function TradingGame() {
         )}
       </div>
 
-      <div className="rounded-md border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
-        <div className="mb-5 grid grid-cols-4 gap-4">
+      <div className="panel p-6">
+        <div className="term-label term-prompt mb-5">Book</div>
+        <div className="mb-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
           <Stat
             label="P&L"
             value={finalPnl !== null ? fmtSigned(finalPnl) : "—"}
@@ -470,7 +467,7 @@ export default function TradingGame() {
         </div>
 
         {game.finished && (
-          <div className="mb-5 rounded-md border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-xs leading-relaxed text-[var(--text-secondary)]">
+          <div className="well mb-5 p-4 font-mono text-xs leading-relaxed text-[var(--text-secondary)]">
             True {game.data.kind === "fermi" ? "value" : "total"} was{" "}
             <span className="text-[var(--foreground)]">
               {game.trueTotal}
@@ -498,8 +495,8 @@ export default function TradingGame() {
           </div>
         )}
 
-        <div className="mb-2 font-mono text-xs tracking-widest text-[var(--text-secondary)] uppercase">Fill Log</div>
-        <div className="max-h-36 overflow-y-auto rounded-md border border-[var(--border)] bg-[var(--background)] p-3 font-mono text-xs leading-relaxed">
+        <div className="field-label mb-2">Fill Log</div>
+        <div className="well max-h-36 overflow-y-auto p-3 font-mono text-xs leading-relaxed">
           {game.fills.length ? (
             [...game.fills].reverse().map((f, i) => (
               <div key={i} className={f.side === "BUY" ? "text-[var(--accent-green)]" : "text-[var(--accent-red)]"}>
@@ -519,26 +516,65 @@ function fmtSigned(n: number) {
   return (n >= 0 ? "+" : "") + n.toFixed(2);
 }
 
-function UnitTile({ label, hidden }: { label?: string; hidden?: boolean }) {
+function PlayingCard({ card, hidden }: { card?: Card; hidden?: boolean }) {
+  if (hidden || !card) {
+    return <div className="pcard pcard-back" role="img" aria-label="Hidden card" />;
+  }
+  const red = card.suit === "♥" || card.suit === "♦";
+  const rank = rankLabel(card.rank);
   return (
     <div
-      className={`flex h-14 w-10 items-center justify-center rounded-md border font-mono text-sm ${
-        hidden
-          ? "border-dashed border-[var(--border)] text-[var(--text-muted)]"
-          : "border-[var(--border)] bg-[var(--background)] text-[var(--foreground)]"
-      }`}
+      className={`pcard ${red ? "pcard-red" : ""}`}
+      role="img"
+      aria-label={`${rank} of ${card.suit}`}
     >
-      {hidden ? "?" : label}
+      <div className="pcard-corner">
+        {rank}
+        <br />
+        {card.suit}
+      </div>
+      <div className="pcard-pip">{card.suit}</div>
+      <div className="pcard-corner pcard-corner-br">
+        {rank}
+        <br />
+        {card.suit}
+      </div>
+    </div>
+  );
+}
+
+const DIE_PIPS: Record<number, number[]> = {
+  1: [4],
+  2: [2, 6],
+  3: [2, 4, 6],
+  4: [0, 2, 6, 8],
+  5: [0, 2, 4, 6, 8],
+  6: [0, 2, 3, 5, 6, 8],
+};
+
+function Die({ value, hidden }: { value?: number; hidden?: boolean }) {
+  if (hidden || value === undefined) {
+    return (
+      <div className="die-back font-mono text-sm text-[var(--text-muted)]" role="img" aria-label="Hidden die">
+        ?
+      </div>
+    );
+  }
+  return (
+    <div className="die" role="img" aria-label={`Die showing ${value}`}>
+      {Array.from({ length: 9 }).map((_, i) =>
+        DIE_PIPS[value].includes(i) ? <span key={i} className="die-pip" /> : <span key={i} />
+      )}
     </div>
   );
 }
 
 function Stat({ label, value, tone }: { label: string; value: string | number; tone?: "pos" | "neg" }) {
   return (
-    <div className="rounded-md border border-[var(--border)] bg-[var(--background)] px-4 py-3.5">
-      <div className="mb-1.5 font-mono text-[0.6rem] tracking-wider text-[var(--text-muted)] uppercase">{label}</div>
+    <div className="well px-4 py-3.5">
+      <div className="field-label mb-1.5">{label}</div>
       <div
-        className={`font-mono text-lg font-medium ${
+        className={`font-mono text-2xl font-medium ${
           tone === "pos" ? "text-[var(--accent-green)]" : tone === "neg" ? "text-[var(--accent-red)]" : "text-[var(--foreground)]"
         }`}
       >

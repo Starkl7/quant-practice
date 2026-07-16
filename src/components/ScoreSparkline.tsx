@@ -1,48 +1,51 @@
-"use client";
-
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Tooltip,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
-
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip);
-
+// Pure-SVG sparkline — no charting library. Line color follows the trend
+// (last score vs first), P&L-style.
 export default function ScoreSparkline({ scores }: { scores: number[] }) {
   if (scores.length < 2) {
-    return <div className="h-10 text-center font-mono text-[0.65rem] text-[var(--text-muted)]">Play more to see a trend</div>;
+    return (
+      <div className="flex h-full min-h-14 items-center justify-center font-mono text-[0.65rem] text-[var(--text-muted)]">
+        Play more to see a trend
+      </div>
+    );
   }
 
+  const w = 240;
+  const h = 56;
+  const pad = 4;
+  const min = Math.min(...scores);
+  const max = Math.max(...scores);
+  const range = max - min || 1;
+
+  const points = scores.map((s, i) => {
+    const x = pad + (i * (w - 2 * pad)) / (scores.length - 1);
+    const y = h - pad - ((s - min) / range) * (h - 2 * pad);
+    return [x, y] as const;
+  });
+  const polyline = points.map(([x, y]) => `${x},${y}`).join(" ");
+  const area = `${pad},${h - pad} ${polyline} ${w - pad},${h - pad}`;
+  const [lastX, lastY] = points[points.length - 1];
+
+  const up = scores[scores.length - 1] >= scores[0];
+  const stroke = up ? "var(--accent-green)" : "var(--accent-red)";
+
   return (
-    <div className="h-10">
-      <Line
-        data={{
-          labels: scores.map((_, i) => i),
-          datasets: [
-            {
-              data: scores,
-              borderColor: "#4a9eff",
-              borderWidth: 1.3,
-              pointRadius: 0,
-              tension: 0.2,
-            },
-          ],
-        }}
-        options={{
-          responsive: true,
-          maintainAspectRatio: false,
-          animation: false,
-          plugins: { legend: { display: false }, tooltip: { enabled: false } },
-          scales: {
-            x: { display: false },
-            y: { display: false },
-          },
-        }}
+    <svg
+      viewBox={`0 0 ${w} ${h}`}
+      className="h-full min-h-14 w-full"
+      preserveAspectRatio="none"
+      role="img"
+      aria-label={`Score trend over ${scores.length} attempts, ${up ? "up" : "down"} overall`}
+    >
+      <polygon points={area} fill={stroke} opacity="0.08" />
+      <polyline
+        points={polyline}
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.5"
+        vectorEffect="non-scaling-stroke"
+        strokeLinejoin="round"
       />
-    </div>
+      <circle cx={lastX} cy={lastY} r="2.5" fill={stroke} />
+    </svg>
   );
 }
