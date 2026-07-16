@@ -34,6 +34,28 @@ function LoginForm() {
     }
   }
 
+  async function handleGoogleSignIn() {
+    setStatus("sending");
+    setErrorMsg("");
+
+    const supabase = createClient();
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? window.location.origin;
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${siteUrl}/auth/callback?next=${encodeURIComponent(next)}`,
+      },
+    });
+
+    if (error) {
+      setStatus("error");
+      setErrorMsg(error.message);
+      return;
+    }
+    // On success, Supabase redirects the browser to Google — no further state change here.
+  }
+
   return (
     <div className="w-full max-w-sm">
       <div className="mb-8">
@@ -51,26 +73,50 @@ function LoginForm() {
           Check <span className="text-slate-100">{email}</span> for a sign-in link.
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@example.com"
-            className="rounded-md border border-slate-700 bg-slate-900 px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 outline-none focus:border-blue-500"
-          />
+        <div className="flex flex-col gap-4">
           <button
-            type="submit"
+            type="button"
+            onClick={handleGoogleSignIn}
             disabled={status === "sending"}
-            className="rounded-md bg-blue-500 px-4 py-2.5 text-sm font-medium text-slate-950 transition hover:bg-blue-400 disabled:opacity-50"
+            className="flex items-center justify-center gap-2 rounded-md border border-slate-700 bg-slate-900 px-4 py-2.5 text-sm font-medium text-slate-100 transition hover:bg-slate-800 disabled:opacity-50"
           >
-            {status === "sending" ? "Sending…" : "Send magic link"}
+            <svg width="16" height="16" viewBox="0 0 48 48" aria-hidden="true">
+              <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l6-6C34.6 5.1 29.6 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21c0-1.4-.1-2.7-.4-3.5z" />
+              <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.8 1.1 8 3l6-6C34.6 5.1 29.6 3 24 3 16.3 3 9.7 7.3 6.3 14.7z" />
+              <path fill="#4CAF50" d="M24 45c5.5 0 10.4-1.9 14.3-5.1l-6.6-5.6C29.6 36.1 27 37 24 37c-5.2 0-9.6-3.3-11.3-8l-6.6 5.1C9.6 40.6 16.3 45 24 45z" />
+              <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4 5.6l6.6 5.6C39.9 37 44 31 44 24c0-1.4-.1-2.7-.4-3.5z" />
+            </svg>
+            Sign in with Google
           </button>
+
+          <div className="flex items-center gap-3 text-xs text-slate-500">
+            <div className="h-px flex-1 bg-slate-800" />
+            or
+            <div className="h-px flex-1 bg-slate-800" />
+          </div>
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              className="rounded-md border border-slate-700 bg-slate-900 px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 outline-none focus:border-blue-500"
+            />
+            <button
+              type="submit"
+              disabled={status === "sending"}
+              className="rounded-md bg-blue-500 px-4 py-2.5 text-sm font-medium text-slate-950 transition hover:bg-blue-400 disabled:opacity-50"
+            >
+              {status === "sending" ? "Sending…" : "Send magic link"}
+            </button>
+          </form>
+
           {status === "error" && (
             <p className="text-sm text-red-400">{errorMsg}</p>
           )}
-        </form>
+        </div>
       )}
     </div>
   );
