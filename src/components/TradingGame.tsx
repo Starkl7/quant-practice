@@ -20,6 +20,48 @@ const SCENARIOS: { key: Scenario; label: string }[] = [
   { key: "fermi", label: "Fermi Estimate" },
 ];
 
+const HELP_TEXT: Record<Scenario, React.ReactNode> = {
+  cards: (
+    <>
+      This is the classic &quot;make me a market&quot; card game used at firms like Jane Street and
+      Optiver. Your hidden total is the sum of 6 cards dealt from a{" "}
+      <span className="text-[var(--foreground)]">standard 52-card deck</span> (4 suits × 13 ranks,
+      Ace=1 through King=13, so 4 copies of every rank) — you see 2 in your hand, and one more is
+      revealed each round. Cards are drawn{" "}
+      <span className="text-[var(--foreground)]">without replacement</span>, so counting matters:
+      keep a running tally of which ranks have already appeared (in your hand or revealed), then
+      estimate the hidden total as your known sum plus (remaining hidden cards × the average rank of
+      what&apos;s left in the deck). A fresh deck averages 7 per card; every revealed high card pulls
+      that average down for the rest of the round, and every revealed low card pulls it up. Quote too
+      tight and you get picked off by the reveal; quote too wide and you capture no edge — walk away
+      with positive P&amp;L once the last card flips.
+    </>
+  ),
+  dice: (
+    <>
+      Same quoting mechanic as the card game, but a different hidden process: the total is the sum
+      of 6 independent <span className="text-[var(--foreground)]">six-sided dice, each showing 1 through 6</span>{" "}
+      — 2 shown, 4 hidden, one revealed per round. Unlike cards, dice rolls are drawn{" "}
+      <span className="text-[var(--foreground)]">with replacement</span>{" "}
+      — each hidden die is always uniform on 1-6 (mean 3.5, variance 35/12) no matter what&apos;s
+      already been revealed, so there&apos;s no counting to do here: your uncertainty shrinks in
+      equal, predictable steps every round instead of unevenly like the card game. A good gut check:
+      each remaining hidden die contributes roughly ±1.7 to your total&apos;s standard deviation.
+    </>
+  ),
+  fermi: (
+    <>
+      No cards or dice here — you&apos;re quoting a two-sided market on a real-world quantity (e.g.
+      the length of the Great Wall in km), the way &quot;Fermi estimation&quot; rounds work in actual
+      trading interviews. There&apos;s no starting hand; instead, each round reveals one more hint
+      that narrows the plausible range, from a rough order of magnitude down to a near-exact clue.
+      The skill being tested is different too: it&apos;s not counting cards or dice, it&apos;s
+      translating genuine uncertainty about the world into a bid/ask spread — and only tightening
+      that spread as fast as the hints actually justify.
+    </>
+  ),
+};
+
 type Card = { rank: number; suit: (typeof SUITS)[number] };
 
 function buildDeck(): Card[] {
@@ -311,17 +353,7 @@ export default function TradingGame() {
 
         {showHelp && (
           <div className="mb-5 rounded-md border border-blue-500/20 bg-blue-500/5 p-4 text-sm leading-relaxed text-[var(--text-secondary)]">
-            This is the &quot;make me a market&quot; format actually used in trading interviews at
-            firms like Jane Street and Optiver: a hidden total value exists, you see partial
-            information, and across several rounds you must quote a two-sided market (bid/ask) on
-            it. A counterparty trades against you whenever it&apos;s profitable for them — so
-            quoting too tight gets you picked off, quoting too wide means you rarely trade and
-            capture no edge. Each round reveals more information; the goal is to tighten your
-            market as your uncertainty shrinks, and to walk away with positive realized P&amp;L
-            once everything is revealed. The <span className="text-[var(--foreground)]">card</span>{" "}
-            and <span className="text-[var(--foreground)]">dice</span> modes sum hidden values with
-            known statistics; <span className="text-[var(--foreground)]">Fermi</span> mode quotes a
-            real-world quantity that narrows via hints instead.
+            {HELP_TEXT[scenario]}
           </div>
         )}
 

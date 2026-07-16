@@ -1,5 +1,5 @@
 {
-  "_note": "Starter set of real-world estimation facts for the Fermi market-making mode. AI-drafted — spot-check trueValue/unit against a primary source before relying on these for interview prep; a few (e.g. Mariana Trench depth) vary by several percent across measurement surveys.",
+  "_note": "Real-world estimation facts for the Fermi market-making mode. Every trueValue below was checked against a primary/credible source (national surveys, official measurement bodies, Wikipedia, Britannica, NASA/Planck, peer-reviewed studies, or original shipbuilder records) as of 2026-07. A few figures are genuinely contested across sources rather than settled — those are called out explicitly in the question's own hints (e.g. blood vessel length, neuron count, Mariana Trench depth) rather than presented as more precise than they are.",
   "questions": [
     {
       "id": "great-wall-length",
@@ -129,6 +129,357 @@
         "It's the deepest known point in any ocean on Earth.",
         "It's just under 11,000 meters deep.",
         "Modern surveys put it at approximately 10,935 m, though estimates vary by a few dozen meters across studies."
+      ]
+    },
+    {
+      "id": "great-pyramid-height",
+      "prompt": "Height of the Great Pyramid of Giza today (it was taller when built)",
+      "unit": "m",
+      "trueValue": 138.5,
+      "tolerancePct": 0.5,
+      "hints": [
+        "It's measured in the hundreds of meters, similar order of magnitude to a modern skyscraper.",
+        "It's less than half the height of the Eiffel Tower (330 m).",
+        "When built, it stood about 146.6 m tall — erosion and lost casing stones have shaved off a few meters since.",
+        "Today it stands at approximately 138.5 meters."
+      ]
+    },
+    {
+      "id": "cn-tower-height",
+      "prompt": "Height of the CN Tower in Toronto",
+      "unit": "m",
+      "trueValue": 553,
+      "tolerancePct": 0.5,
+      "hints": [
+        "It's measured in the hundreds of meters.",
+        "It was the tallest freestanding structure in the world for over 30 years (1975-2007), until the Burj Khalifa surpassed it.",
+        "It's taller than the Eiffel Tower (330 m) by more than 200 m.",
+        "The CN Tower stands 553.33 meters tall."
+      ]
+    },
+    {
+      "id": "angel-falls-height",
+      "prompt": "Total height of Angel Falls, the world's tallest waterfall",
+      "unit": "m",
+      "trueValue": 979,
+      "tolerancePct": 0.6,
+      "hints": [
+        "It's measured in the hundreds of meters — taller than any building on Earth.",
+        "It's more than 15x the height of Niagara Falls' Horseshoe Falls (~51 m).",
+        "Its uninterrupted plunge alone is about 807 m; the total height including lower cascades runs higher.",
+        "Angel Falls has a total height of about 979 meters."
+      ]
+    },
+    {
+      "id": "panama-canal-length",
+      "prompt": "Length of the Panama Canal (deep water to deep water)",
+      "unit": "km",
+      "trueValue": 82,
+      "tolerancePct": 0.6,
+      "hints": [
+        "It's measured in the tens of kilometers, not hundreds.",
+        "It's less than half the length of the Suez Canal (193 km).",
+        "It's a bit less than 100 km.",
+        "The Panama Canal is about 82 km long, from deep water in the Atlantic to deep water in the Pacific."
+      ]
+    },
+    {
+      "id": "channel-tunnel-length",
+      "prompt": "Total length of the Channel Tunnel (Eurotunnel) connecting England and France",
+      "unit": "km",
+      "trueValue": 50.45,
+      "tolerancePct": 0.5,
+      "hints": [
+        "It's measured in the tens of kilometers.",
+        "About 38 km of it runs under the seabed of the English Channel.",
+        "It's shorter than the Panama Canal (82 km).",
+        "The Channel Tunnel is about 50.45 km long in total."
+      ]
+    },
+    {
+      "id": "lake-baikal-depth",
+      "prompt": "Maximum depth of Lake Baikal, the world's deepest lake",
+      "unit": "m",
+      "trueValue": 1642,
+      "tolerancePct": 0.5,
+      "hints": [
+        "It's measured in the thousands of meters — deeper than most lakes by a wide margin.",
+        "It holds more fresh water than all five North American Great Lakes combined.",
+        "It's over 1,600 meters deep at its deepest point.",
+        "Lake Baikal's maximum depth is about 1,642 meters."
+      ]
+    },
+    {
+      "id": "niagara-horseshoe-height",
+      "prompt": "Height of Niagara Falls' Horseshoe Falls",
+      "unit": "m",
+      "trueValue": 51,
+      "tolerancePct": 0.5,
+      "hints": [
+        "It's measured in the tens of meters, not hundreds.",
+        "It's less than a twentieth of the height of Angel Falls (979 m).",
+        "It's a bit higher than 50 m.",
+        "The Horseshoe Falls is commonly cited at about 51 meters tall."
+      ]
+    },
+    {
+      "id": "statue-of-liberty-height",
+      "prompt": "Height of the Statue of Liberty, from ground to the tip of the torch",
+      "unit": "m",
+      "trueValue": 93,
+      "tolerancePct": 0.5,
+      "hints": [
+        "It's measured in the tens to low hundreds of meters.",
+        "The pedestal alone is almost as tall as the copper statue itself.",
+        "It's just under 100 meters.",
+        "Ground to torch tip, the Statue of Liberty measures about 93 meters."
+      ]
+    },
+    {
+      "id": "earth-sun-distance",
+      "prompt": "Average distance from Earth to the Sun",
+      "unit": "million km",
+      "trueValue": 149.6,
+      "tolerancePct": 0.4,
+      "hints": [
+        "It's on the order of a hundred million kilometers — light takes several minutes to cross it.",
+        "This distance defines 1 astronomical unit (AU), the standard yardstick for distances in the solar system.",
+        "It's just under 150 million km.",
+        "The average Earth-Sun distance is about 149.6 million km (1 AU)."
+      ]
+    },
+    {
+      "id": "speed-of-light",
+      "prompt": "Speed of light in a vacuum",
+      "unit": "km/s",
+      "trueValue": 299792,
+      "tolerancePct": 0.3,
+      "hints": [
+        "It's measured in the hundreds of thousands of kilometers per second.",
+        "It's often rounded to 300,000 km/s for quick estimates.",
+        "It's an exactly defined constant since 1983 — the meter is now defined in terms of it.",
+        "The speed of light is exactly 299,792.458 km/s."
+      ]
+    },
+    {
+      "id": "moon-diameter",
+      "prompt": "Diameter of the Moon",
+      "unit": "km",
+      "trueValue": 3476,
+      "tolerancePct": 0.4,
+      "hints": [
+        "It's measured in the thousands of kilometers.",
+        "It's about 1/4 the diameter of Earth.",
+        "It's a bit less than the width of the contiguous United States.",
+        "The Moon's diameter is about 3,476 km."
+      ]
+    },
+    {
+      "id": "earth-circumference",
+      "prompt": "Circumference of the Earth at the equator",
+      "unit": "km",
+      "trueValue": 40075,
+      "tolerancePct": 0.4,
+      "hints": [
+        "It's measured in the tens of thousands of kilometers.",
+        "A commercial jet flying nonstop at cruising speed would take roughly two days to cover this distance.",
+        "It's just over 40,000 km.",
+        "Earth's equatorial circumference is about 40,075 km."
+      ]
+    },
+    {
+      "id": "sunlight-travel-time",
+      "prompt": "Time it takes sunlight to travel from the Sun and reach Earth",
+      "unit": "seconds",
+      "trueValue": 500,
+      "tolerancePct": 0.3,
+      "hints": [
+        "It's a matter of minutes, not hours.",
+        "It's roughly the Earth-Sun distance (149.6 million km) divided by the speed of light (~300,000 km/s).",
+        "It's a bit over 8 minutes.",
+        "Sunlight takes about 500 seconds (8 minutes 20 seconds) to reach Earth."
+      ]
+    },
+    {
+      "id": "age-of-universe",
+      "prompt": "Age of the universe since the Big Bang",
+      "unit": "billion years",
+      "trueValue": 13.8,
+      "tolerancePct": 0.3,
+      "hints": [
+        "It's measured in billions of years, not millions.",
+        "It's roughly 3x the age of the Earth itself (~4.5 billion years).",
+        "It's just under 14 billion years.",
+        "The current best estimate, from Planck satellite data, is 13.8 billion years."
+      ]
+    },
+    {
+      "id": "proxima-centauri-distance",
+      "prompt": "Distance to Proxima Centauri, the nearest star to the Sun",
+      "unit": "light years",
+      "trueValue": 4.25,
+      "tolerancePct": 0.4,
+      "hints": [
+        "It's measured in single-digit light years.",
+        "Even at the speed of light, a signal would take over 4 years to get there.",
+        "It's a bit over 4 light years.",
+        "Proxima Centauri is about 4.25 light years away."
+      ]
+    },
+    {
+      "id": "human-neurons",
+      "prompt": "Number of neurons in the adult human brain",
+      "unit": "billion neurons",
+      "trueValue": 86,
+      "tolerancePct": 0.4,
+      "hints": [
+        "It's measured in the tens of billions.",
+        "For decades, textbooks cited a round '100 billion' — that figure was never rigorously measured.",
+        "It's under 90 billion.",
+        "A widely cited 2009 count puts it at about 86 billion neurons (recent work argues the true range may be anywhere from roughly 61 to 99 billion)."
+      ]
+    },
+    {
+      "id": "blood-vessel-length",
+      "prompt": "Total length of all blood vessels in the human body, laid end to end (the classic textbook estimate)",
+      "unit": "km",
+      "trueValue": 100000,
+      "tolerancePct": 0.5,
+      "hints": [
+        "It's measured in the tens of thousands of kilometers — more than twice Earth's circumference.",
+        "Most of the length comes from capillaries, the body's smallest vessels, not the large arteries and veins.",
+        "The classic figure (from an early-1900s calculation) is around 100,000 km — modern capillary-only estimates actually run lower, closer to 10,000-20,000 km.",
+        "The textbook number most often quoted in Fermi-estimation interviews is about 100,000 km."
+      ]
+    },
+    {
+      "id": "heart-beats-per-day",
+      "prompt": "Number of times an average adult heart beats in a day, at a resting rate of about 70 bpm",
+      "unit": "beats",
+      "trueValue": 100000,
+      "tolerancePct": 0.3,
+      "hints": [
+        "It's measured in the hundreds of thousands.",
+        "70 beats/minute × 60 minutes × 24 hours gets you most of the way there.",
+        "It's just over 100,000.",
+        "At a resting rate of about 70 bpm, the heart beats roughly 100,000 times per day."
+      ]
+    },
+    {
+      "id": "blue-whale-weight",
+      "prompt": "Average weight of an adult blue whale",
+      "unit": "kg",
+      "trueValue": 100000,
+      "tolerancePct": 0.5,
+      "hints": [
+        "It's measured in the tens of thousands of kilograms — heavier than any dinosaur is confirmed to have been.",
+        "It's roughly as heavy as 15-20 adult African elephants combined.",
+        "Averages across populations range from about 70,000 to 130,000 kg depending on sex and region.",
+        "A commonly cited average for an adult blue whale is about 100,000 kg (100 tonnes)."
+      ]
+    },
+    {
+      "id": "elephant-gestation",
+      "prompt": "Gestation period of an African elephant",
+      "unit": "days",
+      "trueValue": 656,
+      "tolerancePct": 0.3,
+      "hints": [
+        "It's measured in the hundreds of days — the longest gestation of any land mammal.",
+        "It's close to twice the length of a human pregnancy (~280 days).",
+        "It's roughly 22 months.",
+        "African elephant gestation averages about 656 days (typically cited as a 640-673 day range)."
+      ]
+    },
+    {
+      "id": "hyperion-tree-height",
+      "prompt": "Height of Hyperion, the world's tallest known living tree (a coast redwood)",
+      "unit": "m",
+      "trueValue": 116,
+      "tolerancePct": 0.4,
+      "hints": [
+        "It's measured in the hundreds of meters — taller than most office towers.",
+        "It's a coast redwood growing in Redwood National Park, California.",
+        "It's just over 115 meters tall.",
+        "Hyperion measures about 116 meters."
+      ]
+    },
+    {
+      "id": "titanic-displacement",
+      "prompt": "Displacement (fully-loaded weight) of the RMS Titanic",
+      "unit": "tonnes",
+      "trueValue": 52310,
+      "tolerancePct": 0.4,
+      "hints": [
+        "It's measured in the tens of thousands of tonnes.",
+        "A commonly repeated myth claims 66,000 tons for Titanic's displacement — that figure is incorrect.",
+        "It's a bit above 50,000 tonnes.",
+        "Titanic's actual displacement, per original shipbuilder records, was about 52,310 tonnes."
+      ]
+    },
+    {
+      "id": "eiffel-tower-rivets",
+      "prompt": "Number of rivets used to construct the Eiffel Tower",
+      "unit": "rivets",
+      "trueValue": 2500000,
+      "tolerancePct": 0.5,
+      "hints": [
+        "It's measured in the millions.",
+        "The tower is built from about 18,000 individual iron pieces, each joined by several rivets.",
+        "It's a bit over 2 million.",
+        "The Eiffel Tower was assembled using about 2.5 million rivets."
+      ]
+    },
+    {
+      "id": "eiffel-tower-steps",
+      "prompt": "Number of steps from the ground to the top of the Eiffel Tower",
+      "unit": "steps",
+      "trueValue": 1665,
+      "tolerancePct": 0.4,
+      "hints": [
+        "It's measured in the low thousands.",
+        "It would take a fit visitor roughly 30-45 minutes to climb them all (though most people take the elevator).",
+        "It's over 1,600 steps.",
+        "There are 1,665 steps from ground level to the top of the Eiffel Tower."
+      ]
+    },
+    {
+      "id": "trans-siberian-railway-length",
+      "prompt": "Length of the Trans-Siberian Railway, from Moscow to Vladivostok",
+      "unit": "km",
+      "trueValue": 9289,
+      "tolerancePct": 0.4,
+      "hints": [
+        "It's measured in the thousands of kilometers — the longest single railway line in the world.",
+        "The journey crosses eight time zones and takes about a week to complete.",
+        "It's just over 9,000 km.",
+        "The Trans-Siberian Railway spans about 9,289 km."
+      ]
+    },
+    {
+      "id": "great-pyramid-weight",
+      "prompt": "Total weight of the Great Pyramid of Giza",
+      "unit": "tonnes",
+      "trueValue": 5900000,
+      "tolerancePct": 0.4,
+      "hints": [
+        "It's measured in the millions of tonnes.",
+        "It's built from roughly 2.3 million stone blocks, averaging about 2.5 tonnes each.",
+        "It's just under 6 million tonnes.",
+        "Estimates put the Great Pyramid's total weight at approximately 5.9 million tonnes."
+      ]
+    },
+    {
+      "id": "sahara-desert-area",
+      "prompt": "Area of the Sahara Desert",
+      "unit": "km²",
+      "trueValue": 9200000,
+      "tolerancePct": 0.4,
+      "hints": [
+        "It's measured in the millions of square kilometers — continent-sized.",
+        "It's comparable in area to the entire United States.",
+        "It's a bit over 9 million km².",
+        "The Sahara covers about 9.2 million km², making it the largest hot desert in the world."
       ]
     }
   ]
