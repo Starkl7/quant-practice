@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MentalMathTrainer from "@/components/MentalMathTrainer";
 import MarketMakingDrill from "@/components/MarketMakingDrill";
 import ProbabilityBank from "@/components/ProbabilityBank";
@@ -13,8 +13,22 @@ const TABS = [
 
 type TabKey = (typeof TABS)[number]["key"];
 
+const STORAGE_KEY = "quant-practice:last-tab";
+
+function isTabKey(v: string | null): v is TabKey {
+  return TABS.some((t) => t.key === v);
+}
+
 export default function PracticeTabs() {
-  const [active, setActive] = useState<TabKey>("mental-math");
+  const [active, setActive] = useState<TabKey>(() => {
+    if (typeof window === "undefined") return "mental-math";
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return isTabKey(stored) ? stored : "mental-math";
+  });
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, active);
+  }, [active]);
 
   return (
     <div>

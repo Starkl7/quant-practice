@@ -13,6 +13,19 @@
   --text-muted: #5c6b80;
 }
 
+:root[data-theme="light"] {
+  --background: #f7f9fc;
+  --foreground: #0b0f17;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #eef2f7;
+  --border: #d8e0ea;
+  --accent-blue: #1c6fd6;
+  --accent-green: #1f9d55;
+  --accent-red: #d93636;
+  --text-secondary: #4a5568;
+  --text-muted: #7c8aa0;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -24,4 +37,12 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), sans-serif;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
 }

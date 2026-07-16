@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default async function Nav() {
   const supabase = await createClient();
@@ -20,10 +21,14 @@ export default async function Nav() {
           >
             Portfolio ↗
           </a>
+          <ThemeToggle />
           {user ? (
             <>
               <Link href="/practice" className="text-[var(--text-secondary)] transition hover:text-[var(--foreground)]">
                 Practice
+              </Link>
+              <Link href="/profile" className="text-[var(--text-secondary)] transition hover:text-[var(--foreground)]">
+                Profile
               </Link>
               <form action="/auth/signout" method="post">
                 <button

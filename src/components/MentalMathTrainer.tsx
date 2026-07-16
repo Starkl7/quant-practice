@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { recordAttempt } from "@/lib/supabase/attempts";
 
 type Op = "add" | "sub" | "mul" | "div" | "pct" | "sq";
 
@@ -90,6 +92,17 @@ export default function MentalMathTrainer() {
 
   const questionStart = useRef(0);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!finished) return;
+    const total = correct + wrong;
+    if (!total) return;
+    const avgTime = answerTimes.length
+      ? answerTimes.reduce((a, b) => a + b, 0) / answerTimes.length
+      : null;
+    recordAttempt(createClient(), "mental_math", correct - wrong, { correct, wrong, avgTime });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [finished]);
 
   useEffect(() => {
     if (!running) return;

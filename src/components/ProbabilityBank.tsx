@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import problemsData from "@/data/probability_problems.json";
+import { createClient } from "@/lib/supabase/client";
+import { recordAttempt } from "@/lib/supabase/attempts";
 
 type Problem = {
   id: string;
@@ -52,6 +54,10 @@ export default function ProbabilityBank() {
       ok = value.trim().toLowerCase() === String(p.answer).toLowerCase();
     }
     setResult(ok ? "correct" : "wrong");
+    recordAttempt(createClient(), "probability", ok ? 1 : 0, {
+      problemId: p.id,
+      category: p.category,
+    });
   }
 
   function next() {
