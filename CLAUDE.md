@@ -30,17 +30,17 @@ All three are tabbed together via `src/components/PracticeTabs.tsx` and rendered
 
 `src/data/probability_problems.json` is an intentionally empty schema skeleton — **do not fabricate problems**. Real entries come from the owner's prep books and follow the `_schema` field documented at the top of that file (fields: `id`, `source`, `chapter`, `difficulty`, `category`, `question`, `answer_type`, `answer`, `tolerance`, `solution`, `tags`). The rendering/answer-checking engine is fully built against this schema; only content is missing.
 
-## Auth architecture (Supabase, passwordless magic-link)
+## Auth architecture (Supabase, Google OAuth)
 
 - `src/lib/supabase/client.ts` / `server.ts` — browser and server (cookie-based) Supabase clients.
 - `src/lib/supabase/middleware.ts` — `updateSession()`, the session-refresh helper invoked from the proxy.
 - `src/proxy.ts` — Next 16's replacement for `middleware.ts`. Redirects unauthenticated requests to `/practice` → `/login?next=/practice`. The exported function must be named `proxy`, not `middleware`, or the build fails (see `@AGENTS.md` note on Next 16 breaking changes above).
-- `src/app/login/page.tsx` — email input, calls `supabase.auth.signInWithOtp`.
-- `src/app/auth/callback/route.ts` — exchanges the magic-link `code` for a session, redirects to `next` (default `/practice`).
+- `src/app/login/page.tsx` — "Sign in with Google" button, calls `supabase.auth.signInWithOAuth`.
+- `src/app/auth/callback/route.ts` — exchanges the OAuth `code` for a session, redirects to `next` (default `/practice`).
 - `src/app/auth/signout/route.ts` — POST route; signs out and redirects home.
 - `src/app/practice/page.tsx` — server component; also redirects to `/login` if there's no user (belt-and-suspenders alongside the proxy check).
 
-No passwords anywhere in this app — auth is magic-link only.
+No passwords anywhere in this app — auth is Google OAuth only. (Magic-link email auth was removed 2026-07: Gmail rejects third-party SMTP sends whose From: domain isn't DMARC-aligned, and there's no custom domain to align with. GitHub OAuth is planned as a second provider.)
 
 ## Local setup
 

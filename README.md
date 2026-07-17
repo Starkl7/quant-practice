@@ -26,7 +26,7 @@ stats including a cross-user percentile.
 ## Stack
 
 - Next.js 16 (App Router, Turbopack) + TypeScript + Tailwind CSS v4
-- Supabase: passwordless magic-link auth + Postgres (attempt history, problem flags)
+- Supabase: Google OAuth sign-in + Postgres (attempt history, problem flags)
 - KaTeX for math rendering
 
 ## Setup
@@ -34,7 +34,9 @@ stats including a cross-user percentile.
 1. Create a free project at [supabase.com](https://supabase.com).
 2. In the Supabase dashboard, go to **Authentication → URL Configuration** and add
    `http://localhost:3000/auth/callback` (and your production URL's `/auth/callback`
-   once deployed) to the redirect allow list.
+   once deployed) to the redirect allow list. Then under **Authentication →
+   Providers**, enable **Google** (create an OAuth client in Google Cloud Console
+   and paste the client ID/secret — Supabase shows the exact redirect URI to use).
 3. Run each file in `supabase/migrations/` (in order) in the dashboard's
    **SQL Editor** — they create the `drill_attempts` table, the percentile RPC, and
    the `problem_flags` table.
@@ -50,7 +52,7 @@ stats including a cross-user percentile.
    npm install
    npm run dev
    ```
-6. Visit `http://localhost:3000`, sign in with your email, and open `/practice`.
+6. Visit `http://localhost:3000`, sign in with Google, and open `/practice`.
 
 The app degrades gracefully without a Supabase project: drills work, but sign-in and
 score persistence no-op.
