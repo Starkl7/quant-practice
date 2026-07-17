@@ -6,8 +6,10 @@ import "katex/dist/katex.min.css";
 
 // Splits out $$...$$ (display) and $...$ (inline) math so plain text is
 // HTML-escaped and math is rendered by KaTeX. Double newlines become
-// paragraph breaks so multi-step solutions read cleanly.
-const MATH_SPLIT = /(\$\$[\s\S]+?\$\$|\$[^$\n]+?\$)/g;
+// paragraph breaks so multi-step solutions read cleanly. Inside inline math,
+// backslash-escaped characters (e.g. \$ for a literal dollar sign) are
+// consumed as pairs so they can't terminate the segment early.
+const MATH_SPLIT = /(\$\$[\s\S]+?\$\$|\$(?:\\.|[^$\n\\])+?\$)/g;
 
 function escapeHtml(s: string): string {
   return s
