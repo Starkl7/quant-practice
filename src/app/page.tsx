@@ -15,9 +15,11 @@ export default function Home() {
             Quant Practice
           </h1>
           <p className="mt-5 max-w-lg text-[15px] leading-relaxed text-[var(--text-secondary)]">
-            Mental math drills, an inventory-aware market-making simulator, and
-            probability &amp; stats problems for quant trading interview prep.
-            Sign in to track your scores across sessions.
+            Quant Practice is a free practice tool for quantitative trading job
+            interviews. It offers three interactive drills — mental math, an
+            inventory-aware market-making simulator, and probability &amp; stats
+            problems — drawn from real quant interview prep material. Sign in
+            with Google to track your scores across sessions.
           </p>
           <div className="mt-8 flex gap-3">
             <Link
@@ -36,6 +38,33 @@ export default function Home() {
         </div>
         <HeroDemo />
       </main>
+
+      <section className="mx-auto w-full max-w-5xl px-6 pb-20">
+        <div className="term-label term-prompt mb-5 !text-[var(--accent-blue)]">What you&apos;ll practice</div>
+        <div className="grid gap-4 sm:grid-cols-3">
+          <div className="panel p-5">
+            <div className="mb-2 font-mono text-xs text-[var(--accent-blue)]">01 · Mental Math</div>
+            <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+              Timed arithmetic drills — addition, multiplication, percentages, squares —
+              for the speed round of a trading interview.
+            </p>
+          </div>
+          <div className="panel p-5">
+            <div className="mb-2 font-mono text-xs text-[var(--accent-blue)]">02 · Market-Making</div>
+            <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+              A two-sided quoting game modeled on the &quot;make me a market&quot; exercise
+              used by firms like Jane Street and Optiver.
+            </p>
+          </div>
+          <div className="panel p-5">
+            <div className="mb-2 font-mono text-xs text-[var(--accent-blue)]">03 · Probability &amp; Stats</div>
+            <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+              Worked probability and statistics problems drawn from real quant interview
+              prep material, with step-by-step solutions.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
