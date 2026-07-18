@@ -1,32 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import problemsData from "@/data/probability_problems.json";
 import MathText from "@/components/MathText";
 import { createClient } from "@/lib/supabase/client";
 import { recordAttempt } from "@/lib/supabase/attempts";
 import { flagProblem } from "@/lib/supabase/flags";
 import { parseAnswer } from "@/lib/parseAnswer";
+import { problems, type Difficulty, type Problem } from "@/lib/problems";
 
-type Difficulty = "easy" | "medium" | "hard";
-
-type Problem = {
-  id: string;
-  source?: string;
-  chapter?: string;
-  difficulty?: Difficulty;
-  category?: string;
-  title?: string;
-  question: string;
-  hint?: string;
-  answer_type: "numeric" | "text";
-  answer: number | string;
-  tolerance?: number;
-  solution?: string;
-  tags?: string[];
-};
-
-const problems = (problemsData.problems as Problem[]) ?? [];
 const CATEGORIES = Array.from(new Set(problems.map((p) => p.category).filter(Boolean))) as string[];
 const DIFFICULTIES: Difficulty[] = ["easy", "medium", "hard"];
 const STARS: Record<Difficulty, number> = { easy: 1, medium: 2, hard: 3 };
