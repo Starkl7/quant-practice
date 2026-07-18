@@ -16,10 +16,10 @@ export default function Home() {
           </h1>
           <p className="mt-5 max-w-lg text-[15px] leading-relaxed text-[var(--text-secondary)]">
             Quant Practice is a free practice tool for quantitative trading job
-            interviews. It offers three interactive drills — mental math, an
-            inventory-aware market-making simulator, and probability &amp; stats
-            problems — drawn from real quant interview prep material. Sign in
-            with Google to track your scores across sessions.
+            interviews. It offers three interactive drills — mental math,
+            market-making games, and probability &amp; stats problems — drawn
+            from published quant interview prep material. Sign in with Google
+            to track your scores across sessions.
           </p>
           <div className="mt-8 flex gap-3">
             <Link
