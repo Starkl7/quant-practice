@@ -15,9 +15,23 @@ const plexMono = IBM_Plex_Mono({
   weight: ["400", "500", "600"],
 });
 
+const description =
+  "Mental math drills, an inventory-aware market-making simulator, and probability & stats problems for quant trading interview prep.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: "Quant Practice | Dhrubojeet Haldar",
-  description: "Mental math drills, a market-making simulator, and probability problems for quant interview prep.",
+  description,
+  openGraph: {
+    title: "Quant Practice",
+    description,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Quant Practice",
+    description,
+  },
 };
 
 export default function RootLayout({
