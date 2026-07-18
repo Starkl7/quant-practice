@@ -93,18 +93,22 @@ export default async function ProblemPage({ params }: { params: Promise<{ id: st
           />
 
           <div className="mb-6">
-            <ProblemSolver problem={problem} signedIn={!!user} />
+            <ProblemSolver
+              problem={problem}
+              signedIn={!!user}
+              solution={
+                problem.solution && (
+                  <div className="rounded-md border border-blue-500/20 bg-blue-500/5 p-4">
+                    <div className="term-label mb-2">Solution</div>
+                    <MathText
+                      text={problem.solution}
+                      className="text-sm leading-relaxed text-[var(--text-secondary)]"
+                    />
+                  </div>
+                )
+              }
+            />
           </div>
-
-          {problem.solution && (
-            <div className="rounded-md border border-blue-500/20 bg-blue-500/5 p-4">
-              <div className="term-label mb-2">Solution</div>
-              <MathText
-                text={problem.solution}
-                className="text-sm leading-relaxed text-[var(--text-secondary)]"
-              />
-            </div>
-          )}
 
           <div className="mt-6 flex items-center justify-between border-t border-[var(--border)] pt-4 font-mono text-xs text-[var(--text-secondary)]">
             {prev ? (
