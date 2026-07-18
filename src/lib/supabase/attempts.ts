@@ -24,6 +24,16 @@ export async function recordAttempt(
   }
 }
 
+export async function resetAttempts(supabase: SupabaseClient): Promise<{ error: string | null }> {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { error: "Not signed in" };
+
+  const { error } = await supabase.from("drill_attempts").delete().eq("user_id", user.id);
+  return { error: error?.message ?? null };
+}
+
 export type Percentile = { percentile: number; sampleSize: number };
 
 // Cross-user aggregate — RLS only lets a client read its own rows, so this goes
