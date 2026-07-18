@@ -2552,6 +2552,382 @@
         "folding",
         "broken stick"
       ]
+    },
+    {
+      "id": "444-2.1.9",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "easy",
+      "category": "classical probability",
+      "title": "Crashes on the Half Hour",
+      "question": "At a busy intersection, the probability of at least one car crash during a 1-hour interval is $\\frac89$. Crashes occur independently at a constant rate over time. Find the probability of at least one crash during a 30-minute interval.",
+      "hint": "Work with the probability of no crash — that's what multiplies across disjoint intervals.",
+      "answer_type": "numeric",
+      "answer": 0.6667,
+      "tolerance": 0.0005,
+      "solution": "No-crash probabilities multiply across disjoint intervals: if $q$ is the no-crash probability for 30 minutes, then $q^2 = P[\\text{no crash in 1 hour}] = \\frac19$, so $q = \\frac13$ and\n$$P[\\text{at least one crash}] = 1 - \\frac13 = \\frac23.$$\nEquivalently, a Poisson process with $e^{-\\lambda} = \\frac19$ has $e^{-\\lambda/2} = \\frac13$. Never scale the event probability itself — scale the exponent.",
+      "tags": [
+        "poisson process",
+        "scaling"
+      ]
+    },
+    {
+      "id": "444-2.1.22",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "medium",
+      "category": "classical probability",
+      "title": "The Dented Die",
+      "question": "A fair 6-sided die has values 1–6. One side, chosen uniformly at random, has its value decreased by 1 (a 1 becomes a 0). The modified die is then rolled once. Find the probability that an even value shows.",
+      "hint": "Condition on which side was dented — and remember that 0 is even.",
+      "answer_type": "numeric",
+      "answer": 0.5,
+      "tolerance": 0,
+      "solution": "Denting an odd side turns it even, and denting an even side turns it odd (with $1 \\to 0$ counting as even). Denting any of 1, 3, 5 gives four even faces ($P = \\frac46$); denting any of 2, 4, 6 gives two ($P = \\frac26$). Averaging over the six equally likely dents:\n$$P = \\frac12 \\cdot \\frac46 + \\frac12 \\cdot \\frac26 = \\frac12.$$\nThe gains and losses cancel exactly — and the trap is forgetting that 0 is even.",
+      "tags": [
+        "parity",
+        "conditioning"
+      ]
+    },
+    {
+      "id": "444-2.1.29",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "easy",
+      "category": "classical probability",
+      "title": "Pair on Top",
+      "question": "What is the probability that the top two cards of a well-shuffled standard 52-card deck form a pair (share the same rank)?",
+      "hint": "Condition on the first card — how many of the remaining 51 match it?",
+      "answer_type": "numeric",
+      "answer": 0.0588,
+      "tolerance": 0.0005,
+      "solution": "Whatever the top card is, 3 of the remaining 51 cards match its rank:\n$$P = \\frac{3}{51} = \\frac{1}{17} \\approx 0.0588.$$\nNo casework needed — the first card only sets the target rank.",
+      "tags": [
+        "cards",
+        "classic"
+      ]
+    },
+    {
+      "id": "444-2.1.47",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "medium",
+      "category": "combinatorics",
+      "title": "Four Primes, Even Sum",
+      "question": "Four distinct integers are drawn uniformly at random from the first 16 primes. Find the probability that their sum is even.",
+      "hint": "Every prime is odd — except one.",
+      "answer_type": "numeric",
+      "answer": 0.75,
+      "tolerance": 0,
+      "solution": "Among the first 16 primes, only 2 is even. Four odd numbers sum to an even number, while including the 2 gives even + odd + odd + odd = odd. So the sum is even exactly when 2 is not drawn:\n$$P = \\frac{\\binom{15}{4}}{\\binom{16}{4}} = \\frac{12}{16} = \\frac34.$$\n(The ratio collapses because excluding one specific element from a 4-draw out of 16 has probability $\\frac{16-4}{16}$.)",
+      "tags": [
+        "primes",
+        "parity"
+      ]
+    },
+    {
+      "id": "444-2.2.6",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "hard",
+      "category": "combinatorics",
+      "title": "Position in the Sundae Line",
+      "question": "An ice-cream shop will give a free sundae to the first person in line whose birthday matches that of someone who already bought ice cream ahead of them. Birthdays are uniform over 365 days and you know nobody else's birthday. Which position in line should you choose to maximize the probability that you win the sundae?",
+      "hint": "You win at position $k$ if the first $k-1$ birthdays are all distinct and yours matches one of them. Compare consecutive positions.",
+      "answer_type": "numeric",
+      "answer": 20,
+      "tolerance": 0,
+      "solution": "At position $k$ you win if the $k-1$ people ahead have all-distinct birthdays and yours matches one of them:\n$$P_k = \\frac{365 \\cdot 364 \\cdots (365-k+2)}{365^{k-1}} \\cdot \\frac{k-1}{365}.$$\nThe ratio $P_{k+1}/P_k = \\frac{k}{k-1}\\cdot\\frac{365-k+1}{365}$ exceeds 1 while $k(366-k) > 365(k-1)$, i.e. up to $k = 19$, and drops below 1 after. So the maximum is at\n$$k = 20, \\qquad P_{20} \\approx 3.23\\%.$$\nThe birthday-paradox threshold $\\sqrt{365} \\approx 19$ shows up exactly where it should.",
+      "tags": [
+        "birthday problem",
+        "optimization",
+        "classic"
+      ]
+    },
+    {
+      "id": "444-2.2.10",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "hard",
+      "category": "conditional probability",
+      "title": "Penalty Kicks and Pólya's Urn",
+      "question": "You take 100 penalty kicks. You made kick 1 and missed kick 2. From kick 3 on, the probability you score equals the fraction of kicks scored so far (if you made 17 of the first 30, you make kick 31 with probability $\\frac{17}{30}$). What is the probability that you score exactly 66 of the 100 kicks?",
+      "hint": "This is a Pólya urn. Work out the distribution of the final tally for a small case — say 4 kicks — and guess the pattern.",
+      "answer_type": "numeric",
+      "answer": 0.0101,
+      "tolerance": 0.0005,
+      "solution": "This process is Pólya's urn started with one success and one failure. By exchangeability, every sequence with $m$ makes in the 98 remaining kicks has the same probability, and the total number of makes after $n$ kicks is uniform on $\\{1, 2, \\dots, n-1\\}$. With $n = 100$:\n$$P[\\text{exactly } 66] = \\frac{1}{99} \\approx 0.0101$$\n— the same for 66 as for any other count from 1 to 99. The \"rich get richer\" dynamics exactly cancel into a uniform final distribution.",
+      "tags": [
+        "polya urn",
+        "exchangeability",
+        "classic"
+      ]
+    },
+    {
+      "id": "444-2.2.18",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "medium",
+      "category": "classical probability",
+      "title": "Beat the Dealer's Card",
+      "question": "You and the dealer are each dealt one card from a shuffled standard 52-card deck. You win only if your card's rank is strictly higher than the dealer's; ties and lower ranks lose. What is the probability you win?",
+      "hint": "By symmetry you and the dealer are equally likely to hold the higher card — so first find the probability of a tie.",
+      "answer_type": "numeric",
+      "answer": 0.4706,
+      "tolerance": 0.0005,
+      "solution": "The two cards tie in rank with probability $\\frac{3}{51}$. Otherwise, by symmetry, each player is equally likely to hold the strictly higher card:\n$$P[\\text{win}] = \\frac{1 - 3/51}{2} = \\frac{24}{51} = \\frac{8}{17} \\approx 0.4706.$$\nThe house edge lives entirely in the ties — a recurring casino-game motif.",
+      "tags": [
+        "symmetry",
+        "ties",
+        "cards"
+      ]
+    },
+    {
+      "id": "444-2.2.33",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "hard",
+      "category": "combinatorics",
+      "title": "All Lines Odd",
+      "question": "The integers 1–9 are placed uniformly at random on a $3 \\times 3$ grid. What is the probability that every row, every column, and both diagonals sum to an odd number?",
+      "hint": "Only the parity pattern matters: where can the four even numbers go so that all 8 lines contain an odd count of odd numbers?",
+      "answer_type": "numeric",
+      "answer": 0.0079,
+      "tolerance": 0.0005,
+      "solution": "Only parities matter: there are five odd digits and four even. A line sums odd iff it contains 1 or 3 odd entries. Checking the possible placements of the four even numbers, the only pattern satisfying all 8 lines is evens on the four corners: each edge row/column then reads even–odd–even (one odd) and the middle row, middle column, and both diagonals pass through odd cells correctly. The four even positions are chosen uniformly among $\\binom94 = 126$ parity patterns, exactly one of which works:\n$$P = \\frac{1}{126} \\approx 0.0079.$$\nVerified by brute force over all $9!$ placements ($2880/362880$).",
+      "tags": [
+        "parity",
+        "grid",
+        "brute force"
+      ]
+    },
+    {
+      "id": "444-2.2.38",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "medium",
+      "category": "classical probability",
+      "title": "One Bulb Against Ten",
+      "question": "Ten independent light bulbs have lifetimes $T_i \\sim \\mathrm{Exp}(1/10)$ (mean 10), and an eleventh bulb has lifetime $X \\sim \\mathrm{Exp}(1/90)$ (mean 90). Find $P[X > T_1 + \\cdots + T_{10}]$.",
+      "hint": "Use memorylessness one bulb at a time — or recognize $P[X > S] = E[e^{-S/90}]$ as an MGF evaluation.",
+      "answer_type": "numeric",
+      "answer": 0.3487,
+      "tolerance": 0.0005,
+      "solution": "Condition on the sum $S = T_1 + \\cdots + T_{10}$: since $X$ is exponential, $P[X > S] = E[e^{-S/90}]$, the MGF of $S$ at $-\\frac{1}{90}$. Each factor contributes $\\frac{1/10}{1/10 + 1/90} = \\frac{9}{10}$, so\n$$P = \\left(\\frac{9}{10}\\right)^{10} \\approx 0.3487.$$\nIntuition via memorylessness: at each burnout the race restarts, and the long-lived bulb outlasts each $T_i$ independently with probability $\\frac{90}{90+10}$.",
+      "tags": [
+        "exponential",
+        "mgf",
+        "races"
+      ]
+    },
+    {
+      "id": "444-2.2.59",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "hard",
+      "category": "geometric probability",
+      "title": "A Small Triangle Somewhere",
+      "question": "A point $P$ is chosen uniformly at random inside triangle $ABC$. Find the probability that at least one of the triangles $ABP$, $BCP$, $CAP$ has area at most one quarter of the area of $ABC$.",
+      "hint": "The three sub-triangle areas are the barycentric coordinates of $P$ — they're nonnegative and sum to 1.",
+      "answer_type": "numeric",
+      "answer": 0.9375,
+      "tolerance": 0,
+      "solution": "The areas of $ABP$, $BCP$, $CAP$ divided by the area of $ABC$ are exactly the barycentric coordinates $(u, v, w)$ of $P$: nonnegative, summing to 1, and uniform over the simplex. The complement event — all three fractions exceed $\\frac14$ — is the sub-simplex $u, v, w > \\frac14$, a triangle similar to the original with scale $1 - 3 \\cdot \\frac14 = \\frac14$ and hence relative area $\\frac{1}{16}$:\n$$P = 1 - \\frac{1}{16} = \\frac{15}{16}.$$\nBarycentric coordinates turn area questions into simplex geometry.",
+      "tags": [
+        "barycentric",
+        "simplex",
+        "triangle"
+      ]
+    },
+    {
+      "id": "444-6.1.16",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "easy",
+      "category": "expected value",
+      "title": "Seven Bills from Eight",
+      "question": "A box holds one $\\$100$ bill, three $\\$20$ bills, and four $\\$10$ bills. You draw 7 of the 8 bills uniformly at random without replacement. Find the expected value of the total you draw.",
+      "hint": "Linearity doesn't care about the dependence between draws.",
+      "answer_type": "numeric",
+      "answer": 175,
+      "tolerance": 0,
+      "solution": "Each of the 8 bills is included with probability $\\frac78$, so by linearity\n$$E[\\text{total}] = \\frac78 (100 + 3 \\cdot 20 + 4 \\cdot 10) = \\frac78 \\cdot 200 = 175.$$\nEquivalently: the one excluded bill has expected value $\\frac{200}{8} = 25$. Sampling without replacement changes nothing about expectations — only about variances.",
+      "tags": [
+        "linearity",
+        "without replacement"
+      ]
+    },
+    {
+      "id": "444-6.1.28",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "medium",
+      "category": "expected value",
+      "title": "A Call Option on Two Dice",
+      "question": "Two fair 6-sided dice are rolled and the underlying settles at the product of the two upfaces. What is the fair price of a call option with strike 30 on this product — that is, $E[\\max(XY - 30,\\, 0)]$?",
+      "hint": "Very few of the 36 outcomes finish in the money.",
+      "answer_type": "numeric",
+      "answer": 0.1667,
+      "tolerance": 0.0005,
+      "solution": "Only products above 30 pay out. The candidates: $6 \\times 6 = 36$ pays $6$; $5 \\times 6 = 6 \\times 5 = 30$ is exactly at strike and pays 0. So\n$$E[\\max(XY - 30, 0)] = \\frac{1}{36} \\cdot 6 = \\frac16 \\approx 0.1667.$$\nOptions on dice are the cleanest way interviews test whether you can price a payoff by direct enumeration — note how the strike sitting exactly on an outcome (30) is there to catch you.",
+      "tags": [
+        "options",
+        "enumeration",
+        "payoff"
+      ]
+    },
+    {
+      "id": "444-6.1.43",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "medium",
+      "category": "expected value",
+      "title": "Half the Sum, Exactly",
+      "question": "Let $X_1, \\dots, X_{40}$ be IID positive random variables with $E[X_1] = 2$ and $E\\left[\\frac{1}{X_1}\\right] = 1$. Define $S_n = X_1 + \\cdots + X_n$. Compute $E\\left[\\frac{S_{20}}{S_{40}}\\right]$.",
+      "hint": "Neither given moment is needed. What is $E\\left[\\frac{X_i}{S_{40}}\\right]$, summed over all $i$?",
+      "answer_type": "numeric",
+      "answer": 0.5,
+      "tolerance": 0,
+      "solution": "By symmetry, $E\\left[\\frac{X_i}{S_{40}}\\right]$ is the same for every $i$, and the 40 terms sum to $E\\left[\\frac{S_{40}}{S_{40}}\\right] = 1$. So each equals $\\frac{1}{40}$ and\n$$E\\left[\\frac{S_{20}}{S_{40}}\\right] = \\frac{20}{40} = \\frac12.$$\nThe stated values of $E[X_1]$ and $E[1/X_1]$ are pure red herrings — and note $E[S_{20}/S_{40}] \\ne E[S_{20}]/E[S_{40}]$ in general; it's exchangeability, not that fallacy, doing the work.",
+      "tags": [
+        "exchangeability",
+        "symmetry",
+        "red herring"
+      ]
+    },
+    {
+      "id": "444-6.1.46",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "medium",
+      "category": "classical probability",
+      "title": "One Extra Roll for Primes",
+      "question": "Player 1 rolls a fair 6-sided die 10{,}000 times; player 2 rolls one 10{,}001 times. What is the probability that player 2 rolls strictly more primes than player 1?",
+      "hint": "Which faces of a die are prime — and what special probability does that give each roll?",
+      "answer_type": "numeric",
+      "answer": 0.5,
+      "tolerance": 0,
+      "solution": "The prime faces are 2, 3, 5 — exactly half of the six — so each roll is a fair coin flip for \"prime.\" This is the classic $n+1$ vs. $n$ fair-coin problem: after 10{,}000 flips each, ties are broken by player 2's extra flip, and by symmetry\n$$P[\\text{player 2 ahead}] = \\frac12.$$\nFormally: let $D$ be the difference after equal rolls; $P[D>0] = P[D<0]$, and the extra flip converts exactly half of the tie mass into wins. The disguise (primes on a die) is the entire problem.",
+      "tags": [
+        "symmetry",
+        "coin flipping",
+        "classic"
+      ]
+    },
+    {
+      "id": "444-6.1.51",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "medium",
+      "category": "expected value",
+      "title": "Visible Heads in a Line",
+      "question": "Twenty people with IID heights from a continuous distribution stand in a single-file line. Looking from the front, a person's head is visible if they are taller than everyone ahead of them. Find the expected number of visible heads.",
+      "hint": "When is person $k$'s head visible? An indicator and a symmetry argument each position.",
+      "answer_type": "numeric",
+      "answer": 3.5977,
+      "tolerance": 0.005,
+      "solution": "Person $k$ is visible iff they are the tallest of the first $k$ people, which by symmetry has probability $\\frac1k$. By linearity,\n$$E[X] = \\sum_{k=1}^{20} \\frac1k = H_{20} \\approx 3.60.$$\nThis is the theory of records: visible heads, best-so-far stock prices, and left-to-right maxima of a permutation are all the same $H_n$.",
+      "tags": [
+        "records",
+        "harmonic",
+        "linearity",
+        "classic"
+      ]
+    },
+    {
+      "id": "444-6.2.9",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "hard",
+      "category": "expected value",
+      "title": "Long Cycles in a Random Permutation",
+      "question": "Let $C_n$ count the cycles of length greater than $n$ in a uniformly random permutation of $\\{1, 2, \\dots, 2n\\}$. Compute $\\lim_{n \\to \\infty} E[C_n]$.",
+      "hint": "For $k > n$ there can be at most one $k$-cycle. What is the probability a random permutation of $2n$ elements contains a cycle of exact length $k$?",
+      "answer_type": "numeric",
+      "answer": 0.6931,
+      "tolerance": 0.0005,
+      "solution": "For $k > \\frac{2n}{2} = n$, a permutation can contain at most one $k$-cycle, and the probability that a uniform permutation of $2n$ elements has a cycle of exact length $k$ is $\\frac1k$ (choose the cycle: $\\binom{2n}{k}\\frac{k!}{k}(2n-k)!$ out of $(2n)!$). So\n$$E[C_n] = \\sum_{k=n+1}^{2n} \\frac1k \\longrightarrow \\ln 2 \\approx 0.6931.$$\nThe same harmonic tail is the engine of the 100-prisoners problem, where $1 - \\ln 2 \\approx 0.31$ is the survival probability.",
+      "tags": [
+        "permutations",
+        "cycles",
+        "100 prisoners"
+      ]
+    },
+    {
+      "id": "444-6.2.10",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "medium",
+      "category": "expected value",
+      "title": "Local Maxima in a Random Line-Up",
+      "question": "Fourteen papers labelled 1–14 are arranged in a line uniformly at random. Position $i$ is a local maximum if its paper is strictly larger than the papers adjacent to it (positions at the ends have only one neighbor). Find the expected number of local maxima.",
+      "hint": "Ends need to beat 1 neighbor, interior spots must beat 2. Linearity over the 14 positions.",
+      "answer_type": "numeric",
+      "answer": 5,
+      "tolerance": 0,
+      "solution": "An end position beats its single neighbor with probability $\\frac12$; an interior position is the largest of the 3 values around it with probability $\\frac13$. With 2 ends and 12 interior positions:\n$$E = 2 \\cdot \\frac12 + 12 \\cdot \\frac13 = 1 + 4 = 5.$$\nIn general $\\frac{n+1}{3}$ for $n \\ge 2$ — worth deriving once and remembering the $\\frac13$ heuristic for peaks.",
+      "tags": [
+        "linearity",
+        "local maxima"
+      ]
+    },
+    {
+      "id": "444-6.2.18",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "hard",
+      "category": "optimal stopping",
+      "title": "Redraws at Two Cents",
+      "question": "You draw a uniform random number from $(0,1)$. You may pay $\\$0.02$ per draw to generate additional numbers, as many times as you like, seeing each result before deciding. Your payout is the maximum of all numbers drawn, minus the total fees. Under the optimal strategy, what is your expected net payout?",
+      "hint": "Find the threshold $t$ where one more draw's expected improvement, $\\int_t^1 (x-t)\\,dx$, exactly equals the fee.",
+      "answer_type": "numeric",
+      "answer": 0.82,
+      "tolerance": 0.005,
+      "solution": "Stop when the current maximum $m$ exceeds a threshold $t$. One more draw improves the maximum by $\\int_t^1 (x - t)\\,dx = \\frac{(1-t)^2}{2}$ in expectation; setting this equal to the fee $0.02$ gives $(1-t)^2 = 0.04$, so $t = 0.8$. Under this policy the number of draws is Geometric($0.2$) with mean 5 (4 of them paid), and the stopping value is $E[X \\mid X \\ge 0.8] = 0.9$:\n$$E[\\text{net}] = 0.9 - 4 \\cdot 0.02 = 0.82.$$\nA sweep of nearby thresholds confirms $0.8$ is optimal. The one-stage-lookahead rule is exactly optimal here because the problem is monotone.",
+      "tags": [
+        "optimal stopping",
+        "threshold",
+        "search cost"
+      ]
+    },
+    {
+      "id": "444-6.2.48",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "hard",
+      "category": "expected value",
+      "title": "When the Sequence Stops Falling",
+      "question": "Let $X_1, X_2, \\dots$ be IID with a continuous distribution, and let $N$ be the first index $n$ such that $X_1 \\ge X_2 \\ge \\cdots \\ge X_{n-1}$ but $X_{n-1} < X_n$ — the time the sequence first stops decreasing. Find $E[N]$.",
+      "hint": "Compute $P[N > n]$ — it only depends on the relative order of the first $n$ values.",
+      "answer_type": "numeric",
+      "answer": 2.7183,
+      "tolerance": 0.0005,
+      "solution": "$N > n$ exactly when the first $n$ values are in decreasing order, which by symmetry has probability $\\frac{1}{n!}$. Summing the tail:\n$$E[N] = \\sum_{n \\ge 0} P[N > n] = \\sum_{n \\ge 0} \\frac{1}{n!} = e \\approx 2.7183.$$\nTogether with the uniform-sum problem ($E[N_1] = e$), this is the other canonical way $e$ falls out of an interview question — both are tail sums with factorial decay, and the answer doesn't depend on the distribution at all.",
+      "tags": [
+        "records",
+        "e",
+        "tail sum",
+        "classic"
+      ]
+    },
+    {
+      "id": "444-6.2.50",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "medium",
+      "category": "expected value",
+      "title": "Fair Price per Door",
+      "question": "On a game show, $\\$200$ sits behind each of 2 of 7 doors; the other 5 hide nothing. You open distinct doors uniformly at random until you find the first prize. If each door opening costs $\\$x$ and the game is fair, what is $x$?",
+      "hint": "The 2 prizes split the 5 empty doors into 3 gaps of equal expected size.",
+      "answer_type": "numeric",
+      "answer": 75,
+      "tolerance": 0,
+      "solution": "By symmetry, the 2 prize doors split the 5 empty doors into 3 gaps of equal expected size $\\frac53$. You open the empty doors of the first gap and then the first prize door, so\n$$E[\\text{doors}] = \\frac53 + 1 = \\frac83$$\n(the general rule: the first of $k$ specials among $n$ items sits at position $\\frac{n+1}{k+1}$ on average). You always win exactly one $\\$200$ prize since you stop at the first one, so fairness requires $x \\cdot \\frac83 = 200$:\n$$x = 75.$$",
+      "tags": [
+        "uniform gaps",
+        "order statistics",
+        "fair value"
+      ]
     }
   ]
 }
