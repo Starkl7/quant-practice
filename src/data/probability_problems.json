@@ -2928,6 +2928,196 @@
         "order statistics",
         "fair value"
       ]
+    },
+    {
+      "id": "444-2.2.2",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "medium",
+      "category": "classical probability",
+      "title": "Three Geometrics in Strict Order",
+      "question": "Ty, Guy, and Psy each flip a fair coin repeatedly until their own first heads. Let $T$, $G$, $P$ be the numbers of flips they respectively need. Find $P[T < G < P]$.",
+      "hint": "Sum the geometric series from the inside out — ties are what make this smaller than $\\frac16$.",
+      "answer_type": "numeric",
+      "answer": 0.0476,
+      "tolerance": 0.0005,
+      "solution": "Each variable is Geometric: $P[T = k] = 2^{-k}$. Summing over $t < g < p$ from the inside out: $\\sum_{p > g} 2^{-p} = 2^{-g}$, then $\\sum_{g > t} 4^{-g} = \\frac13 \\cdot 4^{-t}$, then\n$$P[T < G < P] = \\frac13 \\sum_{t \\ge 1} 8^{-t} = \\frac13 \\cdot \\frac17 = \\frac{1}{21}.$$\nFor continuous variables symmetry would give $\\frac16 = \\frac{3.5}{21}$; the gap is the probability mass lost to ties, which strict inequalities exclude.",
+      "tags": [
+        "geometric",
+        "ordering",
+        "ties"
+      ]
+    },
+    {
+      "id": "444-2.2.34",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "hard",
+      "category": "brownian motion",
+      "title": "Laplace Transform of an Exit Time",
+      "question": "Let $W_t$ be a standard Brownian motion and let $T_a = \\inf\\{t > 0 : |W_t| > a\\}$ be the first exit time from $(-a, a)$. The Laplace transform is $E[e^{-\\lambda T_a}] = \\mathrm{sech}(a\\sqrt{2\\lambda})$. Evaluate it at $\\lambda = 4$ and $a = \\ln 2$.",
+      "hint": "$e^{\\theta W_t - \\theta^2 t/2}$ is a martingale; average the two exit points and apply optional stopping.",
+      "answer_type": "numeric",
+      "answer": 0.2761,
+      "tolerance": 0.0005,
+      "solution": "For $\\theta = \\sqrt{2\\lambda}$, the process $M_t = \\cosh(\\theta W_t)\\, e^{-\\lambda t}$ is a martingale (average of the exponential martingales for $\\pm\\theta$). Optional stopping at $T_a$, where $|W_{T_a}| = a$:\n$$1 = E[M_{T_a}] = \\cosh(a\\theta)\\, E[e^{-\\lambda T_a}] \\implies E[e^{-\\lambda T_a}] = \\frac{1}{\\cosh(a\\sqrt{2\\lambda})}.$$\nAt $\\lambda = 4$, $a = \\ln 2$: $a\\sqrt{2\\lambda} = 2\\sqrt2 \\ln 2 \\approx 1.9605$, giving\n$$E[e^{-4T_a}] = \\mathrm{sech}(2\\sqrt2 \\ln 2) \\approx 0.2761.$$\nThe two-sided barrier gives $\\mathrm{sech}$; a one-sided barrier would give $e^{-a\\sqrt{2\\lambda}}$.",
+      "tags": [
+        "optional stopping",
+        "martingale",
+        "exit time"
+      ]
+    },
+    {
+      "id": "444-2.2.39",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "medium",
+      "category": "random walks",
+      "title": "The Frog's Favorite Number",
+      "question": "A frog starts at 0 and repeatedly jumps forward 1 or 2 steps, each with probability $\\frac12$. Let $p_k$ be the probability the frog ever lands on position $k > 0$. Find the largest value of $p_k$.",
+      "hint": "Condition on the first jump to get a two-term recursion, and compute the first few values before assuming monotonicity.",
+      "answer_type": "numeric",
+      "answer": 0.75,
+      "tolerance": 0,
+      "solution": "The frog reaches $k$ from $k-1$ (with a 1-jump) or from $k-2$ (with a 2-jump), giving $p_k = \\frac12 p_{k-1} + \\frac12 p_{k-2}$ with $p_0 = 1$, $p_1 = \\frac12$. The sequence runs $1, \\frac12, \\frac34, \\frac58, \\frac{11}{16}, \\dots$, oscillating toward $\\frac23$ (each position is skipped with limiting probability tied to the mean jump $\\frac32$). The maximum over $k > 0$ is\n$$p_2 = \\frac34.$$\nThe trap is answering the limit $\\frac23$ — the early terms overshoot it.",
+      "tags": [
+        "recursion",
+        "renewal",
+        "hitting probability"
+      ]
+    },
+    {
+      "id": "444-2.2.50",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "hard",
+      "category": "classical probability",
+      "title": "Halving Coins to a Perfect Finish",
+      "question": "25 fair coins are flipped simultaneously. All coins showing tails are removed, and the survivors are flipped again — repeating until either no coins remain or all remaining coins show heads (with at least one coin present), which counts as a win. What is the probability you win?",
+      "hint": "Compute the win probability for 1 coin, then 2. A pattern this clean demands induction.",
+      "answer_type": "numeric",
+      "answer": 0.5,
+      "tolerance": 0,
+      "solution": "Let $f(n)$ be the win probability with $n$ coins. Conditioning on the number of heads $k$ in a round:\n$$f(n) = \\frac{1}{2^n}\\left(1 + \\sum_{k=1}^{n-1} \\binom{n}{k} f(k)\\right).$$\nClaim: $f(n) = \\frac12$ for all $n \\ge 1$. It holds for $f(1) = \\frac12$, and inductively\n$$f(n) = \\frac{1 + \\frac12(2^n - 2)}{2^n} = \\frac{2^n}{2^n \\cdot 2} = \\frac12.$$\nSo for 25 coins — or any number — the answer is exactly $\\frac12$. The $n$-independence is the interview payoff: a sprawling-looking process with a coin-flip answer.",
+      "tags": [
+        "induction",
+        "elegant",
+        "invariant"
+      ]
+    },
+    {
+      "id": "444-6.1.1",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "medium",
+      "category": "expected value",
+      "title": "Race to Three of a Kind",
+      "question": "Anna and Brenda repeatedly toss a fair coin. Anna wins once 3 heads have appeared in total; Brenda wins once 3 tails have appeared in total (not necessarily consecutive). What is the expected number of tosses until someone wins?",
+      "hint": "The game ends on toss 3, 4, or 5. Enumerate how many of the 32 length-5 sequences end at each length.",
+      "answer_type": "numeric",
+      "answer": 4.125,
+      "tolerance": 0,
+      "solution": "The game always ends by toss 5 (five tosses force three of one side). It ends at toss 3 with two all-alike sequences among $2^3$: probability $\\frac14$. Of the 32 length-5 sequences, 8 decide at toss 3, 12 at toss 4 (the deciding side has exactly 2 of the first 3, then hits: $2\\binom{3}{2} \\cdot \\frac{1}{16} \\cdot 32 = 12$), and 12 at toss 5. So\n$$E = \\frac{8 \\cdot 3 + 12 \\cdot 4 + 12 \\cdot 5}{32} = \\frac{132}{32} = \\frac{33}{8} = 4.125.$$\nA best-of-5 series between evenly matched sides lasts 4.125 games on average — the same computation prices sports-series length.",
+      "tags": [
+        "race",
+        "enumeration",
+        "best of five"
+      ]
+    },
+    {
+      "id": "444-6.2.2",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "hard",
+      "category": "geometric probability",
+      "title": "The Arc That Catches the Point",
+      "question": "Three points are chosen uniformly at random on the circumference of the unit circle, dividing it into 3 arcs. Find the expected length of the arc that contains the fixed point $(1, 0)$.",
+      "hint": "The three arcs average $\\frac{2\\pi}{3}$ — but the arc containing a fixed point is not a typical arc.",
+      "answer_type": "numeric",
+      "answer": 3.1416,
+      "tolerance": 0.0005,
+      "solution": "A fixed point is more likely to land in a longer arc — this is size-biased sampling, the inspection paradox. Treat $(1,0)$ as a fourth uniform point: the 4 points create 4 arcs with equal expected length $\\frac{2\\pi}{4}$, and the arc containing $(1,0)$ is the union of the two arcs adjacent to it:\n$$E[L] = 2 \\cdot \\frac{2\\pi}{4} = \\pi,$$\nhalf the circle — versus $\\frac{2\\pi}{3}$ for a typical arc. The same effect makes your bus wait longer than the average headway.",
+      "tags": [
+        "inspection paradox",
+        "size bias",
+        "circle"
+      ]
+    },
+    {
+      "id": "444-6.2.66",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "medium",
+      "category": "expected value",
+      "title": "Maximum Variance on an Interval",
+      "question": "Let $Y$ be any random variable taking values in $[-1, 1]$. What is the maximum possible value of $\\mathrm{Var}(Y)$?",
+      "hint": "Push all mass to the endpoints — spread is maximized at the extremes.",
+      "answer_type": "numeric",
+      "answer": 1,
+      "tolerance": 0,
+      "solution": "Since $Y^2 \\le 1$, $\\mathrm{Var}(Y) = E[Y^2] - E[Y]^2 \\le E[Y^2] \\le 1$, with equality iff $Y^2 = 1$ almost surely and $E[Y] = 0$ — that is, $Y = \\pm 1$ with probability $\\frac12$ each:\n$$\\max \\mathrm{Var}(Y) = 1.$$\nThis is Popoviciu's inequality $\\mathrm{Var} \\le \\frac{(b-a)^2}{4}$ in its simplest case. Variance on a bounded range is maximized by the two-point distribution at the endpoints — the same fact that bounds Bernoulli variance by $\\frac14$.",
+      "tags": [
+        "popoviciu",
+        "extremal",
+        "bounded"
+      ]
+    },
+    {
+      "id": "444-6.2.71",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "medium",
+      "category": "expected value",
+      "title": "Overlap of Two Random Subsets",
+      "question": "Subsets $A$ and $B$ are drawn independently and uniformly from the power set of $\\Omega = \\{1, \\dots, 20\\}$. Let $N = |A \\cap B|$. Compute $\\frac{\\mathrm{Var}(N)}{E[N]}$.",
+      "hint": "What is the distribution of $N$? Each element joins the intersection independently.",
+      "answer_type": "numeric",
+      "answer": 0.75,
+      "tolerance": 0,
+      "solution": "Each element lies in $A \\cap B$ independently with probability $\\frac12 \\cdot \\frac12 = \\frac14$, so $N \\sim \\mathrm{Bin}(20, \\frac14)$. Then\n$$\\frac{\\mathrm{Var}(N)}{E[N]} = \\frac{npq}{np} = q = \\frac34.$$\nThe Fano-factor shortcut: for any binomial, $\\mathrm{Var}/E = 1 - p$, no matter what $n$ is — recognizing the distribution beats computing either moment.",
+      "tags": [
+        "binomial",
+        "fano factor",
+        "subsets"
+      ]
+    },
+    {
+      "id": "444-6.2.72",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "medium",
+      "category": "expected value",
+      "title": "Closed Groups at the Party",
+      "question": "At a party, each of 50 guests puts their name in a hat and draws one name uniformly at random (a random permutation of the 50 names). Guests who draw each other in a cycle form one closed group; drawing your own name makes a group of one. What is the expected number of closed groups?",
+      "hint": "For each $k$, what is the probability that a fixed guest belongs to a cycle of length $k$ — and how much does one cycle of length $k$ contribute to the group count?",
+      "answer_type": "numeric",
+      "answer": 4.4992,
+      "tolerance": 0.01,
+      "solution": "Groups are exactly the cycles of a uniform random permutation of 50 elements. A fixed guest belongs to a cycle of length $k$ with probability $\\frac{1}{50}$ for every $k$ (following the chain: $\\frac{49}{50}\\cdot\\frac{48}{49}\\cdots$ telescopes). Each guest in a $k$-cycle contributes $\\frac1k$ of that group, so\n$$E[\\#\\text{groups}] = 50 \\sum_{k=1}^{50} \\frac{1}{50} \\cdot \\frac{1}{k} = H_{50} \\approx 4.50.$$\nExpected cycle count of a random permutation is $H_n$ — the third face of the harmonic-number trio, alongside records and convoy clumps.",
+      "tags": [
+        "permutations",
+        "cycles",
+        "harmonic"
+      ]
+    },
+    {
+      "id": "444-6.2.80",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "medium",
+      "category": "expected value",
+      "title": "Pricing a Straddle at Zero",
+      "question": "An underlying settles at $S \\sim N(0, 1)$. A straddle at strike $K = 0$ pays $|S - K| = |S|$. What is the fair value of this straddle?",
+      "hint": "Integrate $|s|$ against the normal density — or recall the mean of the half-normal distribution.",
+      "answer_type": "numeric",
+      "answer": 0.7979,
+      "tolerance": 0.0005,
+      "solution": "The fair value is the expected payoff:\n$$E[|S|] = 2 \\int_0^\\infty s \\cdot \\frac{1}{\\sqrt{2\\pi}} e^{-s^2/2}\\, ds = \\frac{2}{\\sqrt{2\\pi}} = \\sqrt{\\frac{2}{\\pi}} \\approx 0.7979.$$\nThe mean absolute value of a standard normal, $\\sqrt{2/\\pi} \\approx 0.8$, is a number worth carrying around: it converts a normal's standard deviation into an expected absolute move, which is exactly what a straddle prices.",
+      "tags": [
+        "straddle",
+        "half-normal",
+        "options"
+      ]
     }
   ]
 }
