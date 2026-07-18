@@ -112,6 +112,12 @@ export default function MentalMathTrainer() {
   }, [finished]);
 
   useEffect(() => {
+    if (running && question) {
+      inputRef.current?.focus();
+    }
+  }, [running, question]);
+
+  useEffect(() => {
     if (!running) return;
     const interval = setInterval(() => {
       setTimeLeft((t) => {
@@ -142,7 +148,6 @@ export default function MentalMathTrainer() {
     setInput("");
     setFeedback(null);
     questionStart.current = performance.now();
-    inputRef.current?.focus();
   }
 
   function start() {
