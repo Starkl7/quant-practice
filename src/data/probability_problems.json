@@ -14,7 +14,9 @@
       "answer": 0,
       "tolerance": 0.01,
       "solution": "Example worked solution goes here.",
-      "tags": ["example"]
+      "tags": [
+        "example"
+      ]
     }
   },
   "problems": [
@@ -31,7 +33,10 @@
       "answer": 924,
       "tolerance": 0,
       "solution": "Any path from $(0,0)$ to $(6,6)$ consists of exactly $6$ right moves and $6$ up moves, in some order — $12$ moves total. A path is fully determined by choosing which $6$ of the $12$ moves are to the right:\n$$\\binom{12}{6} = 924.$$",
-      "tags": ["lattice paths", "counting"]
+      "tags": [
+        "lattice paths",
+        "counting"
+      ]
     },
     {
       "id": "444-1.1.2",
@@ -46,7 +51,10 @@
       "answer": 0.03095,
       "tolerance": 0.0005,
       "solution": "The combined deck has $416$ cards with $32$ cards of each rank ($8$ decks $\\times\\, 4$ suits). There are $12$ consecutive rank sequences: $A\\text{-}2\\text{-}3,\\ 2\\text{-}3\\text{-}4,\\ \\dots,\\ Q\\text{-}K\\text{-}A$.\n\nFor each sequence, pick one card of each rank: $32^3 = 32768$ ways. Subtract straight flushes — all three cards of the same suit: $4$ suits, and each specific card exists in $8$ copies, giving $4 \\cdot 8^3 = 2048$.\n\n$$P = \\frac{12\\,(32^3 - 4\\cdot 8^3)}{\\binom{416}{3}} = \\frac{368640}{11912160} = \\frac{768}{24817} \\approx 0.0309.$$",
-      "tags": ["cards", "counting"]
+      "tags": [
+        "cards",
+        "counting"
+      ]
     },
     {
       "id": "444-1.1.3",
@@ -61,7 +69,10 @@
       "answer": 0.027,
       "tolerance": 0.0005,
       "solution": "Map each die $x_i \\mapsto 7 - x_i$: this is a bijection, and the sum $20$ becomes $28 - 20 = 8$. So count solutions of $y_1 + y_2 + y_3 + y_4 = 8$ with $1 \\le y_i \\le 6$.\n\nSubstituting $z_i = y_i - 1$: $z_1+z_2+z_3+z_4 = 4$ with $z_i \\ge 0$. Since $4 < 6$, the upper bound can never be violated, so stars and bars gives\n$$\\binom{4 + 3}{3} = \\binom{7}{3} = 35.$$\n\n$$P = \\frac{35}{6^4} = \\frac{35}{1296} \\approx 0.0270.$$",
-      "tags": ["dice", "stars and bars"]
+      "tags": [
+        "dice",
+        "stars and bars"
+      ]
     },
     {
       "id": "444-1.1.4",
@@ -76,7 +87,10 @@
       "answer": 300,
       "tolerance": 0,
       "solution": "Consider the numbers $000$–$999$ as three-digit strings (adding $1000$ contributes no 9s). Each of the three positions cycles through $0$–$9$ uniformly, so each position shows a $9$ in exactly $\\tfrac{1}{10}$ of the $1000$ numbers:\n$$3 \\times \\frac{1000}{10} = 300.$$",
-      "tags": ["digits", "counting"]
+      "tags": [
+        "digits",
+        "counting"
+      ]
     },
     {
       "id": "444-1.1.5",
@@ -91,7 +105,10 @@
       "answer": 120,
       "tolerance": 0,
       "solution": "Each step is $\\pm 1$. With $u$ up-steps and $d$ down-steps: $u + d = 10$ and $u - d = 4$, so $u = 7$, $d = 3$. The walk is determined by choosing which $3$ of the $10$ steps go down:\n$$\\binom{10}{3} = 120.$$",
-      "tags": ["random walk", "counting"]
+      "tags": [
+        "random walk",
+        "counting"
+      ]
     },
     {
       "id": "444-1.1.6",
@@ -106,7 +123,10 @@
       "answer": 160,
       "tolerance": 0,
       "solution": "Let $A$ = strings starting with $1$: the other $7$ bits are free, $|A| = 2^7 = 128$. Let $B$ = strings ending in $00$: the other $6$ bits are free, $|B| = 2^6 = 64$. Both conditions fix $3$ bits: $|A \\cap B| = 2^5 = 32$.\n$$|A \\cup B| = 128 + 64 - 32 = 160.$$",
-      "tags": ["inclusion-exclusion", "binary strings"]
+      "tags": [
+        "inclusion-exclusion",
+        "binary strings"
+      ]
     },
     {
       "id": "444-1.1.7",
@@ -121,7 +141,10 @@
       "answer": 729,
       "tolerance": 0,
       "solution": "Each of the $6$ elements independently has $3$ states: excluded, included normally, or included in bold. (An element cannot appear both ways at once.)\n$$3^6 = 729.$$",
-      "tags": ["product rule", "counting"]
+      "tags": [
+        "product rule",
+        "counting"
+      ]
     },
     {
       "id": "444-1.1.8",
@@ -136,7 +159,11 @@
       "answer": 0.002024,
       "tolerance": 0.0001,
       "solution": "The die restricts the common value $v$ to $\\{1, \\dots, 6\\}$, and each such $v$ appears on the wheel and in the deck. For a fixed $v$:\n$$P(\\text{die} = v)\\,P(\\text{wheel} = v)\\,P(\\text{card} = v) = \\frac{1}{6} \\cdot \\frac{1}{38} \\cdot \\frac{4}{52}.$$\nSumming over the $6$ values:\n$$P = 6 \\cdot \\frac{1}{6} \\cdot \\frac{1}{38} \\cdot \\frac{1}{13} = \\frac{1}{494} \\approx 0.00202.$$",
-      "tags": ["independence", "dice", "cards"]
+      "tags": [
+        "independence",
+        "dice",
+        "cards"
+      ]
     },
     {
       "id": "444-1.1.9",
@@ -151,7 +178,9 @@
       "answer": 0.002778,
       "tolerance": 0.0001,
       "solution": "There are $7!$ equally likely seatings. A valid \"age order\" arrangement is determined by where the youngest person sits ($7$ rotations) and the direction ($2$), giving $7 \\times 2 = 14$ favorable seatings:\n$$P = \\frac{14}{7!} = \\frac{14}{5040} = \\frac{1}{360} \\approx 0.00278.$$\nEquivalently: seat people one at a time around the circle relative to the youngest — only $2$ of the $6!$ relative orders work.",
-      "tags": ["circular arrangements"]
+      "tags": [
+        "circular arrangements"
+      ]
     },
     {
       "id": "444-1.1.10",
@@ -166,7 +195,10 @@
       "answer": 0.06593,
       "tolerance": 0.0005,
       "solution": "There are $14$ gaps between adjacent boys, and since every girl must end up between two boys, the $10$ girls occupy $10$ distinct gaps — all $\\binom{14}{10}$ choices equally likely.\n\nCharlie remains between two boys exactly when both gaps adjacent to him stay empty, i.e. the $10$ girls fit into the other $12$ gaps:\n$$P = \\frac{\\binom{12}{10}}{\\binom{14}{10}} = \\frac{66}{1001} = \\frac{6}{91} \\approx 0.0659.$$",
-      "tags": ["circular arrangements", "gaps"]
+      "tags": [
+        "circular arrangements",
+        "gaps"
+      ]
     },
     {
       "id": "444-1.1.11",
@@ -181,7 +213,10 @@
       "answer": 4368,
       "tolerance": 0,
       "solution": "The sum is $\\sum_{k=3}^{14} (15-k)\\binom{k}{3}$. Count $5$-element subsets of $\\{1, 2, \\dots, 16\\}$ by their fourth-smallest element $m$: we choose $3$ elements below it ($\\binom{m-1}{3}$ ways) and $1$ element above it ($16 - m$ ways). Summing over $m$ and substituting $k = m - 1$ reproduces the sum exactly. Therefore\n$$\\sum_{k=3}^{14} (15-k)\\binom{k}{3} = \\binom{16}{5} = 4368.$$\n(You can also telescope twice with the hockey-stick identity $\\sum_{k=r}^{n}\\binom{k}{r} = \\binom{n+1}{r+1}$.)",
-      "tags": ["binomial identities", "hockey stick"]
+      "tags": [
+        "binomial identities",
+        "hockey stick"
+      ]
     },
     {
       "id": "444-1.1.12",
@@ -196,7 +231,11 @@
       "answer": 3.5,
       "tolerance": 0.01,
       "solution": "Turning over two coins changes the number of heads by $-2$, $0$, or $+2$ — the parity of the head count is invariant.\n\nIf the initial number of heads is even ($0, 2, 4$), you can always reach $4$ heads (flip tails in pairs). If it is odd ($1, 3$), the best you can reach is $3$.\n\nFor $4$ fair coins, $P(\\text{even}) = \\frac{\\binom{4}{0} + \\binom{4}{2} + \\binom{4}{4}}{16} = \\frac{8}{16} = \\frac12$, so\n$$E[\\text{heads}] = \\frac12 \\cdot 4 + \\frac12 \\cdot 3 = 3.5.$$",
-      "tags": ["invariants", "coins", "expected value"]
+      "tags": [
+        "invariants",
+        "coins",
+        "expected value"
+      ]
     },
     {
       "id": "444-1.1.13",
@@ -211,7 +250,10 @@
       "answer": 0.4,
       "tolerance": 0.005,
       "solution": "Three faces of a cube share a vertex if and only if they are pairwise adjacent (no two opposite). Each of the $8$ vertices determines one such triple, and all $8$ triples are distinct, so $8$ of the $\\binom{6}{3} = 20$ equally likely face-triples work:\n$$P = \\frac{8}{20} = \\frac{2}{5} = 0.4.$$\nSequentially: green avoids the face opposite red with probability $\\frac45$; then blue must avoid the faces opposite red and opposite green, $\\frac24 = \\frac12$ — and $\\frac45 \\cdot \\frac12 = \\frac25$.",
-      "tags": ["geometry", "cube"]
+      "tags": [
+        "geometry",
+        "cube"
+      ]
     },
     {
       "id": "444-1.1.14",
@@ -226,7 +268,10 @@
       "answer": 11085360,
       "tolerance": 0,
       "solution": "With $19$ positions, choose which get red, blue, and green:\n$$\\binom{19}{3}\\binom{16}{7} = \\frac{19!}{3!\\,7!\\,9!} = 11{,}085{,}360.$$",
-      "tags": ["multinomial", "counting"]
+      "tags": [
+        "multinomial",
+        "counting"
+      ]
     },
     {
       "id": "444-1.1.15",
@@ -241,7 +286,10 @@
       "answer": 0.05263,
       "tolerance": 0.0005,
       "solution": "Whatever the first sock is, exactly $1$ of the remaining $19$ socks matches it:\n$$P = \\frac{1}{19} \\approx 0.0526.$$",
-      "tags": ["socks", "conditioning"]
+      "tags": [
+        "socks",
+        "conditioning"
+      ]
     },
     {
       "id": "444-1.1.16",
@@ -256,7 +304,10 @@
       "answer": 27720,
       "tolerance": 0,
       "solution": "A path is an arrangement of $3$ right, $4$ forward, and $5$ up moves — $12$ moves total:\n$$\\frac{12!}{3!\\,4!\\,5!} = 27{,}720.$$",
-      "tags": ["lattice paths", "multinomial"]
+      "tags": [
+        "lattice paths",
+        "multinomial"
+      ]
     },
     {
       "id": "444-1.1.17",
@@ -271,7 +322,10 @@
       "answer": 24,
       "tolerance": 0,
       "solution": "Among $8$ people there are $\\binom{8}{2} = 28$ possible handshakes. The $4$ within-couple handshakes don't occur:\n$$28 - 4 = 24.$$",
-      "tags": ["handshakes", "counting"]
+      "tags": [
+        "handshakes",
+        "counting"
+      ]
     },
     {
       "id": "444-1.1.18",
@@ -286,7 +340,10 @@
       "answer": 216,
       "tolerance": 0,
       "solution": "Along each axis, $\\lfloor 20/3 \\rfloor = 6$ cubes fit, with $2$ units left over. Packing axis-aligned:\n$$6 \\times 6 \\times 6 = 216.$$\nThe leftover $2$-unit slabs are too thin to hold another $3$-cube in that direction, so $216$ is the answer.",
-      "tags": ["packing", "geometry"]
+      "tags": [
+        "packing",
+        "geometry"
+      ]
     },
     {
       "id": "444-1.1.19",
@@ -301,7 +358,10 @@
       "answer": 0.03902,
       "tolerance": 0.0005,
       "solution": "The units digit is in $\\{1, 3, 7, 9\\}$ exactly when the product is divisible by neither $2$ nor $5$ — which requires every factor to be odd and not $5$. That leaves $\\{1, 3, 7, 9\\}$: $4$ of the $9$ choices for each draw, independently:\n$$P = \\left(\\frac{4}{9}\\right)^4 = \\frac{256}{6561} \\approx 0.0390.$$",
-      "tags": ["number theory", "independence"]
+      "tags": [
+        "number theory",
+        "independence"
+      ]
     },
     {
       "id": "444-1.1.20",
@@ -316,7 +376,10 @@
       "answer": 0.21,
       "tolerance": 0.005,
       "solution": "This is a hypergeometric probability — choose which $2$ of the $4$ aces and which $11$ of the $48$ non-aces land in the hand:\n$$P = \\frac{\\binom{4}{2}\\binom{48}{11}}{\\binom{52}{13}} = \\frac{4446}{20825} \\approx 0.2135 \\approx 0.21.$$",
-      "tags": ["cards", "hypergeometric"]
+      "tags": [
+        "cards",
+        "hypergeometric"
+      ]
     },
     {
       "id": "444-2.2.4",
@@ -331,7 +394,11 @@
       "answer": 0.1084,
       "tolerance": 0.0005,
       "solution": "Ruin at exactly $m = n + 2k$ rounds means the walk first hits $-n$ (net) at step $m$: that requires $k$ wins and $n + k$ losses. The hitting time theorem gives\n$$P(T = m) = \\frac{n}{m}\\,P(S_m = -n) = \\frac{n}{m}\\binom{m}{k}p^k(1-p)^{n+k}.$$\nWith $p = 1/3$, $n = 5$, $k = 3$, $m = 11$:\n$$\\frac{5}{11}\\binom{11}{3}\\left(\\frac13\\right)^3\\left(\\frac23\\right)^8 = \\frac{6400}{59049} \\approx 0.1084.$$\n(Verified by simulation.) The $\\frac{n}{m}$ factor is exactly the cycle-lemma correction that turns \"ends at $-n$\" into \"first hits $-n$.\"",
-      "tags": ["gambler's ruin", "hitting time", "first passage"]
+      "tags": [
+        "gambler's ruin",
+        "hitting time",
+        "first passage"
+      ]
     },
     {
       "id": "444-2.2.13",
@@ -346,7 +413,10 @@
       "answer": 0.20792,
       "tolerance": 0.0005,
       "solution": "Treat each $A$-vote as $+1$ and each $B$-vote as $-1$: we need the fraction of arrangements whose partial sums never go negative. By the reflection principle, the number of nonnegative paths with $n$ up-steps and $m$ down-steps is\n$$\\binom{n+m}{m} - \\binom{n+m}{m-1},$$\nso\n$$Q(n,m) = 1 - \\frac{\\binom{n+m}{m-1}}{\\binom{n+m}{m}} = 1 - \\frac{m}{n+1} = \\frac{n+1-m}{n+1}.$$\nFor $n = 100$, $m = 80$: $Q = \\frac{21}{101} \\approx 0.2079$.\n(The strict version of this — $A$ always strictly ahead — is the classic ballot theorem $\\frac{n-m}{n+m}$.)",
-      "tags": ["ballot theorem", "reflection principle"]
+      "tags": [
+        "ballot theorem",
+        "reflection principle"
+      ]
     },
     {
       "id": "444-2.2.19",
@@ -361,7 +431,10 @@
       "answer": 0.5039,
       "tolerance": 0.0005,
       "solution": "The best player always reaches the final. The second-best reaches the final if and only if they are in the opposite half of the bracket from the best player — otherwise they meet earlier and #2 is eliminated.\n\nGiven #1's slot, the other $127$ slots are equally likely for #2, and $64$ of them lie in the opposite half:\n$$P = \\frac{64}{127} \\approx 0.5039.$$",
-      "tags": ["tournaments", "symmetry"]
+      "tags": [
+        "tournaments",
+        "symmetry"
+      ]
     },
     {
       "id": "444-2.2.21",
@@ -376,7 +449,10 @@
       "answer": 0.4,
       "tolerance": 0.005,
       "solution": "With $p = \\frac13$, $q = \\frac23$, both times are Geometric($p$):\n$$P(T_1 < T_2) = \\sum_{k=1}^{\\infty} p q^{k-1} \\cdot q^{k} = \\frac{pq}{1 - q^2} = \\frac{(1/3)(2/3)}{1 - 4/9} = \\frac{2}{5}.$$\nSanity check by symmetry: $P(T_1 < T_2) = P(T_2 < T_1)$ and $P(\\text{tie}) = \\frac{p^2 \\cdot (\\text{restart factor})}{\\,} = \\frac{p}{2-p} = \\frac15$, and indeed $\\frac25 + \\frac25 + \\frac15 = 1$.",
-      "tags": ["geometric distribution", "races"]
+      "tags": [
+        "geometric distribution",
+        "races"
+      ]
     },
     {
       "id": "444-2.2.23",
@@ -391,7 +467,10 @@
       "answer": 0.59259,
       "tolerance": 0.0005,
       "solution": "Let $A_{ab}$ be the probability Alice wins when Alice has $a$ heads, Bob has $b$, and Alice is about to flip.\n\n$A_{11} = \\tfrac12 + \\tfrac12\\left(\\tfrac12\\cdot 0 + \\tfrac12 A_{11}\\right) \\Rightarrow A_{11} = \\tfrac23$.\n\n$A_{10} = \\tfrac12 + \\tfrac12\\left(\\tfrac12 A_{11} + \\tfrac12 A_{10}\\right) \\Rightarrow A_{10} = \\tfrac89$.\n\n$A_{01} = \\tfrac12\\left(\\tfrac12\\cdot 0 + \\tfrac12 A_{11}\\right) + \\tfrac12\\left(\\tfrac12\\cdot 0 + \\tfrac12 A_{01}\\right) \\Rightarrow A_{01} = \\tfrac29$.\n\n$$A_{00} = \\tfrac12\\left(\\tfrac12 A_{11} + \\tfrac12 A_{10}\\right) + \\tfrac12\\left(\\tfrac12 A_{01} + \\tfrac12 A_{00}\\right) = \\tfrac49 + \\tfrac14 A_{00} \\;\\Rightarrow\\; A_{00} = \\frac{16}{27} \\approx 0.5926.$$\nGoing first is worth about $9.3$ percentage points here.",
-      "tags": ["first-step analysis", "coins"]
+      "tags": [
+        "first-step analysis",
+        "coins"
+      ]
     },
     {
       "id": "444-2.2.31",
@@ -406,7 +485,10 @@
       "answer": 0.66667,
       "tolerance": 0.005,
       "solution": "Your initial pick is the car with probability $\\frac13$, a goat with probability $\\frac23$ — and the host's action can't change that, because he can always open a goat door regardless of your pick.\n\nIf your initial pick was a goat (probability $\\frac23$), the host's reveal eliminates the *other* goat, so switching wins the car. If it was the car ($\\frac13$), switching loses.\n$$P(\\text{win} \\mid \\text{switch}) = \\frac23.$$\nThe key assumption doing the work: the host *knowingly* reveals a goat. If he opened a random unpicked door and happened to show a goat, the answer would be $\\frac12$.",
-      "tags": ["monty hall", "bayes"]
+      "tags": [
+        "monty hall",
+        "bayes"
+      ]
     },
     {
       "id": "444-2.2.54",
@@ -421,7 +503,10 @@
       "answer": 3,
       "tolerance": 0.01,
       "solution": "For the first 6 to arrive on roll $t$ with no 5 appearing earlier, the first $t-1$ rolls must all land in $\\{1,2,3,4\\}$:\n$$P(T = t,\\ \\text{6 before 5}) = \\left(\\frac46\\right)^{t-1}\\frac16, \\qquad P(\\text{6 before 5}) = \\frac12.$$\nSo conditionally $P(T = t \\mid \\text{6 first}) = 2\\left(\\frac23\\right)^{t-1}\\frac16 = \\left(\\frac23\\right)^{t-1}\\frac13$ — geometric with success probability $\\frac13$, giving\n$$E[T \\mid \\text{6 before 5}] = 3.$$\nIt is *less* than 6: long games give the 5 more chances to show up first, so conditioning on \"6 first\" favors short games. (A very common interview trap is answering 6.)",
-      "tags": ["conditional expectation", "dice"]
+      "tags": [
+        "conditional expectation",
+        "dice"
+      ]
     },
     {
       "id": "444-6.2.5",
@@ -436,7 +521,10 @@
       "answer": 3.2783,
       "tolerance": 0.005,
       "solution": "After any roll, only the last value matters. Let $E_v$ be the expected additional rolls when the last roll was $v$. A last roll of $1$ or $6$ is \"matched\" by $2$ of the $6$ next values, $2$–$5$ by $3$ of $6$. By symmetry let $a = E_1 = E_6$, $b = E_2 = E_5$, $c = E_3 = E_4$:\n$$a = 1 + \\tfrac16(a + b + c + c),\\quad b = 1 + \\tfrac16(a + b + c),\\quad c = 1 + \\tfrac16(a + b),$$\n(each equation keeps only the *non-matching* next values). Solving gives $a = \\frac{72}{23},\\ b = \\frac{289}{115},\\ c = \\frac{252}{115}$, and the answer is\n$$1 + \\frac{2a + 2b + 2c}{6} = \\frac{377}{115} \\approx 3.278.$$\n(Verified by simulation.)",
-      "tags": ["dice", "expected time"]
+      "tags": [
+        "dice",
+        "expected time"
+      ]
     },
     {
       "id": "444-6.2.8",
@@ -451,7 +539,10 @@
       "answer": 1.27324,
       "tolerance": 0.005,
       "solution": "By rotational symmetry, fix one endpoint; the central angle $\\theta$ to the other is $\\mathrm{Unif}(0, 2\\pi)$, and the chord length is $2\\sin(\\theta/2)$:\n$$E[L] = \\frac{1}{2\\pi}\\int_0^{2\\pi} 2\\sin\\!\\left(\\frac{\\theta}{2}\\right) d\\theta = \\frac{1}{2\\pi}\\Big[-4\\cos(\\theta/2)\\Big]_0^{2\\pi} = \\frac{8}{2\\pi} = \\frac{4}{\\pi} \\approx 1.273.$$",
-      "tags": ["circle", "continuous"]
+      "tags": [
+        "circle",
+        "continuous"
+      ]
     },
     {
       "id": "444-6.2.17",
@@ -466,7 +557,10 @@
       "answer": 3.28,
       "tolerance": 0.01,
       "solution": "When $2k$ loose ends remain, you pick one end; of the other $2k - 1$ ends, exactly one is the *other end of the same strand* — connecting to it closes a loop. So that step closes a loop with probability $\\frac{1}{2k-1}$, independent of the past configuration.\n\nBy linearity over the 100 connection steps ($k = 100, 99, \\dots, 1$):\n$$E[\\text{loops}] = \\sum_{k=1}^{100} \\frac{1}{2k-1} = 1 + \\frac13 + \\frac15 + \\cdots + \\frac{1}{199} \\approx 3.28.$$\nRemarkably small — 100 noodles yield only about 3 loops on average, and doubling the noodles adds roughly $\\tfrac12\\ln 2 \\approx 0.35$ more.",
-      "tags": ["linearity of expectation", "jane street classic"]
+      "tags": [
+        "linearity of expectation",
+        "jane street classic"
+      ]
     },
     {
       "id": "444-6.2.21",
@@ -481,7 +575,10 @@
       "answer": 2,
       "tolerance": 0.01,
       "solution": "For $t \\le 1$, the region $\\{x_1 + \\cdots + x_n \\le t\\}$ inside the unit cube is a simplex of volume $\\frac{t^n}{n!}$, so $P(N > n) = \\frac{t^n}{n!}$. Then\n$$E[N] = \\sum_{n \\ge 0} P(N > n) = \\sum_{n \\ge 0} \\frac{t^n}{n!} = e^{t}.$$\nWith $t = \\ln 2$: $E[N] = e^{\\ln 2} = 2$ — exactly.\n(The famous special case $t = 1$ gives $E[N] = e$: on average you need $e$ uniforms to exceed a sum of 1.)",
-      "tags": ["uniform sums", "elegant"]
+      "tags": [
+        "uniform sums",
+        "elegant"
+      ]
     },
     {
       "id": "444-6.2.25",
@@ -496,7 +593,10 @@
       "answer": 554,
       "tolerance": 0.5,
       "solution": "With threshold $n$: each roll succeeds (face $\\ge n$) with $p = \\frac{21-n}{20}$, and a successful face averages $\\bar{v} = \\frac{n+20}{2}$. Each \"cycle\" (roll until success, then take) consumes $\\frac{1}{p} + 1$ actions on average and pays $\\bar{v}$, so the payout rate per action is roughly\n$$\\frac{\\bar v\\, p}{1 + p}.$$\nMaximizing over integer $n$ (or exactly, via the dynamic program $V_a = p(\\bar v + V_{a-2}) + (1-p)V_{a-1}$ over the 100 actions) gives the optimum at $n = 6$:\n$$E[\\text{payout}] \\approx \\$553.96 \\approx \\$554.$$\nLow thresholds waste takes on small faces; high thresholds waste rolls hunting for rare ones. $n=6$ takes about $\\tfrac34$ of rolls at an average of $13$ per take.",
-      "tags": ["threshold strategy", "dice games"]
+      "tags": [
+        "threshold strategy",
+        "dice games"
+      ]
     },
     {
       "id": "444-6.2.27",
@@ -511,7 +611,10 @@
       "answer": 7,
       "tolerance": 0.01,
       "solution": "By heads/tails symmetry, the state is just the current run length. Let $E_1, E_2$ be the expected remaining tosses with a run of 1 or 2 (of either symbol):\n$$E_1 = 1 + \\tfrac12 E_2 + \\tfrac12 E_1, \\qquad E_2 = 1 + \\tfrac12 \\cdot 0 + \\tfrac12 E_1$$\n(continuing the run advances it; switching symbols starts a new run of 1). The first equation gives $E_1 = 2 + E_2$; substituting, $E_1 = 3 + \\tfrac12 E_1$, so $E_1 = 6$.\n\nAdding the very first toss (which always starts a run of 1):\n$$E = 1 + E_1 = 7.$$",
-      "tags": ["runs", "expected time"]
+      "tags": [
+        "runs",
+        "expected time"
+      ]
     },
     {
       "id": "444-6.2.31",
@@ -526,7 +629,10 @@
       "answer": 4,
       "tolerance": 0.01,
       "solution": "Let $V$ be the optimal value. After a roll showing $f$, Alice takes the better of stopping ($f$) or paying $\\$1$ to be back at the start ($V - 1$):\n$$V = \\frac16\\sum_{f=1}^{6} \\max(f,\\ V-1).$$\nGuess the accept set $\\{4,5,6\\}$ (i.e. $3 \\le V-1 \\le 4$): $V = \\frac16(3 \\cdot (V-1) + 4 + 5 + 6) = \\frac{V-1}{2} + \\frac{15}{6}$, giving $V = 4$ — consistent, since $V - 1 = 3$ exactly. So Alice re-rolls on 1, 2 (and is indifferent on 3), and the game is worth\n$$V = \\$4.$$",
-      "tags": ["fixed point", "dice games"]
+      "tags": [
+        "fixed point",
+        "dice games"
+      ]
     },
     {
       "id": "444-6.2.41",
@@ -541,7 +647,10 @@
       "answer": 0.66667,
       "tolerance": 0.005,
       "solution": "Key observation: once $HH$ appears, your friend is certain to win — from $HH$, tails completes $HHT$, and heads keeps the state at $HH$, so $HHT$ arrives before any $HTH$ can form.\n\nLet $a$ be your (HTH) win probability from state \"$H$\" (fresh head, no progress beyond it). From $H$: heads ($\\tfrac12$) reaches $HH$ — you lose; tails reaches $HT$, from which heads ($\\tfrac12$) completes $HTH$ — you win — and tails ($\\tfrac12$) resets to no-progress, which returns to state $H$ when the next head arrives (worth $a$):\n$$a = \\tfrac12\\cdot 0 + \\tfrac12\\left(\\tfrac12\\cdot 1 + \\tfrac12\\,a\\right) \\;\\Rightarrow\\; a = \\tfrac13.$$\nThe game always begins by reaching state $H$, so you win with probability $\\tfrac13$ and your friend wins with probability\n$$\\frac{2}{3}.$$\nThis non-transitivity (every pattern is beaten by some other) is Penney's game.",
-      "tags": ["penney's game", "patterns"]
+      "tags": [
+        "penney's game",
+        "patterns"
+      ]
     },
     {
       "id": "444-6.2.43",
@@ -556,7 +665,10 @@
       "answer": 8,
       "tolerance": 0.01,
       "solution": "The cube graph is 3-regular, so the random walk's stationary distribution is uniform over the $8$ vertices: $\\pi_v = \\frac18$. For any irreducible Markov chain, the expected return time to a state is the reciprocal of its stationary probability:\n$$E[\\text{return}] = \\frac{1}{\\pi_v} = 8.$$\nNo system of equations needed — this works for any regular graph (return time = number of vertices).",
-      "tags": ["random walk on graphs", "stationary distribution"]
+      "tags": [
+        "random walk on graphs",
+        "stationary distribution"
+      ]
     },
     {
       "id": "444-6.2.52",
@@ -571,7 +683,10 @@
       "answer": 10.6,
       "tolerance": 0.01,
       "solution": "By symmetry, the $4$ aces divide the $48$ non-aces into $5$ gaps (before the first ace, between aces, after the last), and each non-ace is equally likely to fall in any gap. So the expected number of non-aces before the first ace is $\\frac{48}{5}$, and\n$$E = \\frac{48}{5} + 1 = \\frac{53}{5} = 10.6.$$\nGeneral form: first of $k$ special cards in a deck of $n$ appears at expected position $\\frac{n+1}{k+1}$.",
-      "tags": ["symmetry", "cards"]
+      "tags": [
+        "symmetry",
+        "cards"
+      ]
     },
     {
       "id": "444-6.2.59",
@@ -586,7 +701,10 @@
       "answer": 15,
       "tolerance": 0.01,
       "solution": "Take any two chords: their $4$ endpoints are $4$ uniformly random points on the circle. The chords cross exactly when the endpoints alternate around the circle — $1$ of the $3$ equally likely pairings of $4$ points into two chords. So each pair of chords crosses with probability $\\frac13$, and by linearity:\n$$E[\\text{intersections}] = \\binom{10}{2}\\cdot\\frac13 = \\frac{45}{3} = 15.$$",
-      "tags": ["linearity of expectation", "circle"]
+      "tags": [
+        "linearity of expectation",
+        "circle"
+      ]
     },
     {
       "id": "444-6.2.77",
@@ -601,7 +719,9 @@
       "answer": 8.3333,
       "tolerance": 0.005,
       "solution": "This is the coupon-collector problem with $4$ equally likely suits. When $k$ suits are still missing, each draw finds a new one with probability $\\frac{k}{4}$, taking $\\frac{4}{k}$ draws in expectation:\n$$E = \\frac44 + \\frac43 + \\frac42 + \\frac41 = 4\\left(1 + \\tfrac12 + \\tfrac13 + \\tfrac14\\right) = \\frac{25}{3} \\approx 8.33.$$",
-      "tags": ["coupon collector"]
+      "tags": [
+        "coupon collector"
+      ]
     },
     {
       "id": "444-6.2.82",
@@ -616,7 +736,10 @@
       "answer": 3.7222,
       "tolerance": 0.005,
       "solution": "After a first roll of $f$, a second roll of $s$ is safe when $s \\le 6 - f$ (paying $s$) and costly otherwise (paying $-f$, which happens for $f$ of the six values):\n$$EV_{re}(f) = \\frac{1}{6}\\left[\\frac{(6-f)(7-f)}{2} - f^2\\right].$$\nEvaluating: $EV_{re}(1) = \\frac{7}{3} > 1$, but $EV_{re}(2) = 1 < 2$, and it only gets worse for higher $f$. So the only profitable re-roll is on a first roll of 1:\n$$E = \\frac16\\cdot\\frac73 + \\frac{2+3+4+5+6}{6} = \\frac{7}{18} + \\frac{20}{6} = \\frac{67}{18} \\approx 3.72.$$\nHigh first rolls are doubly bad to re-roll: the safe window shrinks *and* the forfeit grows.",
-      "tags": ["decision making", "dice games"]
+      "tags": [
+        "decision making",
+        "dice games"
+      ]
     },
     {
       "id": "444-1.1.21",
@@ -631,7 +754,10 @@
       "answer": 2,
       "tolerance": 0,
       "solution": "The full sum telescopes by the standard identity:\n$$\\sum_{k=1}^{300} F_k = F_{302} - 1.$$\nFor the every-third sum, note $F_{3k} = \\tfrac12\\left(F_{3k+2} - F_{3k-1}\\right)$ (check: both sides satisfy it since $F_{3k+2} = F_{3k+1} + F_{3k} = 2F_{3k} + F_{3k-1}$). Telescoping:\n$$\\sum_{k=1}^{100} F_{3k} = \\frac{F_{302} - F_2}{2} = \\frac{F_{302} - 1}{2}.$$\nThe ratio is exactly\n$$\\frac{F_{302} - 1}{(F_{302} - 1)/2} = 2.$$\nEquivalently: every third Fibonacci sum captures exactly half of the total — a consequence of $F_{3k}$ being precisely the even Fibonacci numbers.",
-      "tags": ["fibonacci", "telescoping"]
+      "tags": [
+        "fibonacci",
+        "telescoping"
+      ]
     },
     {
       "id": "444-1.1.22",
@@ -646,7 +772,10 @@
       "answer": 0.41667,
       "tolerance": 0.005,
       "solution": "By symmetry $P(X_1 < X_2) = P(X_1 > X_2)$, and $P(X_1 = X_2) = \\frac{6}{36} = \\frac16$. So\n$$P(X_1 < X_2) = \\frac{1 - \\frac16}{2} = \\frac{5}{12} \\approx 0.4167.$$",
-      "tags": ["dice", "symmetry"]
+      "tags": [
+        "dice",
+        "symmetry"
+      ]
     },
     {
       "id": "444-1.1.24",
@@ -661,7 +790,9 @@
       "answer": 300,
       "tolerance": 0,
       "solution": "$LOLLIPOP$ has $L^3\\,O^2\\,P^2\\,I^1$. The bookend letter needs $\\ge 2$ copies: L, O, or P.\n\n- **L...L**: middle is $\\{L, O, O, P, P, I\\}$: $\\frac{6!}{2!\\,2!} = 180$.\n- **O...O**: middle is $\\{L, L, L, P, P, I\\}$: $\\frac{6!}{3!\\,2!} = 60$.\n- **P...P**: middle is $\\{L, L, L, O, O, I\\}$: $\\frac{6!}{3!\\,2!} = 60$.\n\n$$180 + 60 + 60 = 300.$$",
-      "tags": ["multiset permutations"]
+      "tags": [
+        "multiset permutations"
+      ]
     },
     {
       "id": "444-1.1.28",
@@ -676,7 +807,10 @@
       "answer": 0.07824,
       "tolerance": 0.0005,
       "solution": "Whichever rank the removed pair had, the remaining $38$ cards consist of one rank with $2$ copies and nine ranks with $4$ copies. The number of matching pairs available is\n$$\\binom{2}{2} + 9\\binom{4}{2} = 1 + 54 = 55,$$\nout of $\\binom{38}{2} = 703$ equally likely draws:\n$$P = \\frac{55}{703} \\approx 0.0782.$$",
-      "tags": ["cards", "counting"]
+      "tags": [
+        "cards",
+        "counting"
+      ]
     },
     {
       "id": "444-1.1.36",
@@ -691,7 +825,10 @@
       "answer": 0.8,
       "tolerance": 0.005,
       "solution": "The total mass is $1221$, so 206's side is heavier iff its three weights sum to $\\ge 611$ (ties are impossible: $610.5$ isn't an integer), i.e. iff 206's two partners sum to $\\ge 405$.\n\nThe $\\binom{5}{2} = 10$ equally likely partner pairs from $\\{201,\\dots,205\\}$ have sums $403, 404, 405, \\dots, 409$ — only $\\{201,202\\}$ (sum $403$) and $\\{201,203\\}$ (sum $404$) fail:\n$$P = \\frac{8}{10} = 0.8.$$",
-      "tags": ["enumeration", "symmetry"]
+      "tags": [
+        "enumeration",
+        "symmetry"
+      ]
     },
     {
       "id": "444-1.1.37",
@@ -706,7 +843,10 @@
       "answer": 233,
       "tolerance": 0,
       "solution": "A height-$n$ tower ends in either a 1-block (on a height-$(n{-}1)$ tower) or a 2-block (on a height-$(n{-}2)$ tower):\n$$a_n = a_{n-1} + a_{n-2}, \\qquad a_1 = 1,\\ a_2 = 2.$$\nThis is the Fibonacci sequence shifted: $a_n = F_{n+1}$. So $a_{12} = F_{13} = 233$.",
-      "tags": ["fibonacci", "tilings"]
+      "tags": [
+        "fibonacci",
+        "tilings"
+      ]
     },
     {
       "id": "444-1.1.39",
@@ -721,7 +861,10 @@
       "answer": 0.88571,
       "tolerance": 0.0005,
       "solution": "Work with the complement — all $3$ shinies among the first $4$ positions. All $\\binom{7}{3} = 35$ placements of the shiny positions are equally likely, and $\\binom{4}{3} = 4$ of them put all three in the first four draws:\n$$P(T \\le 4) = \\frac{4}{35} \\quad\\Rightarrow\\quad P(T > 4) = \\frac{31}{35} \\approx 0.886.$$",
-      "tags": ["negative hypergeometric", "complement"]
+      "tags": [
+        "negative hypergeometric",
+        "complement"
+      ]
     },
     {
       "id": "444-1.1.40",
@@ -736,7 +879,10 @@
       "answer": 0.07692,
       "tolerance": 0.0005,
       "solution": "Ignore the other 39 cards entirely — the event depends only on the relative order of the two of hearts and the $12$ face cards. All $13!$ orderings of those cards are equally likely, and we need the two of hearts first among them:\n$$P = \\frac{1}{13} \\approx 0.0769.$$",
-      "tags": ["symmetry", "cards"]
+      "tags": [
+        "symmetry",
+        "cards"
+      ]
     },
     {
       "id": "444-1.2.2",
@@ -751,7 +897,10 @@
       "answer": 235,
       "tolerance": 0,
       "solution": "Such a subset is one block of two consecutive integers (a domino) plus $t$ isolated elements, with every pair of chosen items separated by a gap of at least $1$ (so no extra adjacencies form).\n\nPlacing $t+1$ items (sizes $2, 1, \\dots, 1$) in a row of $10$ with internal gaps $\\ge 1$ leaves $10 - (t+2) - t$ free slack; distributing it gives $\\binom{9-t}{t+1}$ position patterns, times $(t+1)$ choices of which item is the domino:\n$$\\sum_{t=0}^{4} (t+1)\\binom{9-t}{t+1} = 9 + 56 + 105 + 60 + 5 = 235.$$\n(Verified by direct enumeration of all $2^{10}$ subsets.)",
-      "tags": ["gap method", "counting"]
+      "tags": [
+        "gap method",
+        "counting"
+      ]
     },
     {
       "id": "444-1.2.5",
@@ -766,7 +915,10 @@
       "answer": 0.12013,
       "tolerance": 0.0005,
       "solution": "Consider $D = $ (Tort's position) $-$ (Bort's position), which starts at $-4$. Each turtle's step changes $D$ by $\\pm 1$ independently, so after both walk 10 steps, $D$ has moved by the sum of $20$ IID $\\pm 1$ steps. They meet iff that sum is $+4$, i.e. $12$ ups and $8$ downs:\n$$P = \\frac{\\binom{20}{8}}{2^{20}} = \\frac{125970}{1048576} \\approx 0.1201.$$",
-      "tags": ["difference walk", "meeting"]
+      "tags": [
+        "difference walk",
+        "meeting"
+      ]
     },
     {
       "id": "444-1.2.7",
@@ -781,7 +933,11 @@
       "answer": 0.05,
       "tolerance": 0.0005,
       "solution": "Each $\\$5$ payer is a $+1$ (a five enters the till), each $\\$10$ payer a $-1$ (a five leaves). The cashier survives iff the running sum never goes negative — a nonnegative lattice path with $n = 19$ ups and $m = 19$ downs.\n\nBy the reflection principle (weak ballot problem):\n$$P = \\frac{n + 1 - m}{n + 1} = \\frac{1}{20} = 0.05.$$\nWith equal counts, survival is just $\\frac{1}{n+1}$ — the Catalan fraction $\\frac{C_n \\cdot \\binom{2n}{n}^{-1}}{}$ in disguise: of all $\\binom{38}{19}$ orderings, a Catalan-number's worth are safe.",
-      "tags": ["catalan", "ballot theorem", "reflection principle"]
+      "tags": [
+        "catalan",
+        "ballot theorem",
+        "reflection principle"
+      ]
     },
     {
       "id": "444-1.2.16",
@@ -796,7 +952,10 @@
       "answer": 0.1055,
       "tolerance": 0.0005,
       "solution": "Deal the aces one at a time and track which hands they land in. The first ace lands anywhere; the second must land in one of the $39$ slots of the other three hands out of $51$ remaining; and so on:\n$$P = \\frac{52}{52}\\cdot\\frac{39}{51}\\cdot\\frac{26}{50}\\cdot\\frac{13}{49} = \\frac{4!\\,\\cdot 13^4}{52\\cdot 51\\cdot 50\\cdot 49} = \\frac{2197}{20825} \\approx 0.1055.$$\nOnly about a 1-in-9.5 chance — rarer than most people's intuition suggests.",
-      "tags": ["bridge", "cards"]
+      "tags": [
+        "bridge",
+        "cards"
+      ]
     },
     {
       "id": "444-1.2.20",
@@ -811,7 +970,9 @@
       "answer": 0.38462,
       "tolerance": 0.0005,
       "solution": "Amy stops when the fifth red cherry is drawn. The bowl is empty at that moment iff the very last cherry in the random order is red. By symmetry, each of the $13$ cherries is equally likely to be last:\n$$P = \\frac{5}{13} \\approx 0.3846.$$",
-      "tags": ["symmetry"]
+      "tags": [
+        "symmetry"
+      ]
     },
     {
       "id": "444-1.2.21",
@@ -826,7 +987,9 @@
       "answer": 12,
       "tolerance": 0.01,
       "solution": "There are $24$ adjacent position pairs. Any given pair is boy–girl (in either order) with probability\n$$2\\cdot\\frac{15}{25}\\cdot\\frac{10}{24} = \\frac12,$$\nso by linearity of expectation\n$$E = 24 \\cdot \\frac12 = 12.$$\nNo independence needed — linearity doesn't care that adjacent pairs overlap.",
-      "tags": ["linearity of expectation"]
+      "tags": [
+        "linearity of expectation"
+      ]
     },
     {
       "id": "444-1.2.27",
@@ -841,7 +1004,11 @@
       "answer": 0.08691,
       "tolerance": 0.0005,
       "solution": "A valid sequence decomposes uniquely into blocks $H$ (length 1) and $TT$ (length 2) — even tail-runs are just stacked $TT$ blocks. So valid sequences of length $n$ are tilings counted by\n$$a_n = a_{n-1} + a_{n-2}, \\qquad a_0 = a_1 = 1,$$\nthe Fibonacci numbers: $a_{10} = F_{11} = 89$. Hence\n$$P = \\frac{89}{2^{10}} = \\frac{89}{1024} \\approx 0.0869.$$\n(Direct enumeration of all 1024 sequences confirms 89.)",
-      "tags": ["fibonacci", "tilings", "runs"]
+      "tags": [
+        "fibonacci",
+        "tilings",
+        "runs"
+      ]
     },
     {
       "id": "444-1.2.29",
@@ -856,7 +1023,10 @@
       "answer": 30,
       "tolerance": 0,
       "solution": "There are $6!$ ways to place the labels, and the cube's rotation group has $24$ elements ($6$ faces can point down, $4$ rotations each). Since every rotation produces a distinct labeling (no labeling is rotation-symmetric when all faces differ):\n$$\\frac{6!}{24} = \\frac{720}{24} = 30.$$",
-      "tags": ["group actions", "counting"]
+      "tags": [
+        "group actions",
+        "counting"
+      ]
     },
     {
       "id": "444-1.2.36",
@@ -871,7 +1041,10 @@
       "answer": 0.05401,
       "tolerance": 0.0005,
       "solution": "Given no one picked 7, the seven picks are IID uniform on $\\{1, \\dots, 6\\}$. \"7 is the only missing value\" now means all of $1$–$6$ appear among the 7 picks — the picks form a surjection onto $\\{1,\\dots,6\\}$.\n\nA surjection from 7 elements onto 6 doubles up exactly one value: choose the doubled value ($6$), choose which two picks form the double ($\\binom{7}{2} = 21$), and assign the rest ($5!$):\n$$\\frac{6 \\cdot 21 \\cdot 120}{6^7} = \\frac{15120}{279936} = \\frac{35}{648} \\approx 0.054.$$",
-      "tags": ["surjections", "conditioning"]
+      "tags": [
+        "surjections",
+        "conditioning"
+      ]
     },
     {
       "id": "444-1.2.48",
@@ -886,7 +1059,10 @@
       "answer": 11440,
       "tolerance": 0,
       "solution": "A non-decreasing code is determined entirely by its multiset of digits: choose how many of each digit $0$–$9$ appears, with the counts summing to $7$. By stars and bars:\n$$\\binom{7 + 10 - 1}{7} = \\binom{16}{7} = 11440.$$",
-      "tags": ["stars and bars", "multisets"]
+      "tags": [
+        "stars and bars",
+        "multisets"
+      ]
     },
     {
       "id": "444-1.2.49",
@@ -901,7 +1077,10 @@
       "answer": 56,
       "tolerance": 0,
       "solution": "Adding the $k$th line in general position crosses the $k-1$ existing lines in $k-1$ points, splitting the new line into $k$ pieces — each piece cuts one region in two, adding $k$ regions. Starting from $1$ region:\n$$R(n) = 1 + \\sum_{k=1}^{n} k = 1 + n + \\binom{n}{2}.$$\nFor $n = 10$: $1 + 10 + 45 = 56$.",
-      "tags": ["incremental counting", "geometry"]
+      "tags": [
+        "incremental counting",
+        "geometry"
+      ]
     },
     {
       "id": "444-1.2.50",
@@ -916,7 +1095,10 @@
       "answer": 0.42257,
       "tolerance": 0.0005,
       "solution": "Count the favorable hands directly:\n$$\\underbrace{13}_{\\text{pair rank}}\\cdot\\underbrace{\\binom{4}{2}}_{\\text{pair suits}}\\cdot\\underbrace{\\binom{12}{3}}_{\\text{other ranks}}\\cdot\\underbrace{4^3}_{\\text{their suits}} = 1{,}098{,}240,$$\nout of $\\binom{52}{5} = 2{,}598{,}960$ hands:\n$$P = \\frac{1098240}{2598960} = \\frac{352}{833} \\approx 0.4226.$$\nNearly a coin flip — one pair is the most common made hand in poker.",
-      "tags": ["poker", "counting"]
+      "tags": [
+        "poker",
+        "counting"
+      ]
     },
     {
       "id": "444-2.1.2",
@@ -931,7 +1113,10 @@
       "answer": 0.75,
       "tolerance": 0.005,
       "solution": "Rolls that are neither sum restart the situation, so only the first \"relevant\" roll matters. A sum of 4 has $3$ of $36$ outcomes, a sum of 2 has $1$:\n$$P = \\frac{3/36}{3/36 + 1/36} = \\frac{3}{4}.$$\nThis \"race between events\" reduction — ignore everything that isn't one of the two targets — is worth internalizing; it reappears in craps-style problems constantly.",
-      "tags": ["competing events", "dice"]
+      "tags": [
+        "competing events",
+        "dice"
+      ]
     },
     {
       "id": "444-2.1.3",
@@ -946,7 +1131,9 @@
       "answer": 0.74074,
       "tolerance": 0.0005,
       "solution": "The median is $< m$ iff at least $2$ of the $3$ IID draws are $< m$. With each draw below $m$ with probability $m$:\n$$P = \\binom{3}{2}m^2(1-m) + m^3 = 3m^2 - 2m^3.$$\nAt $m = \\tfrac23$: $3\\cdot\\tfrac49 - 2\\cdot\\tfrac{8}{27} = \\tfrac{20}{27} \\approx 0.7407.$",
-      "tags": ["order statistics"]
+      "tags": [
+        "order statistics"
+      ]
     },
     {
       "id": "444-2.1.5",
@@ -961,7 +1148,10 @@
       "answer": 0.25,
       "tolerance": 0.005,
       "solution": "If any two ants walk toward each other along the same edge, they collide; two ants aiming at the same vertex also meet. The only collision-free outcomes are all three moving clockwise, or all three counter-clockwise — $2$ of the $2^3 = 8$ equally likely choices:\n$$P = \\frac{2}{8} = \\frac14.$$",
-      "tags": ["symmetry", "classic"]
+      "tags": [
+        "symmetry",
+        "classic"
+      ]
     },
     {
       "id": "444-2.1.10",
@@ -976,7 +1166,9 @@
       "answer": 0.88235,
       "tolerance": 0.0005,
       "solution": "$$P(\\text{knew} \\mid \\text{correct}) = \\frac{0.6 \\cdot 1}{0.6 \\cdot 1 + 0.4 \\cdot \\tfrac15} = \\frac{0.6}{0.68} = \\frac{15}{17} \\approx 0.882.$$\nGuessing correctly is rare enough ($0.08$ overall) that a correct answer is strong evidence of knowledge.",
-      "tags": ["bayes"]
+      "tags": [
+        "bayes"
+      ]
     },
     {
       "id": "444-2.1.12",
@@ -991,7 +1183,10 @@
       "answer": 0.66667,
       "tolerance": 0.005,
       "solution": "For a fair game, the classic gambler's-ruin result: starting with $a$ against an opponent with $b$, you go broke with probability $\\frac{b}{a+b}$. (The process is a martingale — expected final wealth must equal starting wealth.)\n\nJason starts with $500$ against $1000$:\n$$P(\\text{Jason ruined}) = \\frac{1000}{1500} = \\frac23.$$",
-      "tags": ["gambler's ruin", "martingale"]
+      "tags": [
+        "gambler's ruin",
+        "martingale"
+      ]
     },
     {
       "id": "444-2.1.15",
@@ -1006,7 +1201,10 @@
       "answer": 0.57143,
       "tolerance": 0.0005,
       "solution": "Player 1 wins immediately with probability $\\tfrac13$; otherwise (prob $\\tfrac23$) Player 2 wins with probability $\\tfrac23$, and if both miss (prob $\\tfrac23\\cdot\\tfrac13$) the game restarts:\n$$p_1 = \\frac13 + \\frac23\\cdot\\frac13\\,p_1 \\;\\Rightarrow\\; p_1 = \\frac{1/3}{7/9} = \\frac37, \\qquad p_2 = \\frac47.$$\nDespite moving second, Player 2's much higher per-turn win rate makes him the favorite: $\\max = \\frac47 \\approx 0.571$.",
-      "tags": ["first-step analysis", "turn-based games"]
+      "tags": [
+        "first-step analysis",
+        "turn-based games"
+      ]
     },
     {
       "id": "444-2.1.17",
@@ -1021,7 +1219,10 @@
       "answer": 5,
       "tolerance": 0,
       "solution": "In odds form: prior odds of double-headed are $1{:}19$, and each observed head multiplies the odds by $2$ (likelihood ratio of heads: $1$ vs $\\tfrac12$). After $n$ heads the odds are $2^n : 19$, which favor the double-headed coin once $2^n > 19$:\n$$n = 5 \\quad (2^5 = 32 > 19,\\ \\text{posterior} \\approx 0.627).$$\nFour heads gives odds $16:19$ — still more likely a fair coin.",
-      "tags": ["bayes", "odds form"]
+      "tags": [
+        "bayes",
+        "odds form"
+      ]
     },
     {
       "id": "444-2.1.21",
@@ -1036,7 +1237,10 @@
       "answer": 0.25,
       "tolerance": 0.005,
       "solution": "Conditioning on the coin's bias $T = t$, the win probability is $t^6$. Averaging over the bag:\n$$P = E[T^6] = \\int_0^1 t^6 \\cdot 2t\\,dt = 2\\int_0^1 t^7\\,dt = \\frac{2}{8} = \\frac14.$$\nFar higher than $\\left(E[T]\\right)^6 = (2/3)^6 \\approx 0.088$ — the heavy right tail of $f$ dominates, a good reminder that $E[T^6] \\ne E[T]^6$.",
-      "tags": ["continuous mixing", "beta prior"]
+      "tags": [
+        "continuous mixing",
+        "beta prior"
+      ]
     },
     {
       "id": "444-2.1.23",
@@ -1051,7 +1255,10 @@
       "answer": 0.83333,
       "tolerance": 0.0005,
       "solution": "Posterior on the bowls after one blue draw: the all-blue bowl has likelihood $1$, the mixed bowl $\\tfrac12$, the all-red bowl $0$ — so posterior odds $2{:}1$ for the all-blue bowl.\n$$P(\\text{blue again}) = \\frac23 \\cdot 1 + \\frac13 \\cdot \\frac12 = \\frac56 \\approx 0.833.$$\nThe naive answer $\\tfrac12$ (\"replacement makes draws independent\") ignores that both draws share the same unknown bowl.",
-      "tags": ["bayes", "bertrand box"]
+      "tags": [
+        "bayes",
+        "bertrand box"
+      ]
     },
     {
       "id": "444-2.1.26",
@@ -1066,7 +1273,10 @@
       "answer": 0.66667,
       "tolerance": 0.005,
       "solution": "Stopping at exactly flip $k \\ge 2$ requires the first $k-1$ flips to alternate ($2$ ways) and flip $k$ to repeat flip $k-1$:\n$$P(T = k) = \\frac{2}{2^{k}}\\cdot 1 = 2^{1-k}.$$\nSumming over even $k$:\n$$P = \\sum_{j\\ge 1} 2^{1-2j} = \\frac{1/2}{1 - 1/4} = \\frac23.$$",
-      "tags": ["geometric series", "runs"]
+      "tags": [
+        "geometric series",
+        "runs"
+      ]
     },
     {
       "id": "444-2.1.27",
@@ -1081,7 +1291,11 @@
       "answer": 0.5,
       "tolerance": 0.001,
       "solution": "Compare their first $n$ coins each. By symmetry, $P(\\text{Emilia ahead}) = P(\\text{Ron ahead}) = p$ and $P(\\text{tied}) = t$, with $2p + t = 1$.\n\nEmilia wins overall if she's already ahead (her extra coin can't hurt: probability $p$), or if they're tied and her extra coin lands heads ($t\\cdot\\tfrac12$):\n$$P = p + \\frac{t}{2} = p + \\frac{1 - 2p}{2} = \\frac12,$$\nregardless of $n$. The extra coin exactly breaks the tie symmetry — no computation needed.",
-      "tags": ["symmetry", "coins", "classic"]
+      "tags": [
+        "symmetry",
+        "coins",
+        "classic"
+      ]
     },
     {
       "id": "444-2.1.28",
@@ -1096,7 +1310,10 @@
       "answer": 0.5,
       "tolerance": 0.001,
       "solution": "The sum is odd iff the two dice have different parities. The fair die is odd with probability exactly $\\tfrac12$, so whatever the loaded die's parity turns out to be, the fair die \"disagrees\" with it with probability $\\tfrac12$:\n$$P(\\text{odd sum}) = \\frac12.$$\nThe loading (here $P(i) = i/21$) is a red herring — one fair die makes the sum's parity uniform. This is the additive version of \"one uniform randomizer wipes out the other's bias.\"",
-      "tags": ["parity", "red herring"]
+      "tags": [
+        "parity",
+        "red herring"
+      ]
     },
     {
       "id": "444-2.1.30",
@@ -1111,7 +1328,9 @@
       "answer": 0.1,
       "tolerance": 0.005,
       "solution": "Conditioned on exactly $3$ heads in $5$ flips, all $\\binom{5}{3} = 10$ head-position patterns are equally likely (each unconditional sequence has the same probability $2^{-5}$). $THHTH$ is one of them:\n$$P = \\frac{1}{10}.$$",
-      "tags": ["conditional uniformity"]
+      "tags": [
+        "conditional uniformity"
+      ]
     },
     {
       "id": "444-2.1.31",
@@ -1126,7 +1345,10 @@
       "answer": 3,
       "tolerance": 0,
       "solution": "With $2^n$ equally likely gender sequences:\n$$P(X) = 1 - \\frac{2}{2^n}, \\qquad P(Y) = \\frac{n+1}{2^n}, \\qquad P(X \\cap Y) = P(\\text{exactly one girl}) = \\frac{n}{2^n}.$$\nIndependence requires $\\frac{n}{2^n} = \\left(1 - 2^{1-n}\\right)\\frac{n+1}{2^n}$, i.e. $n = (n+1)(1 - 2^{1-n})$.\n\nTesting: $n = 3$ gives $4 \\cdot \\tfrac34 = 3$ ✓ (and the two sides cross only once, so it's unique).\n$$n = 3.$$\nThis is the famous \"boy–girl independence\" curiosity: it works only for families of three.",
-      "tags": ["independence", "classic"]
+      "tags": [
+        "independence",
+        "classic"
+      ]
     },
     {
       "id": "444-2.1.33",
@@ -1141,7 +1363,10 @@
       "answer": 0.8,
       "tolerance": 0.005,
       "solution": "Treat the base rate as the prior that the leaker is a trader. The witness says \"trader\" either correctly (leaker is a trader, witness right) or incorrectly (leaker is a researcher, witness wrong):\n$$P(\\text{trader} \\mid \\text{says trader}) = \\frac{\\frac23\\cdot\\frac23}{\\frac23\\cdot\\frac23 + \\frac13\\cdot\\frac13} = \\frac{4/9}{5/9} = \\frac45.$$\nThe witness's testimony upgrades the base rate from $2/3$ to $4/5$ — this is the taxicab problem with friendlier numbers.",
-      "tags": ["bayes", "taxicab problem"]
+      "tags": [
+        "bayes",
+        "taxicab problem"
+      ]
     },
     {
       "id": "444-2.1.35",
@@ -1156,7 +1381,10 @@
       "answer": 7.5,
       "tolerance": 0.01,
       "solution": "By first-step analysis, with each door equally likely:\n$$E = \\frac15(2) + \\frac15(5) + \\frac15(1 + E) + \\frac15(3 + E) + \\frac15(4 + E)$$\n$$E = \\frac{15}{5} + \\frac35 E \\;\\Rightarrow\\; \\frac25 E = 3 \\;\\Rightarrow\\; E = 7.5 \\text{ miles}.$$\nQuick sanity view: each \"attempt\" walks an average of $3$ miles and succeeds with probability $\\tfrac25$, so $E = 3 \\cdot \\tfrac52 = 7.5$.",
-      "tags": ["first-step analysis", "trapped miner"]
+      "tags": [
+        "first-step analysis",
+        "trapped miner"
+      ]
     },
     {
       "id": "444-2.1.43",
@@ -1171,7 +1399,10 @@
       "answer": 0.04,
       "tolerance": 0.001,
       "solution": "Divisors of $10^{99} = 2^{99}5^{99}$ are $2^a 5^b$ with $0 \\le a, b \\le 99$ — a $100 \\times 100$ grid. Divisibility by $10^{80}$ needs $a \\ge 80$ and $b \\ge 80$: a $20 \\times 20$ corner:\n$$P = \\frac{20^2}{100^2} = \\frac{1}{25} = 0.04.$$",
-      "tags": ["number theory", "counting"]
+      "tags": [
+        "number theory",
+        "counting"
+      ]
     },
     {
       "id": "444-2.1.44",
@@ -1186,7 +1417,10 @@
       "answer": 0.36788,
       "tolerance": 0.0005,
       "solution": "Conditioning on $N$:\n$$P = \\sum_{n\\ge0} e^{-2}\\frac{2^n}{n!}\\left(\\frac12\\right)^n = e^{-2}\\sum_{n\\ge0}\\frac{1^n}{n!} = e^{-2}\\,e^{1} = e^{-1} \\approx 0.3679.$$\nSlicker: by Poisson thinning, the number of heads is itself $\\mathrm{Poisson}(2 \\cdot \\tfrac12) = \\mathrm{Poisson}(1)$, so $P(\\text{0 heads}) = e^{-1}$ immediately.",
-      "tags": ["poisson thinning", "generating functions"]
+      "tags": [
+        "poisson thinning",
+        "generating functions"
+      ]
     },
     {
       "id": "444-2.1.54",
@@ -1201,7 +1435,10 @@
       "answer": 0.91184,
       "tolerance": 0.0005,
       "solution": "Prior odds $1 : 99$; ten heads multiply the odds by $2^{10} = 1024$:\n$$\\text{posterior odds} = 1024 : 99 \\;\\Rightarrow\\; P = \\frac{1024}{1024 + 99} = \\frac{1024}{1123} \\approx 0.912.$$\nCompare with the 19-fair-coins version: same machinery, and note how 10 heads still leaves a $\\sim 9\\%$ chance of a fair coin because the prior was so lopsided.",
-      "tags": ["bayes", "odds form"]
+      "tags": [
+        "bayes",
+        "odds form"
+      ]
     },
     {
       "id": "444-2.1.68",
@@ -1216,7 +1453,9 @@
       "answer": 0.6,
       "tolerance": 0.005,
       "solution": "If the added baby is a boy, the room is $3$ boys / $6$ babies; if a girl, $2/6$. By Bayes:\n$$P(\\text{added boy} \\mid \\text{picked boy}) = \\frac{\\frac12\\cdot\\frac36}{\\frac12\\cdot\\frac36 + \\frac12\\cdot\\frac26} = \\frac{3}{5} = 0.6.$$\nSeeing a boy tips the $50{-}50$ prior to $60{-}40$ — a clean example of evidence that feels \"indirect\" but still updates the prior.",
-      "tags": ["bayes"]
+      "tags": [
+        "bayes"
+      ]
     },
     {
       "id": "444-4.1.6",
@@ -1231,7 +1470,10 @@
       "answer": 0,
       "tolerance": 0.001,
       "solution": "$$\\mathrm{Cov}(X, Y) = E[Z^3] - E[Z]\\,E[Z^2] = 0 - 0\\cdot 1 = 0,$$\nsince every odd moment of a symmetric distribution vanishes.\n\nThe punchline: $X$ and $Y$ are *perfectly dependent* ($Y$ is a function of $X$) yet completely uncorrelated. Correlation only measures linear relationships — the standard interview follow-up to \"does zero correlation imply independence?\"",
-      "tags": ["covariance", "counterexample"]
+      "tags": [
+        "covariance",
+        "counterexample"
+      ]
     },
     {
       "id": "444-4.1.14",
@@ -1246,7 +1488,10 @@
       "answer": 0.44444,
       "tolerance": 0.0005,
       "solution": "Each point is negative with probability $\\frac13$ (the interval $(-1,0)$ out of total length 3) and positive with probability $\\frac23$. The origin is between the two points iff they land on opposite sides:\n$$P = 2\\cdot\\frac13\\cdot\\frac23 = \\frac49 \\approx 0.444.$$",
-      "tags": ["uniform", "independence"]
+      "tags": [
+        "uniform",
+        "independence"
+      ]
     },
     {
       "id": "444-4.1.16",
@@ -1261,7 +1506,10 @@
       "answer": 0.25391,
       "tolerance": 0.0005,
       "solution": "For the maximum $M$: $P(M \\le t) = \\left(\\frac{t}{4}\\right)^4$. So\n$$P(2 < M \\le 3) = \\left(\\frac34\\right)^4 - \\left(\\frac24\\right)^4 = \\frac{81}{256} - \\frac{16}{256} = \\frac{65}{256} \\approx 0.254.$$\nThe max-CDF-power trick is the single most reused fact in order-statistics questions.",
-      "tags": ["order statistics", "maximum"]
+      "tags": [
+        "order statistics",
+        "maximum"
+      ]
     },
     {
       "id": "444-4.1.19",
@@ -1276,7 +1524,10 @@
       "answer": 0.25,
       "tolerance": 0.005,
       "solution": "The event involves only $X_1, X_2, X_{10}, X_{15}$ — four IID continuous variables. Each is equally likely to be the largest:\n$$P = \\frac14.$$\nThe other 16 variables (and the uniform distribution itself) are decoration — this works for any continuous IID family.",
-      "tags": ["symmetry", "order statistics"]
+      "tags": [
+        "symmetry",
+        "order statistics"
+      ]
     },
     {
       "id": "444-4.1.20",
@@ -1291,7 +1542,10 @@
       "answer": 0.15,
       "tolerance": 0.005,
       "solution": "The region needs $x > \\tfrac12$ (else $xy \\le x < \\tfrac12$), and then $y > \\frac{1}{2x}$:\n$$P = \\int_{1/2}^{1}\\left(1 - \\frac{1}{2x}\\right)dx = \\left[x - \\tfrac12\\ln x\\right]_{1/2}^{1} = \\frac12 - \\frac{\\ln 2}{2} \\approx 0.153 \\approx 0.15.$$\nProducts of uniforms concentrate low — more than half the square has $XY < \\tfrac14$.",
-      "tags": ["integration", "uniform"]
+      "tags": [
+        "integration",
+        "uniform"
+      ]
     },
     {
       "id": "444-4.2.3",
@@ -1306,7 +1560,10 @@
       "answer": 0.25,
       "tolerance": 0.005,
       "solution": "With break points $U, V$, the pieces form a triangle iff every piece is shorter than $\\tfrac12$ (triangle inequality). Taking $U < V$, the conditions are $U < \\tfrac12$, $V > \\tfrac12$, and $V - U < \\tfrac12$ — a triangle of area $\\tfrac18$ in the unit square, doubled for the $V < U$ case:\n$$P = 2 \\cdot \\frac18 = \\frac14.$$\nThe most famous geometric-probability question in interviews.",
-      "tags": ["broken stick", "classic"]
+      "tags": [
+        "broken stick",
+        "classic"
+      ]
     },
     {
       "id": "444-4.2.7",
@@ -1321,7 +1578,10 @@
       "answer": 0.25,
       "tolerance": 0.005,
       "solution": "The table stands iff the disk's center is inside the triangle of leg positions, which happens iff no arc between consecutive legs exceeds a semicircle.\n\nFor 3 uniform points, $P(\\text{some arc} > \\pi) = 3 \\cdot \\left(\\tfrac12\\right)^2 = \\tfrac34$ (each of the 3 points \"leads\" a bad semicircle with probability $\\tfrac14$, and these events are disjoint):\n$$P(\\text{stands}) = 1 - \\frac34 = \\frac14.$$\nSame answer as the broken stick — not a coincidence: both ask for no \"piece\" (arc) exceeding half the total.",
-      "tags": ["semicircle problem", "classic"]
+      "tags": [
+        "semicircle problem",
+        "classic"
+      ]
     },
     {
       "id": "444-4.2.8",
@@ -1336,7 +1596,10 @@
       "answer": 0.5,
       "tolerance": 0.005,
       "solution": "Under the reflection $X_i \\mapsto 1 - X_i$ (which preserves the joint distribution), the min and max swap roles: $U \\mapsto 1 - V$ and $V \\mapsto 1 - U$. So $U + V \\mapsto 2 - (U+V)$, meaning $U + V$ is symmetric about $1$:\n$$P[U + V > 1] = \\frac12,$$\nfor every $n$ — no integration required.",
-      "tags": ["symmetry", "order statistics"]
+      "tags": [
+        "symmetry",
+        "order statistics"
+      ]
     },
     {
       "id": "444-4.2.16",
@@ -1351,7 +1614,10 @@
       "answer": 0.33333,
       "tolerance": 0.0005,
       "solution": "$\\lfloor\\log_2 X\\rfloor = -k$ (for $k \\ge 1$) exactly when $X \\in [2^{-k}, 2^{-k+1})$, an interval of length $2^{-k}$. Both variables land in the same band with probability\n$$\\sum_{k=1}^{\\infty} \\left(2^{-k}\\right)^2 = \\sum_{k=1}^{\\infty} 4^{-k} = \\frac{1/4}{1 - 1/4} = \\frac13.$$",
-      "tags": ["geometric series", "dyadic intervals"]
+      "tags": [
+        "geometric series",
+        "dyadic intervals"
+      ]
     },
     {
       "id": "444-4.2.19",
@@ -1366,7 +1632,10 @@
       "answer": 0.66667,
       "tolerance": 0.0005,
       "solution": "All $\\binom{4}{2} = 6$ ways to interleave the two pairs among the sorted four points are equally likely. The segments are disjoint only when one pair takes the two smallest positions — $2$ of the $6$ patterns:\n$$P(\\text{overlap}) = 1 - \\frac26 = \\frac23.$$\n(Compare with the crossing-chords problem: same four-point counting, different geometry.)",
-      "tags": ["orderings", "intervals"]
+      "tags": [
+        "orderings",
+        "intervals"
+      ]
     },
     {
       "id": "444-4.2.23",
@@ -1381,7 +1650,10 @@
       "answer": 0,
       "tolerance": 0.001,
       "solution": "The standard bivariate normal is rotationally symmetric, so conditioned on the radius $X^2 + Y^2 = r^2$, the point $(X, Y)$ is uniform on that circle — and the average of $X$ over a circle centered at the origin is $0$:\n$$E[X \\mid X^2 + Y^2] = 0.$$\nSymmetry does all the work; any attempt to integrate is a detour.",
-      "tags": ["conditional expectation", "rotational symmetry"]
+      "tags": [
+        "conditional expectation",
+        "rotational symmetry"
+      ]
     },
     {
       "id": "444-4.2.24",
@@ -1396,7 +1668,10 @@
       "answer": 0.66667,
       "tolerance": 0.0005,
       "solution": "For $x \\ge y$ the condition $x + y \\ge 2(x - y)$ simplifies to $y \\ge \\frac{x}{3}$; symmetrically for $y \\ge x$ it's $x \\ge \\frac{y}{3}$. The excluded corners are two triangles under the lines $y = x/3$ and $x = y/3$, each of area $\\int_0^1 \\frac{t}{3}dt = \\frac16$:\n$$P = 1 - 2\\cdot\\frac16 = \\frac23.$$",
-      "tags": ["unit square", "regions"]
+      "tags": [
+        "unit square",
+        "regions"
+      ]
     },
     {
       "id": "444-5.1.7",
@@ -1411,7 +1686,10 @@
       "answer": 2,
       "tolerance": 0.01,
       "solution": "The first roll leaves an even sum with probability $\\tfrac12$ (done in 1 roll). Otherwise the sum is odd, and each subsequent roll makes it even with probability $\\tfrac12$ (three odd faces flip parity) — a Geometric($\\tfrac12$) wait with mean $2$:\n$$E = 1 + \\frac12 \\cdot 2 = 2.$$",
-      "tags": ["parity", "geometric distribution"]
+      "tags": [
+        "parity",
+        "geometric distribution"
+      ]
     },
     {
       "id": "444-5.1.8",
@@ -1426,7 +1704,10 @@
       "answer": 4,
       "tolerance": 0.01,
       "solution": "The payoff is distributed as a die roll conditioned on $\\{2, 3, 4, 5, 6\\}$ — uniform over those five values:\n$$E = \\frac{2+3+4+5+6}{5} = 4.$$\nA common slip is answering $3.5$ (as if re-rolling didn't change the distribution) — but discarding the 1s shifts the average up.",
-      "tags": ["conditioning", "dice"]
+      "tags": [
+        "conditioning",
+        "dice"
+      ]
     },
     {
       "id": "444-5.1.11",
@@ -1441,7 +1722,10 @@
       "answer": 0.37647,
       "tolerance": 0.0005,
       "solution": "$$\\mathrm{Cov}(U,V) = \\mathrm{Var}(X) = 64, \\quad \\mathrm{Var}(U) = 64 + 36 = 100, \\quad \\mathrm{Var}(V) = 64 + 225 = 289.$$\n$$\\mathrm{Corr}(U,V) = \\frac{64}{\\sqrt{100}\\sqrt{289}} = \\frac{64}{170} = \\frac{32}{85} \\approx 0.376.$$\nThis \"common factor\" structure is exactly how one-factor risk models induce correlation between assets.",
-      "tags": ["covariance", "factor models"]
+      "tags": [
+        "covariance",
+        "factor models"
+      ]
     },
     {
       "id": "444-5.2.4",
@@ -1456,7 +1740,10 @@
       "answer": 99,
       "tolerance": 0.01,
       "solution": "For a simple symmetric walk on a cycle of $n$ points, the expected hitting time of $0$ from a point at distance $d$ is\n$$E_d = d\\,(n - d).$$\n(Check: $E_d$ satisfies $E_d = 1 + \\tfrac12 E_{d-1} + \\tfrac12 E_{d+1}$ with $E_0 = E_n = 0$ — a quadratic in $d$ fits exactly.)\n\nWith $n = 100$, $d = 1$:\n$$E = 1 \\cdot 99 = 99.$$\nOne step from home, yet 99 steps away on average — the walk's excursions the \"long way around\" are costly.",
-      "tags": ["hitting times", "cycle"]
+      "tags": [
+        "hitting times",
+        "cycle"
+      ]
     },
     {
       "id": "444-5.2.6",
@@ -1471,7 +1758,10 @@
       "answer": 30940,
       "tolerance": 0.5,
       "solution": "With $p = \\frac{4}{52} = \\frac{1}{13}$ per draw, the expected time to a run of $k$ successes satisfies $E_k = \\frac{E_{k-1} + 1}{p}$ (reach a run of $k-1$, then one more draw either extends it or restarts), giving\n$$E_k = \\sum_{i=1}^{k} p^{-i} = 13 + 13^2 + 13^3 + 13^4 = 30{,}940.$$\nStreaks are brutally expensive: the last jack alone contributes $28{,}561$ of the total.",
-      "tags": ["streaks", "recursion"]
+      "tags": [
+        "streaks",
+        "recursion"
+      ]
     },
     {
       "id": "444-5.2.8",
@@ -1486,7 +1776,10 @@
       "answer": -1,
       "tolerance": 0.001,
       "solution": "Perfect correlation means $Y = a + bX$ with $b = \\sigma_Y/\\sigma_X > 1$. Then\n$$X + Y = a + (1+b)X, \\qquad X - Y = -a + (1-b)X$$\nare both linear in $X$ — so they're perfectly correlated, with sign $\\mathrm{sgn}\\big((1+b)(1-b)\\big)$. Since $b > 1$, $(1-b) < 0$:\n$$\\mathrm{Corr}(X+Y,\\ X-Y) = -1.$$\n(General fact: $\\mathrm{Cov}(X+Y, X-Y) = \\sigma_X^2 - \\sigma_Y^2$, so the sign always follows whichever variable is noisier.)",
-      "tags": ["covariance", "linear dependence"]
+      "tags": [
+        "covariance",
+        "linear dependence"
+      ]
     },
     {
       "id": "444-3.1.3",
@@ -1501,7 +1794,10 @@
       "answer": 0.0030657,
       "tolerance": 0.0002,
       "solution": "Each $i$ satisfies $f(i) = i$ independently with probability $\\frac1n$ (unlike permutations, the values are independent). So $F_n \\sim \\mathrm{Binomial}(n, \\tfrac1n)$, which converges to $\\mathrm{Poisson}(1)$:\n$$\\lim_n P[F_n = 5] = \\frac{e^{-1}}{5!} = \\frac{1}{120e} \\approx 0.00307.$$\n(For random *permutations* the count is also asymptotically Poisson(1), but by a much subtler argument — here independence makes it immediate.)",
-      "tags": ["poisson limit", "random functions"]
+      "tags": [
+        "poisson limit",
+        "random functions"
+      ]
     },
     {
       "id": "444-7.2.1",
@@ -1516,7 +1812,10 @@
       "answer": 2401,
       "tolerance": 0.5,
       "solution": "Since $t \\mapsto t^4$ is convex, Jensen gives\n$$M(4) = E\\left[(e^{X})^4\\right] \\ge \\left(E[e^X]\\right)^4 = M(1)^4 = 7^4 = 2401.$$\nThe bound is attained by the degenerate variable $X = \\ln 7$ (constant), for which $M(\\theta) = 7^\\theta$. So the minimum is exactly\n$$2401.$$",
-      "tags": ["jensen's inequality", "mgf"]
+      "tags": [
+        "jensen's inequality",
+        "mgf"
+      ]
     },
     {
       "id": "444-6.1.2",
@@ -1531,7 +1830,10 @@
       "answer": 9.98889,
       "tolerance": 0.005,
       "solution": "Direct summation (or the identity $|X-Y| = \\max - \\min$ with $E[\\max] + E[\\min] = E[X]+E[Y]$) gives, for $n$-sided dice:\n$$E[|X - Y|] = \\frac{n^2 - 1}{3n}.$$\nFor $n = 30$: $\\frac{899}{90} \\approx 9.99$.\n\nQuick intuition anchor: for large $n$, two uniforms differ by about $\\frac{n}{3}$ — a third of the range.",
-      "tags": ["dice", "absolute difference"]
+      "tags": [
+        "dice",
+        "absolute difference"
+      ]
     },
     {
       "id": "444-6.1.6",
@@ -1546,7 +1848,10 @@
       "answer": 6.33333,
       "tolerance": 0.005,
       "solution": "The guess only affects the current draw, so the optimal strategy is simply to guess whichever color has more balls left (either on ties). Working the DP $V(b,y) = \\max(b,y)\\cdot\\frac{1}{b+y}\\cdot(b+y) + \\frac{b}{b+y}V(b-1,y) + \\frac{y}{b+y}V(b,y-1)$ from the endgame:\n\n$V(1,0) = 1$, $V(1,1) = \\tfrac12\\cdot 2 + 1 = 2$, $V(2,0) = 2 + 1 = 3$, $V(2,1) = \\tfrac23\\cdot3 + \\tfrac23 V(1,1) + \\tfrac13 V(2,0) = \\tfrac{13}{3}$,\n$$V(2,2) = \\tfrac12\\cdot 4 + \\tfrac12 V(1,2) + \\tfrac12 V(2,1) = 2 + \\tfrac{13}{3} = \\frac{19}{3} \\approx 6.33.$$\n(Verified by simulation.) Note the max payoff is $4+3+2+1 = 10$ and you capture about $63\\%$ of it.",
-      "tags": ["dynamic programming", "adaptive strategy"]
+      "tags": [
+        "dynamic programming",
+        "adaptive strategy"
+      ]
     },
     {
       "id": "444-6.1.8",
@@ -1561,7 +1866,10 @@
       "answer": 6.0496,
       "tolerance": 0.005,
       "solution": "Each bid exceeds $9000$ with probability $p = e^{-9000/5000} = e^{-9/5}$ (exponential tail). The number of bids to the first success is Geometric($p$):\n$$E[N] = \\frac{1}{p} = e^{9/5} \\approx 6.05.$$\n(You can type the exact answer as `e^1.8`.)",
-      "tags": ["exponential", "geometric distribution"]
+      "tags": [
+        "exponential",
+        "geometric distribution"
+      ]
     },
     {
       "id": "444-6.1.10",
@@ -1576,7 +1884,10 @@
       "answer": 50.5,
       "tolerance": 0.01,
       "solution": "Runs = 1 + (number of adjacent flips that differ). Each of the $99$ adjacent pairs differs with probability $\\tfrac12$, so by linearity:\n$$E[\\text{runs}] = 1 + \\frac{99}{2} = 50.5.$$",
-      "tags": ["linearity of expectation", "runs"]
+      "tags": [
+        "linearity of expectation",
+        "runs"
+      ]
     },
     {
       "id": "444-6.1.11",
@@ -1591,7 +1902,10 @@
       "answer": 70,
       "tolerance": 0.01,
       "solution": "The head-minus-tail count is a fair random walk started at $0$, stopped on exiting $(-b, a)$ with $a = 10$, $b = 7$. Since $S_t^2 - t$ is a martingale, the expected exit time is\n$$E[T] = a \\cdot b = 10 \\times 7 = 70.$$\n(The exit probabilities follow from the martingale $S_t$ itself: it exits at $+10$ with probability $\\frac{7}{17}$.)",
-      "tags": ["martingale", "exit time"]
+      "tags": [
+        "martingale",
+        "exit time"
+      ]
     },
     {
       "id": "444-6.1.13",
@@ -1606,7 +1920,10 @@
       "answer": 0.52941,
       "tolerance": 0.0005,
       "solution": "Fix a couple. One partner is paired with a uniformly random person among the other $17$, so they're matched with probability $\\frac{1}{17}$. By linearity over 9 couples:\n$$E = \\frac{9}{17} \\approx 0.529.$$\nLike the hat-check problem, the answer stays near $\\tfrac12$ regardless of scale — with $n$ couples it's $\\frac{n}{2n-1} \\to \\tfrac12$.",
-      "tags": ["linearity of expectation", "matching"]
+      "tags": [
+        "linearity of expectation",
+        "matching"
+      ]
     },
     {
       "id": "444-6.1.15",
@@ -1621,7 +1938,10 @@
       "answer": 0.66667,
       "tolerance": 0.005,
       "solution": "Area scaling gives $P(R \\le r) = r^2$, so $f_R(r) = 2r$:\n$$E[R] = \\int_0^1 r\\cdot 2r\\,dr = \\frac23.$$\nThe common wrong answer is $\\tfrac12$ — that's the mean if the *radius* were uniform, but uniform area weights the outer rings more.",
-      "tags": ["uniform on disk", "density transform"]
+      "tags": [
+        "uniform on disk",
+        "density transform"
+      ]
     },
     {
       "id": "444-6.1.17",
@@ -1636,7 +1956,10 @@
       "answer": 2.5,
       "tolerance": 0.005,
       "solution": "The conditioning says exactly one of {first, last} is a head — contributing exactly $1$ — and it says nothing about the three middle flips, which stay independent fair flips contributing $\\tfrac32$:\n$$E = 1 + \\frac32 = 2.5.$$\nDecomposing into \"pinned\" and \"free\" coordinates avoids any conditional-distribution computation.",
-      "tags": ["conditional expectation", "decomposition"]
+      "tags": [
+        "conditional expectation",
+        "decomposition"
+      ]
     },
     {
       "id": "444-6.1.19",
@@ -1651,7 +1974,10 @@
       "answer": 0.625,
       "tolerance": 0.005,
       "solution": "A fresh draw is worth $\\tfrac12$, so keep the first draw iff it exceeds $\\tfrac12$:\n$$E = \\underbrace{P(X \\ge \\tfrac12)\\,E[X \\mid X \\ge \\tfrac12]}_{\\frac12\\cdot\\frac34} + \\underbrace{P(X < \\tfrac12)\\cdot\\frac12}_{\\frac12\\cdot\\frac12} = \\frac38 + \\frac14 = \\frac58 = 0.625.$$\nWith $n$ total draws allowed the value satisfies $V_{n} = \\frac{1 + V_{n-1}^2}{2}$ — worth remembering for the multi-redraw follow-up.",
-      "tags": ["threshold strategy", "uniform"]
+      "tags": [
+        "threshold strategy",
+        "uniform"
+      ]
     },
     {
       "id": "444-6.1.22",
@@ -1666,7 +1992,10 @@
       "answer": 2.45,
       "tolerance": 0.005,
       "solution": "Given first roll $v$, each later roll succeeds ($\\ge v$) with probability $\\frac{7-v}{6}$, so the conditional wait is $\\frac{6}{7-v}$. Averaging:\n$$E[N] = \\frac16\\sum_{v=1}^{6}\\frac{6}{7-v} = \\sum_{k=1}^{6}\\frac{1}{k} = H_6 = \\frac{49}{20} = 2.45.$$\nThe harmonic number shows up because high first rolls are rare but very slow to match — heavy conditional waits balanced by small weights.",
-      "tags": ["harmonic numbers", "conditioning"]
+      "tags": [
+        "harmonic numbers",
+        "conditioning"
+      ]
     },
     {
       "id": "444-6.1.25",
@@ -1681,7 +2010,10 @@
       "answer": 3.5,
       "tolerance": 0.005,
       "solution": "The map $x \\mapsto 7 - x$ preserves the joint distribution of the dice and sends the median $M$ to $7 - M$. So $M$ and $7 - M$ have the same distribution:\n$$E[M] = E[7 - M] \\;\\Rightarrow\\; E[M] = \\frac72 = 3.5.$$\nSame as a single die — symmetry beats the order-statistics integral. (The *max* is where the interesting number lives: $E[\\max] = \\frac{119}{24}$.)",
-      "tags": ["symmetry", "order statistics"]
+      "tags": [
+        "symmetry",
+        "order statistics"
+      ]
     },
     {
       "id": "444-6.1.26",
@@ -1696,7 +2028,10 @@
       "answer": 0.8,
       "tolerance": 0.005,
       "solution": "$\\mathrm{Var}(Y) = 25c^2 + 100(1-c)^2$; setting the derivative to zero: $50c = 200(1-c)$, so\n$$c = \\frac{100}{125} = 0.8.$$\nGeneral rule: optimal weights are proportional to *inverse* variances ($c \\propto 1/25$, $1-c \\propto 1/100$) — the same math behind minimum-variance portfolios and precision-weighted averaging.",
-      "tags": ["portfolio", "inverse-variance weighting"]
+      "tags": [
+        "portfolio",
+        "inverse-variance weighting"
+      ]
     },
     {
       "id": "444-6.1.34",
@@ -1711,7 +2046,10 @@
       "answer": 0.5,
       "tolerance": 0.005,
       "solution": "$A - A^T = \\begin{pmatrix} 0 & d \\\\ -d & 0 \\end{pmatrix}$ with $d = A_{12} - A_{21}$, so $\\det = d^2$.\n\n$d$ takes values $-1, 0, 1$ with probabilities $\\tfrac14, \\tfrac12, \\tfrac14$:\n$$E[d^2] = \\frac14 + \\frac14 = \\frac12.$$\nThe diagonal entries never mattered — they cancel in $A - A^T$.",
-      "tags": ["matrices", "reduction"]
+      "tags": [
+        "matrices",
+        "reduction"
+      ]
     },
     {
       "id": "444-6.1.35",
@@ -1726,7 +2064,10 @@
       "answer": 6,
       "tolerance": 0.01,
       "solution": "Coins are independent, so optimize each alone: keep heads, re-flip tails. One coin is a head at the end unless it shows tails twice:\n$$P(\\text{head}) = 1 - \\frac14 = \\frac34, \\qquad E = 8\\cdot\\frac34 = \\$6.$$",
-      "tags": ["independence", "coins"]
+      "tags": [
+        "independence",
+        "coins"
+      ]
     },
     {
       "id": "444-6.1.37",
@@ -1741,7 +2082,10 @@
       "answer": 4.5,
       "tolerance": 0.01,
       "solution": "With $r$ reds among 3 orbs, each draw removes a red with probability $\\frac{r}{3}$ — a geometric wait of $\\frac{3}{r}$ draws. From $r = 2$:\n$$E = \\frac{3}{2} + \\frac{3}{1} = 4.5.$$",
-      "tags": ["geometric stages", "urns"]
+      "tags": [
+        "geometric stages",
+        "urns"
+      ]
     },
     {
       "id": "444-6.1.38",
@@ -1756,7 +2100,10 @@
       "answer": 0,
       "tolerance": 0,
       "solution": "Winning is bad news: conditional on $V < b$, the value averages only $\\frac{b}{2}$, so your resale nets $1.5\\cdot\\frac{b}{2} = 0.75b$ — less than the $b$ you paid:\n$$E[\\text{profit}] = \\frac{b}{100000}\\left(0.75b - b\\right) = -\\frac{0.25\\,b^2}{100000} < 0 \\text{ for all } b > 0.$$\nOptimal bid: $\\$0$. This is the winner's curse — the 1.5× markup isn't enough to overcome the adverse selection of only winning overpriced items. (You'd need a multiplier above 2 to bid at all.)",
-      "tags": ["winner's curse", "adverse selection"]
+      "tags": [
+        "winner's curse",
+        "adverse selection"
+      ]
     },
     {
       "id": "444-6.1.39",
@@ -1771,7 +2118,10 @@
       "answer": 42,
       "tolerance": 0.01,
       "solution": "With $E_1$ = expected rolls to a first 6 and the streak recursion $E_2 = \\frac{E_1 + 1}{p}$:\n$$E = \\frac{1}{1/6} + \\frac{1}{(1/6)^2} = 6 + 36 = 42.$$\nCompanion to the coin's HH $= 2 + 4 = 6$ — same structure, rarer success.",
-      "tags": ["streaks", "recursion"]
+      "tags": [
+        "streaks",
+        "recursion"
+      ]
     },
     {
       "id": "444-6.1.45",
@@ -1786,7 +2136,10 @@
       "answer": 45,
       "tolerance": 0,
       "solution": "At bank $t$, one more roll gains the average non-10 face $\\frac{1+\\cdots+9}{10} = 4.5$ but loses $t$ with probability $\\frac{1}{10}$:\n$$\\Delta EV = 4.5 - \\frac{t}{10},$$\nwhich is positive exactly while $t < 45$. So Adam keeps rolling below $45$ and stops at\n$$k = 45.$$\n(The myopic one-step rule is optimal here because the threshold structure makes future decisions consistent with it.)",
-      "tags": ["push your luck", "marginal analysis"]
+      "tags": [
+        "push your luck",
+        "marginal analysis"
+      ]
     },
     {
       "id": "444-6.1.47",
@@ -1801,7 +2154,10 @@
       "answer": -1,
       "tolerance": 0,
       "solution": "Given $U = u$, $N$ is Geometric($1-u$) with $E[N \\mid U = u] = \\frac{1}{1-u}$. Averaging:\n$$E[N] = \\int_0^1 \\frac{du}{1-u} = \\infty.$$\nEvery conditional expectation is finite, yet the overall expectation diverges — the rare draws of $U$ near 1 contribute unboundedly. ($N$ is finite almost surely; its *mean* isn't. Interviewers use this to test whether you check integrability rather than assume it.)",
-      "tags": ["infinite expectation", "st. petersburg flavor"]
+      "tags": [
+        "infinite expectation",
+        "st. petersburg flavor"
+      ]
     },
     {
       "id": "444-6.1.50",
@@ -1816,7 +2172,386 @@
       "answer": 14.7,
       "tolerance": 0.01,
       "solution": "When $k$ faces remain unseen, the wait for a new one is Geometric($\\frac{k}{6}$), taking $\\frac{6}{k}$ rolls on average:\n$$E = 6\\left(\\frac16 + \\frac15 + \\frac14 + \\frac13 + \\frac12 + 1\\right) = 6H_6 = \\frac{147}{10} = 14.7.$$\nThe canonical coupon-collector number — worth having memorized.",
-      "tags": ["coupon collector", "classic"]
+      "tags": [
+        "coupon collector",
+        "classic"
+      ]
+    },
+    {
+      "id": "444-2.1.13",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "easy",
+      "category": "geometric probability",
+      "title": "Coin on the Chessboard",
+      "question": "A chessboard is made of 2-inch $\\times$ 2-inch squares. A coin of diameter 1 inch is tossed and lands uniformly at random on the board. What is the probability that the coin lies completely within a single square (touching no gridline)?",
+      "hint": "Track the coin's center. How far must it stay from every gridline?",
+      "answer_type": "numeric",
+      "answer": 0.25,
+      "tolerance": 0,
+      "solution": "The coin avoids all gridlines exactly when its center is at least $\\frac12$ inch from every edge of the square it lands in. Within a $2 \\times 2$ square, the allowed region for the center is the inner $1 \\times 1$ square, so\n$$P = \\frac{1 \\cdot 1}{2 \\cdot 2} = \\frac14.$$\nA staple geometric-probability screen: always reduce a tossed disk to its center point.",
+      "tags": [
+        "geometric",
+        "classic"
+      ]
+    },
+    {
+      "id": "444-2.1.42",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "medium",
+      "category": "classical probability",
+      "title": "One Fair Coin Saves Parity",
+      "question": "$n$ coins are laid out in front of you. One is fair; the other $n-1$ each show heads with probability $\\lambda$, where $0 < \\lambda < 1$. All $n$ coins are flipped. Find the probability that an even number of heads appears.",
+      "hint": "Condition on the biased coins first. What does the single fair coin do to the parity?",
+      "answer_type": "numeric",
+      "answer": 0.5,
+      "tolerance": 0,
+      "solution": "Condition on the total showing on the $n-1$ biased coins. Whatever their parity, the fair coin makes the overall parity even with probability exactly $\\frac12$: if the biased total is even we need tails ($\\frac12$), if odd we need heads ($\\frac12$). So\n$$P[\\text{even}] = \\frac12,$$\nindependent of $n$ and $\\lambda$. One genuinely fair coin completely randomizes parity — a trick worth remembering for any XOR-flavored question.",
+      "tags": [
+        "parity",
+        "symmetry",
+        "trick"
+      ]
+    },
+    {
+      "id": "444-2.1.46",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "medium",
+      "category": "conditional probability",
+      "title": "Rigging the Candy Boxes",
+      "question": "You have 5 good candies, 5 bad candies, and two boxes. You may distribute all 10 candies between the boxes however you like. Your blindfolded brother then picks a box uniformly at random and draws one candy uniformly at random from it, which you receive. Playing optimally, what is the probability you receive a good candy?",
+      "hint": "Make one box as pure as possible while keeping the other box as good as possible.",
+      "answer_type": "numeric",
+      "answer": 0.7222,
+      "tolerance": 0.0005,
+      "solution": "Put a single good candy alone in box 1 and the remaining 4 good + 5 bad in box 2. Then\n$$P[\\text{good}] = \\frac12 \\cdot 1 + \\frac12 \\cdot \\frac49 = \\frac{13}{18} \\approx 0.7222.$$\nA brute-force check over all $(g, b)$ splits confirms this is optimal. The intuition: a guaranteed win from one box costs only one good candy, and the other box stays nearly balanced.",
+      "tags": [
+        "optimization",
+        "strategy",
+        "classic"
+      ]
+    },
+    {
+      "id": "444-2.1.56",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "medium",
+      "category": "classical probability",
+      "title": "Rain Without Independence",
+      "question": "The chance of rain is 40% on Saturday and 70% on Sunday. Without assuming independence, find the tightest possible upper bound on the probability that it does not rain at all this weekend.",
+      "hint": "Bound $P[A \\cap B]$ by the smaller of $P[A]$ and $P[B]$ — then check the bound is achievable.",
+      "answer_type": "numeric",
+      "answer": 0.3,
+      "tolerance": 0,
+      "solution": "Let $A$ = no rain Saturday ($P[A] = 0.6$) and $B$ = no rain Sunday ($P[B] = 0.3$). For any joint distribution,\n$$P[A \\cap B] \\le \\min(P[A], P[B]) = 0.3,$$\nand the bound is attained when $B \\subseteq A$ (whenever Sunday is dry, Saturday was too). So the tightest upper limit is $0.3$. This is the upper Fréchet bound — the standard follow-up to any \"assume independence\" warm-up.",
+      "tags": [
+        "frechet bounds",
+        "coupling"
+      ]
+    },
+    {
+      "id": "444-2.1.66",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "easy",
+      "category": "classical probability",
+      "title": "Air and Water Before Fire",
+      "question": "Four cards labelled water, earth, fire, and air lie face down. You flip them over one at a time in uniformly random order. You win if both the air and water cards are revealed before the fire card. What is the probability that you win?",
+      "hint": "The earth card is irrelevant. Where must fire sit among the three cards that matter?",
+      "answer_type": "numeric",
+      "answer": 0.3333,
+      "tolerance": 0.0005,
+      "solution": "Only the relative order of water, air, and fire matters, and all $3! = 6$ orderings are equally likely. You win exactly when fire is last of the three, which happens in $2! = 2$ orderings:\n$$P = \\frac{2}{6} = \\frac13.$$\nEquivalently: fire is equally likely to be first, middle, or last among the three relevant cards.",
+      "tags": [
+        "symmetry",
+        "relative order"
+      ]
+    },
+    {
+      "id": "444-2.1.70",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "easy",
+      "category": "conditional probability",
+      "title": "Five Before Snake Eyes",
+      "question": "Two fair dice are rolled repeatedly. What is the probability that a sum of 5 appears before a sum of 2?",
+      "hint": "Ignore every roll that is neither. What is the conditional probability that a decisive roll is a 5?",
+      "answer_type": "numeric",
+      "answer": 0.8,
+      "tolerance": 0,
+      "solution": "Rolls that show neither sum can be ignored. Given a decisive roll, the probability it is a 5 is\n$$P = \\frac{P[\\text{sum } 5]}{P[\\text{sum } 5] + P[\\text{sum } 2]} = \\frac{4/36}{4/36 + 1/36} = \\frac45.$$\nThe race-between-events reduction — the engine behind every craps-style question.",
+      "tags": [
+        "competing events",
+        "classic"
+      ]
+    },
+    {
+      "id": "444-2.2.9",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "medium",
+      "category": "combinatorics",
+      "title": "A Random Subset of a Random Subset",
+      "question": "Subsets $A$ and $B$ are chosen independently and uniformly at random from all subsets of a set $X$ with $|X| = 5$. What is the probability that $A \\subseteq B$?",
+      "hint": "Decide element by element. For each element, which of the four (in $A$?, in $B$?) combinations are allowed?",
+      "answer_type": "numeric",
+      "answer": 0.2373,
+      "tolerance": 0.0005,
+      "solution": "Each element of $X$ independently lands in one of four equally likely cells: in both, in $A$ only, in $B$ only, or in neither. The containment $A \\subseteq B$ fails only for \"in $A$ only\", so each element complies with probability $\\frac34$:\n$$P = \\left(\\frac34\\right)^5 = \\frac{243}{1024} \\approx 0.2373.$$\nProduct-over-elements is the standard way to tame random-subset questions.",
+      "tags": [
+        "subsets",
+        "independence"
+      ]
+    },
+    {
+      "id": "444-2.2.16",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "medium",
+      "category": "conditional probability",
+      "title": "The Twice-Red Painted Cube",
+      "question": "A white $3 \\times 3 \\times 3$ cube is painted red on its outer surface, then cut into 27 unit cubes. One unit cube is selected uniformly at random and rolled twice; both rolls show a red face. What is the probability the selected cube is a corner cube?",
+      "hint": "Corner, edge, face, and center cubes have 3, 2, 1, 0 red faces. Apply Bayes with squared likelihoods.",
+      "answer_type": "numeric",
+      "answer": 0.5714,
+      "tolerance": 0.0005,
+      "solution": "The 27 cubes split into 8 corners (3 red faces), 12 edges (2), 6 face-centers (1), and 1 center (0). Rolling red twice has likelihood $(r/6)^2$ for a cube with $r$ red faces. By Bayes,\n$$P[\\text{corner} \\mid RR] = \\frac{8 \\cdot (1/2)^2}{8 \\cdot (1/2)^2 + 12 \\cdot (1/3)^2 + 6 \\cdot (1/6)^2} = \\frac{2}{2 + 4/3 + 1/6} = \\frac47 \\approx 0.5714.$$\nThe repeated observation squares each likelihood — the same structure as the double-headed-coin problem.",
+      "tags": [
+        "bayes",
+        "painted cube",
+        "classic"
+      ]
+    },
+    {
+      "id": "444-2.2.25",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "medium",
+      "category": "conditional probability",
+      "title": "Positive Given a Positive Sum",
+      "question": "Let $X, Y \\sim N(0,1)$ be IID. Find $P[X > 0 \\mid X + Y > 0]$.",
+      "hint": "Draw the plane. Both events are half-planes through the origin — the answer is a ratio of angles.",
+      "answer_type": "numeric",
+      "answer": 0.75,
+      "tolerance": 0,
+      "solution": "The vector $(X, Y)$ is rotationally symmetric about the origin, so the probability of any cone is proportional to its angle. The event $\\{x + y > 0\\}$ is the half-plane above the line $y = -x$, spanning the directions from $-45^\\circ$ to $135^\\circ$. Its overlap with $\\{x > 0\\}$ (directions $-90^\\circ$ to $90^\\circ$) spans $-45^\\circ$ to $90^\\circ$, i.e. $135^\\circ$ of the $180^\\circ$ half-plane:\n$$P = \\frac{135^\\circ}{180^\\circ} = \\frac34.$$\nRotational symmetry turns bivariate normal questions into geometry.",
+      "tags": [
+        "gaussian",
+        "rotational symmetry"
+      ]
+    },
+    {
+      "id": "444-2.2.27",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "hard",
+      "category": "combinatorics",
+      "title": "Three Chords, No Crossings",
+      "question": "Six points are chosen uniformly at random on a circle, then split uniformly at random into three pairs, and a chord is drawn through each pair. What is the probability that no two chords intersect?",
+      "hint": "Count the ways to pair 6 points on a circle, and count the non-crossing pairings (a Catalan number).",
+      "answer_type": "numeric",
+      "answer": 0.3333,
+      "tolerance": 0.0005,
+      "solution": "Only the pairing matters, not the point positions. Six labelled points admit $5!! = 5 \\cdot 3 \\cdot 1 = 15$ perfect matchings, all equally likely. The non-crossing matchings of $2n$ points on a circle number the Catalan number $C_n$; for $n = 3$, $C_3 = 5$. So\n$$P = \\frac{5}{15} = \\frac13.$$\nWorth memorizing: random chords non-crossing $= C_n / (2n-1)!!$.",
+      "tags": [
+        "catalan",
+        "chords",
+        "matchings"
+      ]
+    },
+    {
+      "id": "444-2.2.32",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "medium",
+      "category": "estimation",
+      "title": "The German Tank Problem",
+      "question": "German tanks carry distinct serial numbers $1, 2, \\dots, N$. You observe 6 tanks with serial numbers 38, 17, 59, 42, 97, and 120. Under the frequentist (minimum-variance unbiased) approach, what is the best guess for $N$?",
+      "hint": "Start from the sample maximum — it underestimates $N$. Scale up by the expected gap between order statistics.",
+      "answer_type": "numeric",
+      "answer": 139,
+      "tolerance": 0,
+      "solution": "The sample maximum $m = 120$ from $k = 6$ draws underestimates $N$. The $k$ observed serials split $\\{1,\\dots,N\\}$ into gaps of expected size $\\frac{N-k}{k+1}$ each, so the expected maximum is $m \\approx \\frac{k}{k+1}(N+1)$. Inverting gives the UMVU estimator\n$$\\hat N = m\\left(1 + \\frac1k\\right) - 1 = 120 \\cdot \\frac76 - 1 = 139.$$\nThe actual WWII use of this estimator famously beat intelligence estimates of tank production.",
+      "tags": [
+        "german tank",
+        "order statistics",
+        "estimator",
+        "classic"
+      ]
+    },
+    {
+      "id": "444-2.2.51",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "easy",
+      "category": "classical probability",
+      "title": "Russian Roulette, No Re-Spin",
+      "question": "A six-chambered revolver is loaded with one bullet and the cylinder is spun once to randomize the chamber order. You and your friend alternate pulling the trigger — your friend goes first — and the cylinder is never re-spun. The person who fires the bullet loses. What is the probability that you win?",
+      "hint": "With no re-spin, the game is equivalent to the bullet sitting in one of six fixed positions.",
+      "answer_type": "numeric",
+      "answer": 0.5,
+      "tolerance": 0,
+      "solution": "With a single initial spin, the bullet occupies one of the 6 chamber positions uniformly. Your friend fires on positions 1, 3, 5 and you fire on positions 2, 4, 6 — three positions each:\n$$P[\\text{you win}] = \\frac36 = \\frac12.$$\nContrast with the re-spin variant, where each pull is a fresh $\\frac16$ Bernoulli and the first player is at a disadvantage ($P[\\text{second player wins}] = \\frac{5}{11}$). Interviewers love asking which variant you'd rather go first in.",
+      "tags": [
+        "russian roulette",
+        "symmetry",
+        "classic"
+      ]
+    },
+    {
+      "id": "444-2.2.53",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 2 — Axiomatic and Conditional Probability",
+      "difficulty": "medium",
+      "category": "markov chains",
+      "title": "Whisper Down the Lane",
+      "question": "$n$ people stand in a line. $P_1$ receives a binary message (\"yes\" or \"no\") and passes it to $P_2$, who passes it to $P_3$, and so on. Each person independently transmits the message they heard with probability $p$ and the opposite message with probability $1-p$, where $0 < p < 1$. Let $p_n$ be the probability that $P_n$ passes along the original message. Find $\\lim_{n \\to \\infty} p_n$.",
+      "hint": "Write the one-step recursion for $p_n$ and find its fixed point.",
+      "answer_type": "numeric",
+      "answer": 0.5,
+      "tolerance": 0,
+      "solution": "The message is correct at step $n+1$ if it was correct and transmitted faithfully, or incorrect and flipped:\n$$p_{n+1} = p_n p + (1 - p_n)(1 - p).$$\nThe fixed point solves $p^* = p^* p + (1-p^*)(1-p)$, giving $p^* = \\frac12$, and since $|2p - 1| < 1$ the recursion contracts toward it. After enough noisy relays, all information is lost — the limit is $\\frac12$ regardless of $p$. (Only the degenerate $p \\in \\{0, 1\\}$ cases preserve information.)",
+      "tags": [
+        "information cascade",
+        "fixed point",
+        "telephone game"
+      ]
+    },
+    {
+      "id": "444-6.1.36",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "medium",
+      "category": "expected value",
+      "title": "Waiting for Heads-Heads",
+      "question": "A fair coin is flipped repeatedly until two heads appear in a row. What is the expected number of flips?",
+      "hint": "Set up states by current streak: no progress, one head, done.",
+      "answer_type": "numeric",
+      "answer": 6,
+      "tolerance": 0,
+      "solution": "Let $E_0$ be the expected flips from scratch and $E_1$ after a fresh head:\n$$E_0 = 1 + \\tfrac12 E_1 + \\tfrac12 E_0, \\qquad E_1 = 1 + \\tfrac12 \\cdot 0 + \\tfrac12 E_0.$$\nSolving gives $E_1 = 4$ and $E_0 = 6$. In general, $HH\\cdots H$ of length $k$ takes $2^{k+1} - 2$ flips in expectation — the self-overlap of the pattern is what makes it slower than a non-overlapping pattern of the same length.",
+      "tags": [
+        "pattern waiting",
+        "states",
+        "classic"
+      ]
+    },
+    {
+      "id": "444-6.1.52",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "easy",
+      "category": "expected value",
+      "title": "Letters to the Wrong Firms",
+      "question": "You wrote $X$ letters for recruiters at $X$ different firms, then forgot which recruiter belongs to which firm and assigned the letters to firms uniformly at random, one letter per firm. What is the expected number of letters that reach the correct firm?",
+      "hint": "Indicator variables — no need to touch derangement counts.",
+      "answer_type": "numeric",
+      "answer": 1,
+      "tolerance": 0,
+      "solution": "Let $I_j$ indicate that letter $j$ lands correctly; $P[I_j = 1] = \\frac1X$. By linearity,\n$$E\\left[\\sum_j I_j\\right] = X \\cdot \\frac1X = 1,$$\nfor every $X$. The classic matching problem: the expected number of fixed points of a random permutation is always exactly 1, even though the distribution (asymptotically Poisson(1)) is far from obvious.",
+      "tags": [
+        "linearity",
+        "matching",
+        "derangement",
+        "classic"
+      ]
+    },
+    {
+      "id": "444-6.2.22",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "hard",
+      "category": "expected value",
+      "title": "Uniform Sum Past Two",
+      "question": "Let $X_1, X_2, \\dots \\sim \\mathrm{Unif}(0,1)$ IID and let $N_2 = \\min\\{n : X_1 + \\cdots + X_n > 2\\}$ be the first time the running sum exceeds 2. Find $E[N_2]$.",
+      "hint": "You likely know $E[N_1] = e$. Extend the renewal argument: $E[N_t]$ satisfies an integral equation on $[0, 2]$.",
+      "answer_type": "numeric",
+      "answer": 4.6708,
+      "tolerance": 0.005,
+      "solution": "Let $m(t) = E[N_t]$ be the expected count for threshold $t$. Conditioning on $X_1 = x$ gives the renewal equation $m(t) = 1 + \\int_0^{\\min(t,1)} m(t - x)\\,dx$, whose solution on $[0,1]$ is the famous $m(t) = e^t$. Continuing to $t \\in [1,2]$ yields\n$$E[N_2] = e^2 - e \\approx 4.6708.$$\n(The general closed form is $m(t) = \\sum_{j=0}^{\\lfloor t \\rfloor} (-1)^j \\frac{(t-j)^j}{j!} e^{t-j}$.) The threshold-1 case is the single most famous $e$ appearance in interviews; the threshold-2 follow-up checks whether you can actually run the renewal argument.",
+      "tags": [
+        "renewal",
+        "uniform sum",
+        "e"
+      ]
+    },
+    {
+      "id": "444-6.2.47",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "medium",
+      "category": "expected value",
+      "title": "Fives Before the First Six",
+      "question": "A fair 6-sided die is rolled repeatedly until the first 6 appears. What is the expected number of 5s rolled before stopping?",
+      "hint": "Ignore rolls of 1–4 entirely, or condition on which of 5 and 6 appears first, and recurse.",
+      "answer_type": "numeric",
+      "answer": 1,
+      "tolerance": 0,
+      "solution": "Ignore the irrelevant faces 1–4: each decisive roll is a 5 or a 6 with equal probability, and the process ends at the first 6. The number of 5s before the first 6 is then Geometric: $P[k \\text{ fives}] = (\\frac12)^{k+1}$, so\n$$E[\\#5\\text{s}] = \\sum_{k \\ge 0} k \\left(\\tfrac12\\right)^{k+1} = 1.$$\nBy the same symmetry, each of the faces 1–5 is rolled once in expectation before the first 6 — consistent with the expected $6$ total rolls.",
+      "tags": [
+        "symmetry",
+        "geometric",
+        "elegant"
+      ]
+    },
+    {
+      "id": "444-6.2.49",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "hard",
+      "category": "expected value",
+      "title": "Waiting for H-T-H",
+      "question": "On average, how many tosses of a fair coin does it take to first observe the pattern HTH?",
+      "hint": "Compare with HH: the pattern's self-overlap (it begins and ends with H) changes the answer. States or the martingale casino both work.",
+      "answer_type": "numeric",
+      "answer": 10,
+      "tolerance": 0,
+      "solution": "By Conway's leading-numbers (or the gambler-casino martingale) argument, the expected waiting time is the sum of $2^k$ over every prefix of the pattern that is also a suffix. HTH overlaps itself at length 3 (the whole word) and length 1 (single H):\n$$E = 2^3 + 2^1 = 10.$$\nState equations give the same answer. Compare $HTT$: only the full word overlaps, so $E = 8$ — equal-length patterns need not have equal waiting times, which is also why the Penney-ante game is non-transitive.",
+      "tags": [
+        "pattern waiting",
+        "martingale",
+        "conway"
+      ]
+    },
+    {
+      "id": "444-6.2.61",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "medium",
+      "category": "expected value",
+      "title": "The Last Bulb Standing",
+      "question": "Four lightbulbs have IID $\\mathrm{Exp}(1)$ lifetimes $X_1, X_2, X_3, X_4$. Find the expected time until the last bulb burns out, $E[\\max_i X_i]$.",
+      "hint": "Memorylessness: the minimum of $k$ exponentials is $\\mathrm{Exp}(k)$, and after each burnout the clock restarts.",
+      "answer_type": "numeric",
+      "answer": 2.0833,
+      "tolerance": 0.0005,
+      "solution": "The first burnout is the minimum of 4 exponentials, i.e. $\\mathrm{Exp}(4)$ with mean $\\frac14$. By memorylessness the remaining 3 bulbs are as good as new, so the next stage takes $\\frac13$, then $\\frac12$, then $1$:\n$$E[\\max] = \\frac14 + \\frac13 + \\frac12 + 1 = \\frac{25}{12} \\approx 2.0833.$$\nIn general $E[\\max \\text{ of } n] = H_n$, the harmonic number — the continuous cousin of the coupon collector.",
+      "tags": [
+        "exponential",
+        "order statistics",
+        "memorylessness"
+      ]
+    },
+    {
+      "id": "444-6.2.63",
+      "source": "444+ Problems in Probability",
+      "chapter": "Ch. 6 — Random Variables and Expectation",
+      "difficulty": "medium",
+      "category": "expected value",
+      "title": "Variance of the Longer Piece",
+      "question": "A 1-meter rope is cut at a point chosen uniformly at random along its length. Find the variance of the length of the longer piece (in meters).",
+      "hint": "What is the distribution of $\\max(U, 1-U)$ for $U \\sim \\mathrm{Unif}(0,1)$?",
+      "answer_type": "numeric",
+      "answer": 0.0208,
+      "tolerance": 0.0005,
+      "solution": "Let $U \\sim \\mathrm{Unif}(0,1)$ be the cut point; the longer piece is $L = \\max(U, 1-U)$. By the folding symmetry, $L \\sim \\mathrm{Unif}(\\frac12, 1)$: for $\\ell \\in [\\frac12, 1]$, $P[L \\le \\ell] = P[1 - \\ell \\le U \\le \\ell] = 2\\ell - 1$. A uniform on an interval of width $\\frac12$ has variance\n$$\\mathrm{Var}(L) = \\frac{(1/2)^2}{12} = \\frac{1}{48} \\approx 0.0208.$$\nThe folding trick — mapping $\\max(U, 1-U)$ back to a plain uniform — kills a whole family of broken-stick questions.",
+      "tags": [
+        "uniform",
+        "folding",
+        "broken stick"
+      ]
     }
   ]
 }
