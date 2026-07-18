@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import ThemeToggle from "@/components/ThemeToggle";
+import Avatar from "@/components/Avatar";
 
 export default async function Nav() {
   const supabase = await createClient();
@@ -33,6 +34,12 @@ export default async function Nav() {
           >
             Portfolio ↗
           </a>
+          <Link
+            href="/problems"
+            className="hidden text-[var(--text-secondary)] transition hover:text-[var(--foreground)] sm:inline"
+          >
+            Problems
+          </Link>
           <div className="hidden sm:block">
             <ThemeToggle />
           </div>
@@ -41,8 +48,9 @@ export default async function Nav() {
               <Link href="/practice" className="hidden text-[var(--text-secondary)] transition hover:text-[var(--foreground)] sm:inline">
                 Practice
               </Link>
-              <Link href="/profile" className="hidden text-[var(--text-secondary)] transition hover:text-[var(--foreground)] sm:inline">
-                Profile
+              <Link href="/profile" className="flex shrink-0 items-center gap-2 text-[var(--text-secondary)] transition hover:text-[var(--foreground)]">
+                <Avatar user={user} size={24} />
+                <span className="hidden sm:inline">Profile</span>
               </Link>
               <form action="/auth/signout" method="post">
                 <button

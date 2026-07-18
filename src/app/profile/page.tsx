@@ -1,6 +1,7 @@
 import Nav from "@/components/Nav";
 import SettingsPanel from "@/components/SettingsPanel";
 import DrillStatsCard from "@/components/DrillStatsCard";
+import Avatar from "@/components/Avatar";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { getPercentile, type Drill, type DrillAttempt, type Percentile } from "@/lib/supabase/attempts";
@@ -63,7 +64,8 @@ export default async function ProfilePage() {
 
         <div className="panel mb-6 p-6">
           <div className="term-label term-prompt mb-5">Account</div>
-          <div className="flex flex-wrap gap-8">
+          <div className="flex flex-wrap items-center gap-8">
+            <Avatar user={user} size={48} />
             <div>
               <div className="field-label mb-1.5">Email</div>
               <div className="font-mono text-sm text-[var(--foreground)]">{user.email}</div>
