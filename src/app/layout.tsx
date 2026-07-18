@@ -32,6 +32,9 @@ export const metadata: Metadata = {
     title: "Quant Practice",
     description,
   },
+  verification: {
+    google: "Ny-1vg3eDax-bBUmPOg7ha_Qqu_7KOthzR6dgFVbyVk",
+  },
 };
 
 export default function RootLayout({
