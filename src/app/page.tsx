@@ -27,7 +27,7 @@ export default function Home() {
               Start Practicing →
             </Link>
             <a
-              href="https://dhrubojeet-haldar.github.io"
+              href="https://starkl7.github.io"
               className="rounded-md border border-[var(--border)] px-5 py-2.5 text-sm font-medium text-[var(--foreground)] transition hover:border-[var(--text-secondary)]"
             >
               Back to Portfolio

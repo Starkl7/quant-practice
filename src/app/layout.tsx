@@ -48,6 +48,11 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-[var(--background)] text-[var(--foreground)]">
         <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
           {children}
+          <footer className="border-t border-[var(--border)] py-6 text-center font-mono text-xs text-[var(--text-muted)]">
+            <a href="/privacy" className="hover:text-[var(--text-secondary)]">
+              Privacy Policy
+            </a>
+          </footer>
         </ThemeProvider>
       </body>
     </html>

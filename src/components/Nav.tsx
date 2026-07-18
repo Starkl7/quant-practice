@@ -28,7 +28,7 @@ export default async function Nav() {
             Star ★
           </a>
           <a
-            href="https://dhrubojeet-haldar.github.io"
+            href="https://starkl7.github.io"
             className="hidden text-[var(--text-secondary)] transition hover:text-[var(--foreground)] md:inline"
           >
             Portfolio ↗
