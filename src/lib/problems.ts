@@ -1,3 +1,4 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { createPublicClient } from "@/lib/supabase/public";
 
 export type Difficulty = "easy" | "medium" | "hard";
@@ -24,8 +25,13 @@ export type Problem = {
 const COLUMNS =
   "id, source, chapter, difficulty, category, title, question, hint, answer_type, tolerance, tags";
 
-export async function getProblems(): Promise<Problem[]> {
-  const { data, error } = await createPublicClient()
+// problems_public filters restricted-tag problems per caller (see
+// supabase/migrations/0009_restricted_tags.sql): pass the cookie-based
+// server client to include problems the signed-in user has grants for;
+// the default anon client only ever sees unrestricted problems (what the
+// SEO pages and sitemap want).
+export async function getProblems(client?: SupabaseClient): Promise<Problem[]> {
+  const { data, error } = await (client ?? createPublicClient())
     .from("problems_public")
     .select(COLUMNS)
     .order("sort_order", { ascending: true });
@@ -36,8 +42,11 @@ export async function getProblems(): Promise<Problem[]> {
   return (data ?? []) as unknown as Problem[];
 }
 
-export async function getProblem(id: string): Promise<Problem | undefined> {
-  const { data, error } = await createPublicClient()
+export async function getProblem(
+  id: string,
+  client?: SupabaseClient
+): Promise<Problem | undefined> {
+  const { data, error } = await (client ?? createPublicClient())
     .from("problems_public")
     .select(COLUMNS)
     .eq("id", id)

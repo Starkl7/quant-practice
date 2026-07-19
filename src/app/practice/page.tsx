@@ -12,7 +12,9 @@ export default async function PracticePage() {
 
   if (!user) redirect("/login?next=/practice");
 
-  const problems = await getProblems();
+  // Pass the cookie-scoped client so restricted-tag problems the user has
+  // been granted access to are included (anon client would filter them out).
+  const problems = await getProblems(supabase);
 
   return (
     <div className="flex flex-1 flex-col">
