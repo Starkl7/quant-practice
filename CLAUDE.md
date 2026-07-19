@@ -22,13 +22,15 @@ A standalone quant-interview-prep app (spun out of a portfolio site), with three
 
 1. **Mental Math Trainer** (`src/components/MentalMathTrainer.tsx`) — timed arithmetic drills. Client-only, no backend dependency.
 2. **Market-Making Game** (`src/components/TradingGame.tsx`) — the "make me a market" card game used in actual trading interviews (Jane Street, Optiver, etc.): a hidden total is built from dealt cards, you see a partial hand, and across several rounds you quote a two-sided bid/ask on the sum as more cards are revealed and a counterparty trades against you when it's profitable for them. Client-only.
-3. **Probability & Stats** (`src/components/ProbabilityBank.tsx`) — reads problems from `src/data/probability_problems.json`.
+3. **Probability & Stats** (`src/components/ProbabilityBank.tsx`) — reads problems from the Supabase `problems` table via `src/lib/problems.ts`.
 
 All three are tabbed together via `src/components/PracticeTabs.tsx` and rendered from `src/app/practice/page.tsx`.
 
 ### Probability problem bank
 
-`src/data/probability_problems.json` is an intentionally empty schema skeleton — **do not fabricate problems**. Real entries come from the owner's prep books and follow the `_schema` field documented at the top of that file (fields: `id`, `source`, `chapter`, `difficulty`, `category`, `question`, `answer_type`, `answer`, `tolerance`, `solution`, `tags`). The rendering/answer-checking engine is fully built against this schema; only content is missing.
+Problem content lives only in the Supabase `problems` table — it is never committed to this repo. **Do not fabricate problems.** New batches are authored by the owner in a local gitignored staging file (`problems.local.json`, same shape as the table: `id`, `source`, `chapter`, `difficulty`, `category`, `title`, `question`, `hint`, `answer_type`, `answer`, `tolerance`, `solution`, `tags`): each question is rewritten in the owner's own wording, solved, and numerically verified, then upserted with `scripts/migrate-problems.mjs`.
+
+Problems carrying a tag listed in the `restricted_tags` table are only visible to users granted that tag in `problem_tag_access` (see `supabase/migrations/0009_restricted_tags.sql`); grants are managed by inserting rows in the Supabase dashboard, no admin UI. Anonymous traffic (SEO pages, sitemap) never sees restricted problems, and the `check_answer`/`reveal_solution` RPCs enforce the same gate. (All problem text is the owner's own wording before it ever reaches the database; the restricted-tag system exists to scope certain problems to a chosen group of users.)
 
 ## Auth architecture (Supabase, Google OAuth)
 

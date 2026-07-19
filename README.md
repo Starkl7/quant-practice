@@ -16,9 +16,10 @@ behind auth.
 3. **Probability & Stats** — a LeetCode-style problem bank: browse by index/title/
    difficulty (★–★★★), filter by category, submit answers (decimals, fractions like
    `6/91`, or expressions like `(4/9)^4` all accepted), with optional hints and full
-   KaTeX-rendered solutions. Problems are imported in curated batches from prep
-   books, each answer verified numerically before import. A per-problem flag button
-   lets users report suspect answers/parsing while the bank matures.
+   KaTeX-rendered solutions. Problems are authored in curated batches — each
+   question written in original wording, solved, and verified numerically before
+   import. A per-problem flag button lets users report suspect answers/parsing
+   while the bank matures.
 
 Scores and attempts persist per-user (Supabase), and `/profile` shows per-drill
 stats including a cross-user percentile.
@@ -59,17 +60,18 @@ score persistence no-op.
 
 ## The probability problem bank
 
-`src/data/probability_problems.json` holds the problems; the schema is documented in
-its `_schema` field (`id`, `source`, `chapter`, `difficulty`, `category`, `title`,
-`question`, `hint`, `answer_type`, `answer`, `tolerance`, `solution`, `tags` —
-questions/hints/solutions support KaTeX `$...$` and `$$...$$`).
+Problem content lives in the Supabase `problems` table, not in this repo (fields:
+`id`, `source`, `chapter`, `difficulty`, `category`, `title`, `question`, `hint`,
+`answer_type`, `answer`, `tolerance`, `solution`, `tags` — questions/hints/solutions
+support KaTeX `$...$` and `$$...$$`). Batches are authored locally in a gitignored
+staging file and upserted with `scripts/migrate-problems.mjs`.
 
-Content policy: no fabricated or scraped problems. Entries are imported in curated
-batches from freely shared prep material[^1], and every answer is verified
-numerically (exact computation or simulation) before it lands here. Solutions are
-authored for this repo, not copied. Answer checking is client-side by design — this
-is a practice tool, not a competition (see `supabase/queries/problem_bank_review.sql`
-for how flags + solve stats are reviewed).
+Content policy: no fabricated problems, and no problem text reproduced verbatim
+from any source. Every question is written in original wording, and every answer
+is verified numerically (exact computation or simulation) before it's upserted. Solutions and hints are original. Answers and
+solutions never leave the server — checking goes through the `check_answer` /
+`reveal_solution` RPCs (see `supabase/queries/problem_bank_review.sql` for how
+flags + solve stats are reviewed).
 
 ## Deploying
 
@@ -86,13 +88,7 @@ production domain.
 
 ## License
 
-Code is [MIT-licensed](LICENSE). The problem-bank data files (`src/data/*.json`)
-are provided for use within this app; the problem statements derive from freely
-shared prep material credited below, and the solutions/hints, while original to
-this repo, are meant to be practiced against here rather than repackaged.
-
-[^1]: Problem statements in the current batches are adapted from Srijit Mukherjee's
-    freely shared *444+ Problems in Probability for AI and Quantitative Finance* —
-    a curated collection he distributes openly for students (per its acknowledgment,
-    the problems are gathered from free online resources). Solutions, hints, and
-    answer verification in this repo are original. Thank you, Srijit!
+Code is [MIT-licensed](LICENSE). Problem-bank content (questions, solutions, hints)
+is not part of this repository — it lives in the app's database and is meant to be
+practiced against in the app rather than repackaged. `src/data/fermi_questions.json`
+contains factual reference values with verification noted inline.

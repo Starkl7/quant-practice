@@ -1,11 +1,11 @@
-// One-off backfill: loads src/data/probability_problems.json into the
-// Supabase `problems` table (see supabase/migrations/0006_problems_table.sql).
-// Not part of the app build — run manually after each curated batch is added
-// to the JSON, same authoring workflow as before, just synced to the DB now.
+// Upserts a locally staged problem batch into the Supabase `problems` table
+// (see supabase/migrations/0006_problems_table.sql). Not part of the app
+// build — run manually after authoring a batch in problems.local.json
+// (gitignored; problem content is never committed to this repo).
 //
 // Usage:
 //   Add SUPABASE_SERVICE_ROLE_KEY=... to .env.local (gitignored), then:
-//   node --env-file=.env.local scripts/migrate-problems.mjs
+//   node --env-file=.env.local scripts/migrate-problems.mjs [path/to/staging.json]
 //
 // Needs the service role key (Supabase dashboard → Project Settings → API),
 // not the anon key — RLS blocks direct writes to `problems` for everyone else.
@@ -28,12 +28,13 @@ if (!SUPABASE_URL || !SERVICE_ROLE_KEY) {
   process.exit(1);
 }
 
-const { problems } = JSON.parse(
-  readFileSync(path.join(__dirname, "../src/data/probability_problems.json"), "utf-8")
-);
+const stagingPath =
+  process.argv[2] ?? path.join(__dirname, "../problems.local.json");
+
+const { problems } = JSON.parse(readFileSync(stagingPath, "utf-8"));
 
 if (!problems?.length) {
-  console.error("No problems found in probability_problems.json — nothing to migrate.");
+  console.error(`No problems found in ${stagingPath} — nothing to migrate.`);
   process.exit(1);
 }
 
@@ -53,8 +54,8 @@ const rows = problems.map((p, index) => ({
   tags: p.tags ?? [],
   answer: p.answer,
   solution: p.solution,
-  // Chapter/section groups run past 9 problems (e.g. 444-1.1.1..444-1.1.28),
-  // so sorting by `id` text would misorder them — this preserves the JSON's
+  // Section id groups run past 9 problems, so sorting by `id` text would
+  // misorder them (x.1.10 before x.1.2) — this preserves the staging file's
   // curated array order instead.
   sort_order: index,
 }));

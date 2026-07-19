@@ -1,8 +1,8 @@
 -- Run this once in the Supabase dashboard (SQL Editor) for this project.
--- The problem bank has chapter.section groups with 10+ problems (e.g.
--- 444-1.1.1 .. 444-1.1.28), so sorting problems_public by `id` text would put
--- 444-1.1.10 before 444-1.1.2 (lexicographic, not numeric). Add an explicit
--- sort_order set from the curated JSON's array position instead.
+-- Problem ids share dotted section prefixes with 10+ entries per section, so
+-- sorting problems_public by `id` text would put x.1.10 before x.1.2
+-- (lexicographic, not numeric). Add an explicit sort_order set from the
+-- curated import's array position instead.
 
 alter table public.problems add column if not exists sort_order integer;
 
