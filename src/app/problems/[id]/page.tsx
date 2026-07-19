@@ -4,10 +4,13 @@ import { notFound } from "next/navigation";
 import Nav from "@/components/Nav";
 import MathText from "@/components/MathText";
 import ProblemSolver from "@/components/ProblemSolver";
-import { problems, getProblem } from "@/lib/problems";
+import { getProblems, getProblem } from "@/lib/problems";
 import { createClient } from "@/lib/supabase/server";
 
-export function generateStaticParams() {
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const problems = await getProblems();
   return problems.map((p) => ({ id: p.id }));
 }
 
@@ -17,7 +20,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const problem = getProblem(id);
+  const problem = await getProblem(id);
   if (!problem) return {};
 
   const title = `${problem.title ?? problem.id} | Quant Practice`;
@@ -40,8 +43,10 @@ const STAR_COUNTS: Record<string, number> = { easy: 1, medium: 2, hard: 3 };
 
 export default async function ProblemPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const problem = getProblem(id);
-  if (!problem) notFound();
+  const problems = await getProblems();
+  const idx = problems.findIndex((p) => p.id === id);
+  if (idx === -1) notFound();
+  const problem = problems[idx];
 
   const supabase = await createClient();
   const {
@@ -49,7 +54,6 @@ export default async function ProblemPage({ params }: { params: Promise<{ id: st
   } = await supabase.auth.getUser();
 
   const difficulty = problem.difficulty ?? "easy";
-  const idx = problems.indexOf(problem);
   const prev = idx > 0 ? problems[idx - 1] : undefined;
   const next = idx < problems.length - 1 ? problems[idx + 1] : undefined;
 
@@ -96,12 +100,12 @@ export default async function ProblemPage({ params }: { params: Promise<{ id: st
             <ProblemSolver
               problem={problem}
               signedIn={!!user}
-              solution={
-                problem.solution && (
-                  <div className="rounded-md border border-blue-500/20 bg-blue-500/5 p-4">
-                    <div className="term-label mb-2">Solution</div>
+              hint={
+                problem.hint && (
+                  <div className="rounded-md border border-amber-500/20 bg-amber-500/5 p-4">
+                    <div className="term-label mb-2">Hint</div>
                     <MathText
-                      text={problem.solution}
+                      text={problem.hint}
                       className="text-sm leading-relaxed text-[var(--text-secondary)]"
                     />
                   </div>

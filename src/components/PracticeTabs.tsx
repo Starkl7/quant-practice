@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import MentalMathTrainer from "@/components/MentalMathTrainer";
 import TradingGame from "@/components/TradingGame";
 import ProbabilityBank from "@/components/ProbabilityBank";
+import type { Problem } from "@/lib/problems";
 
 const TABS = [
   { key: "mental-math", label: "Mental Math Trainer" },
@@ -19,7 +20,7 @@ function isTabKey(v: string | null): v is TabKey {
   return TABS.some((t) => t.key === v);
 }
 
-export default function PracticeTabs() {
+export default function PracticeTabs({ problems }: { problems: Problem[] }) {
   const [active, setActive] = useState<TabKey>(() => {
     if (typeof window === "undefined") return "mental-math";
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -52,7 +53,7 @@ export default function PracticeTabs() {
 
       {active === "mental-math" && <MentalMathTrainer />}
       {active === "market-making" && <TradingGame />}
-      {active === "probability" && <ProbabilityBank />}
+      {active === "probability" && <ProbabilityBank problems={problems} />}
     </div>
   );
 }

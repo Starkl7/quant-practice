@@ -6,9 +6,8 @@ import { createClient } from "@/lib/supabase/client";
 import { recordAttempt } from "@/lib/supabase/attempts";
 import { flagProblem } from "@/lib/supabase/flags";
 import { parseAnswer } from "@/lib/parseAnswer";
-import { problems, type Difficulty, type Problem } from "@/lib/problems";
+import type { Difficulty, Problem } from "@/lib/problems";
 
-const CATEGORIES = Array.from(new Set(problems.map((p) => p.category).filter(Boolean))) as string[];
 const DIFFICULTIES: Difficulty[] = ["easy", "medium", "hard"];
 const STARS: Record<Difficulty, number> = { easy: 1, medium: 2, hard: 3 };
 const SOLVED_KEY = "quant-practice:probability-solved";
@@ -23,7 +22,8 @@ function loadIdSet(key: string): Set<string> {
   }
 }
 
-export default function ProbabilityBank() {
+export default function ProbabilityBank({ problems }: { problems: Problem[] }) {
+  const CATEGORIES = Array.from(new Set(problems.map((p) => p.category).filter(Boolean))) as string[];
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
   const [difficultyFilter, setDifficultyFilter] = useState<string>("all");
   const [openId, setOpenId] = useState<string | null>(null);
@@ -202,8 +202,10 @@ function ProblemView({
   const [value, setValue] = useState("");
   const [result, setResult] = useState<"correct" | "wrong" | "invalid" | null>(null);
   const [attempted, setAttempted] = useState(false);
+  const [checking, setChecking] = useState(false);
   const [showHint, setShowHint] = useState(false);
-  const [showSolution, setShowSolution] = useState(false);
+  const [solution, setSolution] = useState<string | null>(null);
+  const [solutionLoading, setSolutionLoading] = useState(false);
 
   // Problems can be long — snap back to the top when opening one.
   useEffect(() => {
@@ -217,27 +219,55 @@ function ProblemView({
       ? parseAnswer(value)?.toPrecision(6) ?? null
       : null;
 
-  function submit() {
-    if (!value.trim()) return;
-    let ok: boolean;
+  async function revealSolution() {
+    if (solution || solutionLoading) return;
+    setSolutionLoading(true);
+    const { data, error } = await createClient()
+      .rpc("reveal_solution", { p_problem_id: p.id })
+      .returns<{ solution: string }[]>()
+      .single();
+    setSolutionLoading(false);
+    if (error || !data) {
+      console.warn("reveal_solution failed:", error?.message);
+      return;
+    }
+    setSolution(data.solution);
+  }
+
+  async function submit() {
+    if (!value.trim() || checking) return;
+    let submitted: string;
     if (p.answer_type === "numeric") {
       const num = parseAnswer(value);
       if (num === null) {
         setResult("invalid");
         return;
       }
-      const tol = p.tolerance ?? 0.01;
-      ok = Math.abs(num - (p.answer as number)) <= tol;
+      submitted = String(num);
     } else {
-      ok = value.trim().toLowerCase() === String(p.answer).toLowerCase();
+      submitted = value.trim();
     }
+
+    setChecking(true);
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .rpc("check_answer", { p_problem_id: p.id, p_submitted: submitted })
+      .returns<{ correct: boolean }[]>()
+      .single();
+    setChecking(false);
+    if (error || !data) {
+      console.warn("check_answer failed:", error?.message);
+      return;
+    }
+
+    const ok = data.correct;
     setResult(ok ? "correct" : "wrong");
     setAttempted(true);
     if (ok) {
       onSolved();
-      setShowSolution(true);
+      revealSolution();
     }
-    recordAttempt(createClient(), "probability", ok ? 1 : 0, {
+    recordAttempt(supabase, "probability", ok ? 1 : 0, {
       problemId: p.id,
       category: p.category,
     });
@@ -309,9 +339,10 @@ function ProblemView({
         />
         <button
           onClick={submit}
-          className="rounded-md bg-[var(--accent-blue)] px-4 py-2 text-sm font-medium text-[var(--background)] transition hover:opacity-90"
+          disabled={checking}
+          className="rounded-md bg-[var(--accent-blue)] px-4 py-2 text-sm font-medium text-[var(--background)] transition hover:opacity-90 disabled:opacity-60"
         >
-          Submit
+          {checking ? "Checking…" : "Submit"}
         </button>
         {p.hint && !showHint && (
           <button
@@ -321,12 +352,13 @@ function ProblemView({
             Show Hint
           </button>
         )}
-        {attempted && !showSolution && (
+        {attempted && !solution && (
           <button
-            onClick={() => setShowSolution(true)}
-            className="rounded-md border border-[var(--border)] px-4 py-2 text-sm text-[var(--foreground)] transition hover:border-[var(--text-secondary)]"
+            onClick={revealSolution}
+            disabled={solutionLoading}
+            className="rounded-md border border-[var(--border)] px-4 py-2 text-sm text-[var(--foreground)] transition hover:border-[var(--text-secondary)] disabled:opacity-60"
           >
-            Show Solution
+            {solutionLoading ? "Loading…" : "Show Solution"}
           </button>
         )}
       </div>
@@ -365,13 +397,10 @@ function ProblemView({
         </div>
       )}
 
-      {showSolution && p.solution && (
+      {solution && (
         <div className="rounded-md border border-blue-500/20 bg-blue-500/5 p-4">
           <div className="term-label mb-2">Solution</div>
-          <MathText
-            text={p.solution}
-            className="text-sm leading-relaxed text-[var(--text-secondary)]"
-          />
+          <MathText text={solution} className="text-sm leading-relaxed text-[var(--text-secondary)]" />
         </div>
       )}
     </div>

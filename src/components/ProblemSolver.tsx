@@ -10,33 +10,47 @@ import type { Problem } from "@/lib/problems";
 export default function ProblemSolver({
   problem: p,
   signedIn,
-  solution,
+  hint,
 }: {
   problem: Problem;
   signedIn: boolean;
-  solution?: React.ReactNode;
+  hint?: React.ReactNode;
 }) {
   const [value, setValue] = useState("");
   const [result, setResult] = useState<"correct" | "wrong" | "invalid" | null>(null);
-  const [showSolution, setShowSolution] = useState(false);
+  const [showHint, setShowHint] = useState(false);
+  const [checking, setChecking] = useState(false);
 
-  function submit() {
-    if (!value.trim()) return;
-    let ok: boolean;
+  async function submit() {
+    if (!value.trim() || checking) return;
+    let submitted: string;
     if (p.answer_type === "numeric") {
       const num = parseAnswer(value);
       if (num === null) {
         setResult("invalid");
         return;
       }
-      const tol = p.tolerance ?? 0.01;
-      ok = Math.abs(num - (p.answer as number)) <= tol;
+      submitted = String(num);
     } else {
-      ok = value.trim().toLowerCase() === String(p.answer).toLowerCase();
+      submitted = value.trim();
     }
+
+    setChecking(true);
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .rpc("check_answer", { p_problem_id: p.id, p_submitted: submitted })
+      .returns<{ correct: boolean }[]>()
+      .single();
+    setChecking(false);
+    if (error || !data) {
+      console.warn("check_answer failed:", error?.message);
+      return;
+    }
+
+    const ok = data.correct;
     setResult(ok ? "correct" : "wrong");
-    if (ok) setShowSolution(true);
-    recordAttempt(createClient(), "probability", ok ? 1 : 0, {
+    if (ok) setShowHint(true);
+    recordAttempt(supabase, "probability", ok ? 1 : 0, {
       problemId: p.id,
       category: p.category,
     });
@@ -57,9 +71,10 @@ export default function ProblemSolver({
           />
           <button
             onClick={submit}
-            className="rounded-md bg-[var(--accent-blue)] px-4 py-2 text-sm font-medium text-[var(--background)] transition hover:opacity-90"
+            disabled={checking}
+            className="rounded-md bg-[var(--accent-blue)] px-4 py-2 text-sm font-medium text-[var(--background)] transition hover:opacity-90 disabled:opacity-60"
           >
-            Submit
+            {checking ? "Checking…" : "Submit"}
           </button>
         </div>
       ) : (
@@ -90,21 +105,21 @@ export default function ProblemSolver({
             ? "Correct."
             : result === "invalid"
               ? "Couldn't read that as a number — try a decimal (0.066), a fraction (6/91), or an expression ((4/9)^4)."
-              : "Not quite — try again, or reveal the solution."}
+              : "Not quite — try again, or reveal the hint."}
         </div>
       )}
 
-      {solution && (
+      {hint && (
         <div>
-          {!showSolution && (
+          {!showHint && (
             <button
-              onClick={() => setShowSolution(true)}
+              onClick={() => setShowHint(true)}
               className="rounded-md border border-[var(--border)] px-4 py-2 text-sm text-[var(--foreground)] transition hover:border-[var(--text-secondary)]"
             >
-              Show Solution
+              Show Hint
             </button>
           )}
-          <div className={showSolution ? "" : "hidden"}>{solution}</div>
+          <div className={showHint ? "" : "hidden"}>{hint}</div>
         </div>
       )}
     </div>

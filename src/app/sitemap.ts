@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
-import { problems } from "@/lib/problems";
+import { getProblems } from "@/lib/problems";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const problems = await getProblems();
   return [
     { url: BASE_URL, changeFrequency: "monthly", priority: 1 },
     { url: `${BASE_URL}/problems`, changeFrequency: "weekly", priority: 0.8 },

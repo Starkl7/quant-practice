@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Nav from "@/components/Nav";
-import { problems } from "@/lib/problems";
+import { getProblems } from "@/lib/problems";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Probability & Stats Problems | Quant Practice",
@@ -16,7 +18,8 @@ const STAR_TONES: Record<string, string> = {
 };
 const STAR_COUNTS: Record<string, number> = { easy: 1, medium: 2, hard: 3 };
 
-export default function ProblemsIndexPage() {
+export default async function ProblemsIndexPage() {
+  const problems = await getProblems();
   return (
     <div className="flex flex-1 flex-col">
       <Nav />
