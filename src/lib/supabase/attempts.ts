@@ -37,19 +37,21 @@ export async function resetAttempts(supabase: SupabaseClient): Promise<{ error: 
 export type Percentile = { percentile: number; sampleSize: number };
 
 // Cross-user aggregate — RLS only lets a client read its own rows, so this goes
-// through the drill_percentile() SECURITY DEFINER function (see
-// supabase/migrations/0003_percentile_rpc.sql) instead of a direct select.
-export async function getPercentile(
+// through a SECURITY DEFINER function instead of a direct select.
+// Ranks a user's total XP against the per-user total-XP distribution. Pass a
+// drill for that drill's leaderboard, or null for combined XP across all drills
+// (see supabase/migrations/0010_drill_xp_percentile.sql).
+export async function getXpPercentile(
   supabase: SupabaseClient,
-  drill: Drill,
-  score: number
+  drill: Drill | null,
+  xp: number
 ): Promise<Percentile | null> {
   const { data, error } = await supabase
-    .rpc("drill_percentile", { p_drill: drill, p_score: score })
+    .rpc("drill_xp_percentile", { p_drill: drill, p_xp: xp })
     .returns<{ percentile: number; sample_size: number }[]>()
     .single();
   if (error || !data) {
-    console.warn("getPercentile failed:", error?.message);
+    console.warn("getXpPercentile failed:", error?.message);
     return null;
   }
   return { percentile: data.percentile, sampleSize: data.sample_size };

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { recordAttempt } from "@/lib/supabase/attempts";
+import { mentalMathXp, sequencesXp } from "@/lib/xp";
 import { generateSequence } from "@/lib/sequences";
 
 type Mode = "arithmetic" | "sequences";
@@ -103,10 +104,13 @@ export default function MentalMathTrainer() {
     const avgTime = answerTimes.length
       ? answerTimes.reduce((a, b) => a + b, 0) / answerTimes.length
       : null;
-    recordAttempt(createClient(), mode === "sequences" ? "sequences" : "mental_math", correct - wrong, {
+    const isSeq = mode === "sequences";
+    recordAttempt(createClient(), isSeq ? "sequences" : "mental_math", correct - wrong, {
       correct,
       wrong,
       avgTime,
+      digits,
+      xp: isSeq ? sequencesXp(correct) : mentalMathXp(correct, digits),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [finished]);

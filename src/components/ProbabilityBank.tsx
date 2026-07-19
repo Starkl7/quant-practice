@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import MathText from "@/components/MathText";
 import { createClient } from "@/lib/supabase/client";
 import { recordAttempt } from "@/lib/supabase/attempts";
+import { probabilityXp } from "@/lib/xp";
 import { flagProblem } from "@/lib/supabase/flags";
 import { parseAnswer } from "@/lib/parseAnswer";
 import type { Difficulty, Problem } from "@/lib/problems";
@@ -270,6 +271,8 @@ function ProblemView({
     recordAttempt(supabase, "probability", ok ? 1 : 0, {
       problemId: p.id,
       category: p.category,
+      difficulty: p.difficulty ?? "easy",
+      xp: probabilityXp(ok, p.difficulty),
     });
   }
 

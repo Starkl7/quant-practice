@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { recordAttempt } from "@/lib/supabase/attempts";
+import { marketMakingXp } from "@/lib/xp";
 import { shuffle } from "@/lib/shuffle";
 import fermiData from "@/data/fermi_questions.json";
 
@@ -305,6 +306,7 @@ export default function TradingGame() {
         scenario,
         fills: next.fills.length,
         avgSpread,
+        xp: marketMakingXp(finalPnl, scenario, avgSpread),
       });
       setRecorded(true);
     }

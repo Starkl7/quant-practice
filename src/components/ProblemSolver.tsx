@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { recordAttempt } from "@/lib/supabase/attempts";
+import { probabilityXp } from "@/lib/xp";
 import { parseAnswer } from "@/lib/parseAnswer";
 import type { Problem } from "@/lib/problems";
 
@@ -53,6 +54,8 @@ export default function ProblemSolver({
     recordAttempt(supabase, "probability", ok ? 1 : 0, {
       problemId: p.id,
       category: p.category,
+      difficulty: p.difficulty ?? "easy",
+      xp: probabilityXp(ok, p.difficulty),
     });
   }
 
